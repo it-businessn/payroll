@@ -1,0 +1,31 @@
+.flex-container {
+    display: flex;
+}
+.signUp-cover {
+    background-image: url("../../assets/signUp-cover.svg");
+    background-repeat: no-repeat;
+    background-color: #f6f8ff;
+    background-size: contain;
+    background-position: center;
+}
+.signUp-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 60%;
+}
+a {
+    text-decoration: none;
+    text-align: right;
+}
+.signUp-grid {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: space-evenly;
+}
+.signUp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4em 0;
+}

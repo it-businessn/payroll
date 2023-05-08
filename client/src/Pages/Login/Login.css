@@ -1,0 +1,31 @@
+.flex-container {
+    display: flex;
+}
+.signIn-cover {
+    background-image: url(https://img.freepik.com/free-vector/cloud-computing-security-abstract-concept-illustration_335657-2105.jpg?w=996&t=st=1683298487~exp=1683299087~hmac=fc22a0a283ec19bab25840515f9afa584c3922dfab170e11e706ebe2481720cf);
+    background-repeat: no-repeat;
+    background-color: #eee;
+    background-size: cover;
+    background-position: center;
+}
+.signIn-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+a {
+    text-decoration: none;
+    text-align: right;
+}
+.login-grid {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: space-evenly;
+    background: #90b2f917 !important;
+}
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5em 0;
+}
