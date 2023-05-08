@@ -1,43 +1,56 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-    FormControl,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { IconButton, InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { Form, FormikProvider, useFormik } from "formik";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import * as api from "../../api/index.js";
+import { LoginSchema } from "../../config/userSchema.js";
 import Copyright from "../Copyright";
 import "./Login.css";
 
 export default function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
-
+    const navigate = useNavigate();
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        let result = {
-            email: data.get("email"),
-            password: data.get("password"),
-        };
-        await api.signIn(result);
-    };
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validationSchema: LoginSchema,
+        onSubmit: async () => {
+            try {
+                const userData = await api.signIn(values);
+                const userDetails = userData?.data;
+                const userToken = userData?.token;
+                const profile = { userDetails, userToken };
+                localStorage.setItem("profile", JSON.stringify(profile));
+                navigate("/home");
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    });
+    const {
+        errors,
+        touched,
+        values,
+        isSubmitting,
+        handleSubmit,
+        getFieldProps,
+    } = formik;
 
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
@@ -61,33 +74,38 @@ export default function Login() {
                         <Typography variant="body2" color="text.secondary">
                             Start managing your finance faster and better
                         </Typography>
-                        <Box
-                            component="form"
-                            noValidate
-                            onSubmit={handleSubmit}
-                            sx={{ mt: 2 }}
-                        >
-                            <TextField
-                                margin="dense"
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                size="medium"
-                                autoComplete="email"
-                            />
-                            <FormControl
-                                variant="outlined"
-                                fullWidth
-                                margin="dense"
+                        <FormikProvider value={formik}>
+                            <Form
+                                noValidate
+                                onSubmit={handleSubmit}
+                                sx={{ mt: 2 }}
                             >
-                                <InputLabel htmlFor="outlined-adornment-password">
-                                    Password
-                                </InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-password"
+                                <TextField
+                                    margin="dense"
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    type="email"
+                                    size="medium"
+                                    autoComplete="email"
+                                    {...getFieldProps("email")}
+                                    error={Boolean(
+                                        touched.email && errors.email
+                                    )}
+                                    helperText={touched.email && errors.email}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    fullWidth
+                                    id="password"
+                                    name="password"
+                                    label="Password"
+                                    autoComplete="password"
                                     type={showPassword ? "text" : "password"}
-                                    endAdornment={
+                                    size="medium"
+                                    {...getFieldProps("password")}
+                                    endadornment={
                                         <InputAdornment position="end">
                                             <IconButton
                                                 aria-label="toggle password visibility"
@@ -108,30 +126,34 @@ export default function Login() {
                                         </InputAdornment>
                                     }
                                     required
-                                    name="password"
-                                    label="Password"
+                                    error={Boolean(
+                                        touched.password && errors.password
+                                    )}
+                                    helperText={
+                                        touched.password && errors.password
+                                    }
                                 />
-                            </FormControl>
-
-                            <Link to="/forgot-password">
-                                <Typography
-                                    variant="subtitle2"
-                                    sx={{ textAlign: "right" }}
+                                <Link to="/forgot-password">
+                                    <Typography
+                                        variant="subtitle2"
+                                        sx={{ textAlign: "right" }}
+                                    >
+                                        Forgot password?
+                                    </Typography>
+                                </Link>
+                                <LoadingButton
+                                    loading={isSubmitting}
+                                    variant="contained"
+                                    color="primary"
+                                    type="submit"
+                                    fullWidth
+                                    size="large"
+                                    sx={{ mt: 1, mb: "2em" }}
                                 >
-                                    Forgot password?
-                                </Typography>
-                            </Link>
-                            <Button
-                                color="primary"
-                                type="submit"
-                                fullWidth
-                                size="large"
-                                variant="contained"
-                                sx={{ mt: 1, mb: "2em" }}
-                            >
-                                Login
-                            </Button>
-                        </Box>
+                                    Login
+                                </LoadingButton>
+                            </Form>
+                        </FormikProvider>
                     </Box>
                     <Typography
                         variant="body2"

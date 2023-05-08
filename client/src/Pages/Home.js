@@ -1,2 +1,5 @@
-import { Component } from "react";
-export default class Home extends Component {}
+import React from "react";
+
+export default function Home() {
+    return <div>Welcome Home</div>;
+}

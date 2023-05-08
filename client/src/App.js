@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@mui/material/styles";
 
+import { theme } from "./config/themeConfig";
 import RoutePages from "./routes";
-import { theme } from "./themeConfig.js/themeConfig";
 
 function App() {
     return (
