@@ -1,19 +1,22 @@
-import * as Yup from "yup";
-
-export const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-        .email("Email must be a valid email address")
-        .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+import { object, string } from "yup";
+export const LoginSchema = object().shape({
+    email: string()
+        .required("Please enter email")
+        .email("Email must be a valid email address"),
+    password: string()
+        .required("Please enter password")
+        .min(4, "Password should be minimum 4 characters long"),
 });
 
-export const RegisterSchema = Yup.object().shape({
-    name: Yup.string()
-        .min(2, "Too Short!")
+export const RegisterSchema = object().shape({
+    name: string()
+        .min(4, "Too Short!")
         .max(50, "Too Long!")
-        .required("Name required"),
-    email: Yup.string()
-        .email("Email must be a valid email address")
-        .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+        .required("Please enter name"),
+    email: string()
+        .required("Please enter email")
+        .email("Email must be a valid email address"),
+    password: string()
+        .required("Please enter password")
+        .min(4, "Password should be minimum 4 characters long"),
 });

@@ -46,6 +46,7 @@ export default function SignUp() {
         handleSubmit,
         getFieldProps,
     } = formik;
+
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
@@ -111,27 +112,6 @@ export default function SignUp() {
                                     type={showPassword ? "text" : "password"}
                                     size="medium"
                                     {...getFieldProps("password")}
-                                    endadornment={
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                onMouseDown={
-                                                    handleMouseDownPassword
-                                                }
-                                                edge="end"
-                                            >
-                                                {showPassword ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                    required
                                     error={Boolean(
                                         touched.password && errors.password
                                     )}
