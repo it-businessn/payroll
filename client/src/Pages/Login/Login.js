@@ -1,57 +1,72 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { IconButton, InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Form, FormikProvider, useFormik } from "formik";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
+import FormikForm from "../../components/FormikForm.js";
 import { LoginSchema } from "../../config/userSchema.js";
 import Copyright from "../Copyright";
 import "./Login.css";
 
 export default function Login() {
-    const [showPassword, setShowPassword] = React.useState(false);
-    const navigate = useNavigate();
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
+    const initialValues = {
+        email: "",
+        password: "",
     };
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
+    const formFields = [
+        {
+            field: "TextField",
+            margin: "dense",
+            fullWidth: true,
+            id: "email",
+            label: "Email Address",
+            size: "medium",
+            name: "email",
+            type: "email",
+            variant: "outlined",
+            color: "primary",
         },
-        validationSchema: LoginSchema,
-        onSubmit: async () => {
-            try {
-                const userData = await api.signIn(values);
-                const userDetails = userData?.data;
-                const userToken = userData?.token;
-                const profile = { userDetails, userToken };
-                localStorage.setItem("profile", JSON.stringify(profile));
-                navigate("/home");
-            } catch (error) {
-                console.log(error);
-            }
+        {
+            field: "TextField",
+            margin: "dense",
+            fullWidth: true,
+            id: "password",
+            label: "Password",
+            size: "medium",
+            name: "password",
+            type: "password",
+            variant: "outlined",
+            color: "primary",
         },
-    });
-    const {
-        errors,
-        touched,
-        values,
-        isSubmitting,
-        handleSubmit,
-        getFieldProps,
-    } = formik;
+        {
+            field: "link",
+            path: "/forgot-password",
+            label: "Forgot password?",
+        },
+        {
+            field: "submitButton",
+        },
+    ];
+    const navigate = useNavigate();
+    const handleSubmit = async (values) => {
+        try {
+            console.log("e");
+            const userData = await api.signIn(values);
+            const userDetails = userData?.data;
+            const userToken = userData?.token;
+            const profile = { userDetails, userToken };
+            localStorage.setItem("profile", JSON.stringify(profile));
 
+            navigate("/home");
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
@@ -74,86 +89,12 @@ export default function Login() {
                         <Typography variant="body2" color="text.secondary">
                             Start managing your finance faster and better
                         </Typography>
-                        <FormikProvider value={formik}>
-                            <Form
-                                noValidate
-                                onSubmit={handleSubmit}
-                                sx={{ mt: 2 }}
-                            >
-                                <TextField
-                                    margin="dense"
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    type="email"
-                                    size="medium"
-                                    autoComplete="email"
-                                    {...getFieldProps("email")}
-                                    error={Boolean(
-                                        touched.email && errors.email
-                                    )}
-                                    helperText={touched.email && errors.email}
-                                />
-                                <TextField
-                                    margin="dense"
-                                    fullWidth
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    autoComplete="password"
-                                    type={showPassword ? "text" : "password"}
-                                    size="medium"
-                                    {...getFieldProps("password")}
-                                    endadornment={
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                onMouseDown={
-                                                    handleMouseDownPassword
-                                                }
-                                                edge="end"
-                                            >
-                                                {showPassword ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                    required
-                                    error={Boolean(
-                                        touched.password && errors.password
-                                    )}
-                                    helperText={
-                                        touched.password && errors.password
-                                    }
-                                />
-                                <Link to="/forgot-password">
-                                    <Typography
-                                        variant="subtitle2"
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        Forgot password?
-                                    </Typography>
-                                </Link>
-                                <LoadingButton
-                                    loading={isSubmitting}
-                                    variant="contained"
-                                    color="primary"
-                                    type="submit"
-                                    fullWidth
-                                    size="large"
-                                    sx={{ mt: 1, mb: "2em" }}
-                                >
-                                    Login
-                                </LoadingButton>
-                            </Form>
-                        </FormikProvider>
+                        <FormikForm
+                            submit={handleSubmit}
+                            schema={LoginSchema}
+                            initialValues={initialValues}
+                            formFields={formFields}
+                        ></FormikForm>
                     </Box>
                     <Typography
                         variant="body2"
