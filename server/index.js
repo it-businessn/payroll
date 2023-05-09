@@ -5,13 +5,13 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/users.js";
 
 const app = express();
+app.set("view engine", "ejs");
 dotenv.config();
-
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/users", userRoutes);
-
 const PORT = process.env.PORT || 5000;
 
 mongoose
