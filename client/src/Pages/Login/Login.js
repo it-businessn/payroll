@@ -18,6 +18,7 @@ import "./Login.css";
 
 export default function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
+    const [hasError, setErrorMessage] = React.useState("");
     const navigate = useNavigate();
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -39,6 +40,7 @@ export default function Login() {
                 localStorage.setItem("profile", JSON.stringify(profile));
                 navigate("/home");
             } catch (error) {
+                setErrorMessage(error.response.data.error);
                 console.log(error);
             }
         },
@@ -105,27 +107,6 @@ export default function Login() {
                                     type={showPassword ? "text" : "password"}
                                     size="medium"
                                     {...getFieldProps("password")}
-                                    endadornment={
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                onMouseDown={
-                                                    handleMouseDownPassword
-                                                }
-                                                edge="end"
-                                            >
-                                                {showPassword ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                    required
                                     error={Boolean(
                                         touched.password && errors.password
                                     )}
@@ -152,6 +133,13 @@ export default function Login() {
                                 >
                                     Login
                                 </LoadingButton>
+                                <Typography
+                                    variant="subtitle2"
+                                    color="red"
+                                    gutterBottom
+                                >
+                                    {hasError}
+                                </Typography>
                             </Form>
                         </FormikProvider>
                     </Box>

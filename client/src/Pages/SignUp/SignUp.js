@@ -18,12 +18,7 @@ import "./SignUp.css";
 export default function SignUp() {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const [hasError, setErrorMessage] = React.useState("");
 
     const formik = useFormik({
         initialValues: { name: "", email: "", password: "" },
@@ -34,6 +29,7 @@ export default function SignUp() {
                 const userData = await api.signUp(values);
                 navigate("/home");
             } catch (error) {
+                setErrorMessage(error.response.data.error);
                 console.log(error);
             }
         },
@@ -101,7 +97,7 @@ export default function SignUp() {
                                         touched.email && errors.email
                                     )}
                                     helperText={touched.email && errors.email}
-                                />{" "}
+                                />
                                 <TextField
                                     margin="dense"
                                     fullWidth
@@ -130,6 +126,13 @@ export default function SignUp() {
                                 >
                                     Register
                                 </LoadingButton>
+                                <Typography
+                                    variant="subtitle2"
+                                    color="red"
+                                    gutterBottom
+                                >
+                                    {hasError}
+                                </Typography>
                             </Form>
                         </FormikProvider>
                     </Box>
