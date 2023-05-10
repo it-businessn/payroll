@@ -4,6 +4,52 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            * {
+                font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                height: 100vh;
+            }
+            .source-img {
+                background-image: url(https://img.freepik.com/free-vector/cloud-computing-security-abstract-concept-illustration_335657-2105.jpg?w=996&t=st=1683298487~exp=1683299087~hmac=fc22a0a…);
+                background-repeat: no-repeat;
+                background-color: #eee;
+                background-size: cover;
+                background-position: center;
+            }
+            .form-div {
+                padding: 8em;
+                background-color: rgb(246 248 255);
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .form-content {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+            input,
+            button {
+                padding: 17px;
+                border-radius: 8px;
+                border: none;
+                font-size: 1em;
+            }
+            input {
+                color: black;
+            }
+            button {
+                color: white;
+                background: rgb(83 95 236);
+            }
+            label {
+                margin: 1em 0;
+            }
+        </style>
         <title>Document</title>
         <script>
             var status = `<%- JSON.stringify(status) %>`;
@@ -16,20 +62,26 @@
         </script>
     </head>
     <body>
-        <h1><%= email%></h1>
-        <form action="" method="post">
-            <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Enter new password"
-            /><br />
-            <input
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="Confirm your password"
-            /><br /><button>Submit</button>
-        </form>
+        <div class="grid-container">
+            <div class="source-img"></div>
+            <div class="form-div">
+                <h1>Create Your New Password</h1>
+                <form class="form-content" action="" method="post">
+                    <label>Email : <%= email%></label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter new password"
+                    /><br />
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        placeholder="Confirm your password"
+                    /><br /><button>Submit</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

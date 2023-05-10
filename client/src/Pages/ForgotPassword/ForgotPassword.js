@@ -1,35 +1,32 @@
+import { CssBaseline, Grid, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
-import { LoginSchema } from "../../config/userSchema.js";
-import Copyright from "../Copyright";
-import "./Login.css";
-import { loginFormFields, loginInitialValues } from "./loginFormFields.js";
-
-export default function Login() {
-    const [hasError, setError] = React.useState("");
-
-    const navigate = useNavigate();
+import { ResetPasswordSchema } from "../../config/userSchema.js";
+import Copyright from "../Copyright.js";
+import {
+    resetPasswordFormFields,
+    resetPasswordInitialValues,
+} from "./passwordResetFormFields.js";
+import "../Login/Login.css";
+export default function ForgotPassword() {
+    const [hasError, setErrorMessage] = React.useState("");
+    const [emailSentText, setEmailSentText] = React.useState("");
     const handleSubmit = async (values) => {
         try {
-            const userData = await api.signIn(values);
-            const userDetails = userData?.data;
-            const userToken = userData?.token;
-            const profile = { userDetails, userToken };
-            localStorage.setItem("profile", JSON.stringify(profile));
-
-            navigate("/home");
+            const response = await api.forgotPassword(values);
+            setEmailSentText(response.data.message);
+            setErrorMessage("");
         } catch (error) {
-            setError(error.response.data.error);
+            setEmailSentText("");
+            setErrorMessage(error.response.data.error);
             console.log(error);
         }
     };
+
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
@@ -47,17 +44,22 @@ export default function Login() {
                 <Box className="login-container">
                     <Box className="signIn-form">
                         <Typography variant="h6" gutterBottom>
-                            Welcome Back!
+                            Reset Your Password
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Start managing your finance faster and better
+                            Enter your email address to receive a reset link
                         </Typography>
                         <FormikForm
                             formSubmit={handleSubmit}
-                            schema={LoginSchema}
-                            initialValues={loginInitialValues}
-                            formFields={loginFormFields}
+                            schema={ResetPasswordSchema}
+                            initialValues={resetPasswordInitialValues}
+                            formFields={resetPasswordFormFields}
                         />
+                        {emailSentText && (
+                            <Typography variant="subtitle2" color="green">
+                                {emailSentText}
+                            </Typography>
+                        )}
                         {hasError && (
                             <Typography variant="subtitle2" color="red">
                                 {hasError}
@@ -67,7 +69,7 @@ export default function Login() {
                     <Typography
                         variant="body2"
                         color="text.secondary"
-                        sx={{ textAlign: "center" }}
+                        sx={{ textAlign: "center", mt: 2 }}
                     >
                         Don't have an account? &nbsp;
                         <Link to="/sign-up">Sign Up</Link>
