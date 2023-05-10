@@ -85,7 +85,10 @@ export const resetPassword = async (req, res) => {
     }
     try {
         const verify = jwt.verify(token, "test");
-        res.render("index", { email: verify.email, status: "Verified User" });
+        res.render("index", {
+            email: verify.email,
+            status: "Not verified ",
+        });
     } catch (error) {
         console.log(error);
         res.send("User not Verified");
@@ -112,7 +115,7 @@ export const setNewPassword = async (req, res) => {
             }
         );
 
-        res.render("index", { email: verify.email, status: "Verified" });
+        res.render("index", { email: verify.email, status: "verified" });
     } catch (error) {
         console.log(error);
         res.json({ status: "Something Went Wrong" });
