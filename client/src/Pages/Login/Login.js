@@ -4,58 +4,20 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { Link } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
 import { LoginSchema } from "../../config/userSchema.js";
 import Copyright from "../Copyright";
 import "./Login.css";
+import { loginFormFields, loginInitialValues } from "./loginFormFields.js";
 
 export default function Login() {
-    const initialValues = {
-        email: "",
-        password: "",
-    };
-    const formFields = [
-        {
-            field: "TextField",
-            margin: "dense",
-            fullWidth: true,
-            id: "email",
-            label: "Email Address",
-            size: "medium",
-            name: "email",
-            type: "email",
-            variant: "outlined",
-            color: "primary",
-        },
-        {
-            field: "TextField",
-            margin: "dense",
-            fullWidth: true,
-            id: "password",
-            label: "Password",
-            size: "medium",
-            name: "password",
-            type: "password",
-            variant: "outlined",
-            color: "primary",
-        },
-        {
-            field: "link",
-            path: "/forgot-password",
-            label: "Forgot password?",
-        },
-        {
-            field: "submitButton",
-        },
-    ];
+    const [hasError, setError] = React.useState("");
+
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
         try {
-            console.log("e");
             const userData = await api.signIn(values);
             const userDetails = userData?.data;
             const userToken = userData?.token;
@@ -64,6 +26,7 @@ export default function Login() {
 
             navigate("/home");
         } catch (error) {
+            setError(error.response.data.error);
             console.log(error);
         }
     };
@@ -90,11 +53,16 @@ export default function Login() {
                             Start managing your finance faster and better
                         </Typography>
                         <FormikForm
-                            submit={handleSubmit}
+                            formSubmit={handleSubmit}
                             schema={LoginSchema}
-                            initialValues={initialValues}
-                            formFields={formFields}
-                        ></FormikForm>
+                            initialValues={loginInitialValues}
+                            formFields={loginFormFields}
+                        />
+                        {hasError && (
+                            <Typography variant="subtitle2" color="red">
+                                {hasError}
+                            </Typography>
+                        )}
                     </Box>
                     <Typography
                         variant="body2"

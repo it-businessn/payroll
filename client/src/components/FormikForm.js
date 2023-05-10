@@ -1,40 +1,27 @@
-import LoadingButton from "@mui/lab/LoadingButton";
-import { TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { Link } from "react-router-dom";
-function FormikForm({ schema, initialValues, formFields, submit }) {
-    const [hasError, setError] = React.useState("");
-
+function FormikForm({ schema, initialValues, formFields, formSubmit }) {
     const formik = useFormik({
         initialValues,
         validationSchema: schema,
-        onSubmit: (event) => {
+        onSubmit: (formValues) => {
             try {
-                console.log(event);
-                formikHelpers.resetForm();
-                submit(values);
+                formSubmit(formValues);
             } catch (error) {
-                setError(error.response.data.error);
+                console.log(error);
             }
         },
     });
-    const {
-        errors,
-        isValid,
-        touched,
-        dirty,
-        values,
-        isSubmitting,
-        getFieldProps,
-        formikHelpers,
-    } = formik;
+    const { errors, isValid, touched, dirty, getFieldProps } = formik;
     return (
         <FormikProvider value={formik}>
-            <Form onSubmit={submit} sx={{ mt: 2 }}>
+            <Form sx={{ mt: 2 }}>
                 {formFields.map((item) =>
-                    item.field === "TextField" ? (
+                    item.field === "textField" ? (
                         <TextField
+                            key={item.id}
                             margin={item.margin}
                             fullWidth={item.fullWidth}
                             id={item.id}
@@ -54,35 +41,25 @@ function FormikForm({ schema, initialValues, formFields, submit }) {
                             }
                         />
                     ) : item.field === "link" ? (
-                        <Link to={item.path}>
-                            <Typography
-                                variant="subtitle2"
-                                sx={{ textAlign: "right" }}
-                            >
-                                {item.label}
-                            </Typography>
+                        <Link to={item.path} key={item.id}>
+                            <span style={item.style}>{item.label}</span>
                         </Link>
                     ) : (
-                        item.field === "submitButton" && (
-                            <LoadingButton
-                                loading={isSubmitting}
-                                variant="contained"
-                                color="primary"
-                                type="submit"
-                                fullWidth
-                                size="large"
+                        item.field === "button" && (
+                            <Button
+                                key={item.id}
+                                variant={item.variant}
+                                color={item.color}
+                                type={item.type}
+                                fullWidth={item.fullWidth}
+                                size={item.size}
                                 disabled={!isValid || !dirty}
-                                sx={{ mt: 1, mb: "2em" }}
+                                sx={item.style}
                             >
-                                Login
-                            </LoadingButton>
+                                {item.label}
+                            </Button>
                         )
                     )
-                )}
-                {hasError && (
-                    <Typography variant="subtitle2" color="red">
-                        {hasError}
-                    </Typography>
                 )}
             </Form>
         </FormikProvider>
