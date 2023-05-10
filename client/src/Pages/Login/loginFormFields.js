@@ -1,0 +1,48 @@
+export const loginInitialValues = {
+    email: "",
+    password: "",
+};
+export const loginFormFields = [
+    {
+        field: "textField",
+        margin: "dense",
+        fullWidth: true,
+        id: "email",
+        label: "Email Address",
+        size: "medium",
+        name: "email",
+        type: "email",
+        variant: "outlined",
+        color: "primary",
+    },
+    {
+        field: "textField",
+        margin: "dense",
+        fullWidth: true,
+        id: "password",
+        label: "Password",
+        size: "medium",
+        name: "password",
+        type: "password",
+        variant: "outlined",
+        color: "primary",
+    },
+    {
+        field: "link",
+        id: "link",
+        path: "/forgot-password",
+        label: "Forgot password?",
+        style: { float: "right", fontSize: "0.875rem" },
+    },
+    {
+        field: "button",
+        variant: "contained",
+        color: "primary",
+        id: "login",
+        fullWidth: true,
+        type: "submit",
+        size: "large",
+        label: "Login",
+        style: { mt: 1, mb: "2em" },
+    },
+];

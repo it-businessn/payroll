@@ -1,59 +1,35 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { IconButton, InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Form, FormikProvider, useFormik } from "formik";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import * as api from "../../api/index.js";
+import FormikForm from "../../components/FormikForm.js";
 import { LoginSchema } from "../../config/userSchema.js";
 import Copyright from "../Copyright";
 import "./Login.css";
+import { loginFormFields, loginInitialValues } from "./loginFormFields.js";
 
 export default function Login() {
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [hasError, setErrorMessage] = React.useState("");
+    const [hasError, setError] = React.useState("");
+
     const navigate = useNavigate();
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleSubmit = async (values) => {
+        try {
+            const userData = await api.signIn(values);
+            const userDetails = userData?.data;
+            const userToken = userData?.token;
+            const profile = { userDetails, userToken };
+            localStorage.setItem("profile", JSON.stringify(profile));
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
+            navigate("/home");
+        } catch (error) {
+            setError(error.response.data.error);
+            console.log(error);
+        }
     };
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-        validationSchema: LoginSchema,
-        onSubmit: async () => {
-            try {
-                const userData = await api.signIn(values);
-                const userDetails = userData?.data;
-                const userToken = userData?.token;
-                const profile = { userDetails, userToken };
-                localStorage.setItem("profile", JSON.stringify(profile));
-                navigate("/home");
-            } catch (error) {
-                setErrorMessage(error.response.data.error);
-                console.log(error);
-            }
-        },
-    });
-    const {
-        errors,
-        touched,
-        values,
-        isSubmitting,
-        handleSubmit,
-        getFieldProps,
-    } = formik;
-
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
@@ -76,72 +52,17 @@ export default function Login() {
                         <Typography variant="body2" color="text.secondary">
                             Start managing your finance faster and better
                         </Typography>
-                        <FormikProvider value={formik}>
-                            <Form
-                                noValidate
-                                onSubmit={handleSubmit}
-                                sx={{ mt: 2 }}
-                            >
-                                <TextField
-                                    margin="dense"
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    type="email"
-                                    size="medium"
-                                    autoComplete="email"
-                                    {...getFieldProps("email")}
-                                    error={Boolean(
-                                        touched.email && errors.email
-                                    )}
-                                    helperText={touched.email && errors.email}
-                                />
-                                <TextField
-                                    margin="dense"
-                                    fullWidth
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    autoComplete="password"
-                                    type={showPassword ? "text" : "password"}
-                                    size="medium"
-                                    {...getFieldProps("password")}
-                                    error={Boolean(
-                                        touched.password && errors.password
-                                    )}
-                                    helperText={
-                                        touched.password && errors.password
-                                    }
-                                />
-                                <Link to="/forgot-password">
-                                    <Typography
-                                        variant="subtitle2"
-                                        sx={{ textAlign: "right" }}
-                                    >
-                                        Forgot password?
-                                    </Typography>
-                                </Link>
-                                <LoadingButton
-                                    loading={isSubmitting}
-                                    variant="contained"
-                                    color="primary"
-                                    type="submit"
-                                    fullWidth
-                                    size="large"
-                                    sx={{ mt: 1, mb: "2em" }}
-                                >
-                                    Login
-                                </LoadingButton>
-                                <Typography
-                                    variant="subtitle2"
-                                    color="red"
-                                    gutterBottom
-                                >
-                                    {hasError}
-                                </Typography>
-                            </Form>
-                        </FormikProvider>
+                        <FormikForm
+                            formSubmit={handleSubmit}
+                            schema={LoginSchema}
+                            initialValues={loginInitialValues}
+                            formFields={loginFormFields}
+                        />
+                        {hasError && (
+                            <Typography variant="subtitle2" color="red">
+                                {hasError}
+                            </Typography>
+                        )}
                     </Box>
                     <Typography
                         variant="body2"
