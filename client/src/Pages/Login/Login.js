@@ -1,6 +1,4 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { IconButton, InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
@@ -17,14 +15,8 @@ import Copyright from "../Copyright";
 import "./Login.css";
 
 export default function Login() {
-    const [showPassword, setShowPassword] = React.useState(false);
     const [hasError, setErrorMessage] = React.useState("");
     const navigate = useNavigate();
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -104,7 +96,7 @@ export default function Login() {
                                     name="password"
                                     label="Password"
                                     autoComplete="password"
-                                    type={showPassword ? "text" : "password"}
+                                    type="password"
                                     size="medium"
                                     {...getFieldProps("password")}
                                     error={Boolean(

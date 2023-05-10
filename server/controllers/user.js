@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import { generateOTP } from "../services/OTP.js";
 import sendEmail from "../utils/sendEmail.js";
 
 export const signIn = async (req, res) => {
@@ -19,7 +20,7 @@ export const signIn = async (req, res) => {
         }
         const token = jwt.sign(
             { email: existingUser?.email, id: existingUser?._id },
-            "test",
+            process.env.JWT_SECRET_KEY,
             {
                 expiresIn: "1h",
             }
@@ -36,18 +37,61 @@ export const signUp = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ error: "User already exists" });
         }
-        const encryptedPassword = await bcrypt.hash(password, 10);
-        const result = await User.create({
-            name,
-            email,
-            password: encryptedPassword,
-        });
-
-        res.status(200).json({ result });
+        const newUser = await createUser(name, email, password);
+        if (!newUser[0]) {
+            return res.status(400).send({
+                message: "Unable to create new user",
+            });
+        }
+        res.status(200).json({ newUser });
     } catch (error) {
         res.status(500).json({
             message: "Something went wrong",
         });
+    }
+};
+export const verifyUser = async (req, res) => {
+    const { email, otp } = req.body;
+    try {
+        const user = await validateUserSignUp(email, otp);
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({
+            message: "Something went wrong",
+        });
+    }
+};
+const validateUserSignUp = async (email, otp) => {
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+        return res.status(404).json({ error: "User does not exist" });
+    }
+    if (existingUser && existingUser.otp !== otp) {
+        return [false, "Invalid OTP"];
+    }
+    const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
+        $set: { active: true },
+    });
+    return [true, updatedUser];
+};
+const createUser = async (name, email, password) => {
+    const hashedPassword = await hashedPassword(password);
+    const otpGenerated = generateOTP();
+
+    const newUser = await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        otp: otpGenerated,
+    });
+    if (!newUser) {
+        return [false, "Unable to sign you up"];
+    }
+    try {
+        await sendEmail(email, "Set OTP", otpGenerated);
+        return [true, newUser];
+    } catch (error) {
+        return [false, "Unable to sign up, Please try again later", error];
     }
 };
 export const forgotPassword = async (req, res) => {
@@ -59,7 +103,7 @@ export const forgotPassword = async (req, res) => {
         }
         const token = jwt.sign(
             { email: existingUser?.email, id: existingUser?._id },
-            "test",
+            process.env.JWT_SECRET_KEY,
             {
                 expiresIn: "1h",
             }
@@ -84,7 +128,7 @@ export const resetPassword = async (req, res) => {
         return res.json({ status: "User does not exist!" });
     }
     try {
-        const verify = jwt.verify(token, "test");
+        const verify = jwt.verify(token, process.env.JWT_SECRET_KEY);
         res.render("index", {
             email: verify.email,
             status: "Not verified ",
@@ -102,8 +146,8 @@ export const setNewPassword = async (req, res) => {
         return res.json({ status: "User Not Exists!!" });
     }
     try {
-        const verify = await jwt.verify(token, "test");
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const verify = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const hashedPassword = await hashedPassword(password);
         await User.updateOne(
             {
                 _id: id,

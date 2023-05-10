@@ -9,6 +9,8 @@ const API = axios.create({
 
 export const signIn = (formData) => API.post("/users/signIn", formData);
 export const signUp = (formData) => API.post("/users/signUp", formData);
+export const verifyUser = (formData) =>
+    API.post("/users/verify-user", formData);
 export const userData = (formData) => API.post("/userData", formData);
 export const forgotPassword = (formData) =>
     API.post("/users/forgot-password", formData);
