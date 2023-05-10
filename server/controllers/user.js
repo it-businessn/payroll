@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
-import { generateOTP } from "../services/OTP.js";
+import { encryptPassword, generateOTP } from "../services/OTP.js";
 import sendEmail from "../utils/sendEmail.js";
 
 export const signIn = async (req, res) => {
@@ -43,8 +43,9 @@ export const signUp = async (req, res) => {
                 message: "Unable to create new user",
             });
         }
-        res.status(200).json({ newUser });
+        res.status(200).json({ status: "ok", data: newUser });
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Something went wrong",
         });
@@ -75,7 +76,7 @@ const validateUserSignUp = async (email, otp) => {
     return [true, updatedUser];
 };
 const createUser = async (name, email, password) => {
-    const hashedPassword = await hashedPassword(password);
+    const hashedPassword = await encryptPassword(password);
     const otpGenerated = generateOTP();
 
     const newUser = await User.create({
@@ -147,7 +148,7 @@ export const setNewPassword = async (req, res) => {
     }
     try {
         const verify = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const hashedPassword = await hashedPassword(password);
+        const hashedPassword = await encryptPassword(password);
         await User.updateOne(
             {
                 _id: id,

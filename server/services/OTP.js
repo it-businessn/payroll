@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+import otpGenerator from "otp-generator";
 export const generateOTP = () => {
     const OTP = otpGenerator.generate(10, {
         upperCaseAlphabets: false,
@@ -5,5 +7,5 @@ export const generateOTP = () => {
     });
     return OTP;
 };
-export const hashedPassword = async (password) =>
+export const encryptPassword = async (password) =>
     await bcrypt.hash(password, 10);
