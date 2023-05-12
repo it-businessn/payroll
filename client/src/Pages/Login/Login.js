@@ -23,8 +23,7 @@ export default function Login() {
             const userToken = userData?.token;
             const profile = { userDetails, userToken };
             localStorage.setItem("profile", JSON.stringify(profile));
-
-            navigate("/home");
+            userData.active ? navigate("/home") : navigate("/verify-email");
         } catch (error) {
             setError(error.response.data.error);
             console.log(error);

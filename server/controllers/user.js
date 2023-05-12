@@ -161,6 +161,6 @@ export const setNewPassword = async (request, response) => {
         response.render("index", { email: verify.email, status: "verified" });
     } catch (error) {
         console.log(error);
-        response.status(500).json({ error: "Something Went Wrong" });
+        response.json({ error: "Something Went Wrong" });
     }
 };

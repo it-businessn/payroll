@@ -22,8 +22,7 @@ export default function SignUp() {
         try {
             const userData = await api.signUp(values);
             const userDetails = userData?.data;
-            const userToken = userData?.token;
-            const profile = { userDetails, userToken };
+            const profile = { userDetails: userDetails.data[1] };
             localStorage.setItem("profile", JSON.stringify(profile));
             navigate("/verify-email");
         } catch (error) {

@@ -7,13 +7,38 @@ import * as api from "../../api/index.js";
 import Copyright from "../Copyright.js";
 import "../Login/Login.css";
 
+const OTPInputFields = [
+    {
+        name: "firstChar",
+        id: "firstChar",
+    },
+    {
+        name: "secondChar",
+        id: "secondChar",
+    },
+    {
+        name: "thirdChar",
+        id: "thirdChar",
+    },
+    {
+        name: "fourthChar",
+        id: "fourthChar",
+    },
+    {
+        name: "fifthChar",
+        id: "fifthChar",
+    },
+    {
+        name: "sixthChar",
+        id: "sixthChar",
+    },
+];
 export default function VerifyEmail() {
     const [user, setUser] = React.useState(
         JSON.parse(localStorage.getItem("profile") || "")
     );
-    const userEmail = "";
     const resetPasswordInitialValues = {
-        email: userEmail,
+        email: user.userDetails.email,
         otp: "",
     };
     const [hasError, setErrorMessage] = React.useState("");
@@ -45,32 +70,6 @@ export default function VerifyEmail() {
         }
     };
 
-    const OTPInputFields = [
-        {
-            name: "firstChar",
-            id: "firstChar",
-        },
-        {
-            name: "secondChar",
-            id: "secondChar",
-        },
-        {
-            name: "thirdChar",
-            id: "thirdChar",
-        },
-        {
-            name: "fourthChar",
-            id: "fourthChar",
-        },
-        {
-            name: "fifthChar",
-            id: "fifthChar",
-        },
-        {
-            name: "sixthChar",
-            id: "sixthChar",
-        },
-    ];
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
@@ -104,6 +103,7 @@ export default function VerifyEmail() {
                             <div>
                                 {OTPInputFields.map((item) => (
                                     <input
+                                        key={item.id}
                                         type="text"
                                         name={item.name}
                                         id={item.id}

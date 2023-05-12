@@ -2,10 +2,10 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
+import VerifyEmail from "./Pages/ForgotPassword/VerifyEmail";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
-import VerifyEmail from "./Pages/ForgotPassword/VerifyEmail";
 
 export default function RoutePages() {
     return (
