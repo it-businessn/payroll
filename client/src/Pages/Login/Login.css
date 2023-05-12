@@ -8,8 +8,42 @@
     background-size: cover;
     background-position: center;
 }
+.password-cover {
+    background-image: url(https://img.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg?w=996&t=st=1683839048~exp=1683839648~hmac=1a9e66be9be56e282504fafd470b59c12599e95296c6a15835b5ff53083bce5f);
+}
+.verify-cover {
+    background-image: url(https://img.freepik.com/free-vector/corporate-meeting-employees-cartoon-characters-discussing-business-strategy-planning-further-actions-brainstorming-formal-communication-seminar-concept-illustration_335657-2035.jpg?w=996&t=st=1683842881~exp=1683843481~hmac=7f41ea334ab2acc3a8ea2d93643ce9b177fca0ef0720aec48e2a8a4e9f768119);
+}
 .signIn-form {
     width: 70%;
+}
+.otp-container {
+    display: flex;
+    flex-direction: column;
+}
+.otp-container > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.otp-container > div > input {
+    width: 55px;
+    height: 55px;
+    padding: 1em;
+    margin: 1em 0;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+    font-size: 1em;
+}
+.otp-container > button {
+    padding: 1em;
+    border-radius: 5px;
+    background: #5b62f8;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
 }
 a {
     text-decoration: none;

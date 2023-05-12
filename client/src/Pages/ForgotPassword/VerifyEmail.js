@@ -4,15 +4,14 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
-import FormikForm from "../../components/FormikForm.js";
 import Copyright from "../Copyright.js";
 import "../Login/Login.css";
-import { otpPasswordFormFields } from "./passwordResetFormFields.js";
+
 export default function VerifyEmail() {
     const [user, setUser] = React.useState(
         JSON.parse(localStorage.getItem("profile") || "")
     );
-    const userEmail = user.userDetails.data[1].email;
+    const userEmail = "";
     const resetPasswordInitialValues = {
         email: userEmail,
         otp: "",
@@ -20,10 +19,18 @@ export default function VerifyEmail() {
     const [hasError, setErrorMessage] = React.useState("");
     const [emailSentText, setEmailSentText] = React.useState("");
     const navigate = useNavigate();
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
         try {
-            values.otp = values.text;
-            const response = await api.verifyUser(values);
+            const otpInputNodeValues = document.querySelectorAll("input");
+            let defaultParams = "";
+            const otpValue = Array.prototype.slice
+                .call(otpInputNodeValues)
+                .map((item) => defaultParams + item.value);
+            resetPasswordInitialValues.otp = otpValue.join("");
+            const response = await api.verifyUser(resetPasswordInitialValues);
+            navigate("/home");
             if (response.user[0] === true) {
                 setEmailSentText("Email verified successfully");
             } else {
@@ -38,10 +45,42 @@ export default function VerifyEmail() {
         }
     };
 
+    const OTPInputFields = [
+        {
+            name: "firstChar",
+            id: "firstChar",
+        },
+        {
+            name: "secondChar",
+            id: "secondChar",
+        },
+        {
+            name: "thirdChar",
+            id: "thirdChar",
+        },
+        {
+            name: "fourthChar",
+            id: "fourthChar",
+        },
+        {
+            name: "fifthChar",
+            id: "fifthChar",
+        },
+        {
+            name: "sixthChar",
+            id: "sixthChar",
+        },
+    ];
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={6} className="signIn-cover" />
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={6}
+                className="signIn-cover  verify-cover"
+            />
             <Grid
                 item
                 xs={12}
@@ -58,13 +97,23 @@ export default function VerifyEmail() {
                             Verify Your Email
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Enter your OTP you received from your email
+                            A verification code has been sent to your email.
+                            Enter your OTP below
                         </Typography>
-                        <FormikForm
-                            formSubmit={handleSubmit}
-                            initialValues={resetPasswordInitialValues}
-                            formFields={otpPasswordFormFields}
-                        />
+                        <form onSubmit={handleSubmit} className="otp-container">
+                            <div>
+                                {OTPInputFields.map((item) => (
+                                    <input
+                                        type="text"
+                                        name={item.name}
+                                        id={item.id}
+                                        maxLength={1}
+                                        required
+                                    />
+                                ))}
+                            </div>
+                            <button type="submit">Verify Link</button>
+                        </form>
                         {emailSentText && (
                             <Typography variant="subtitle2" color="green">
                                 {emailSentText}

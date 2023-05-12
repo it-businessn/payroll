@@ -1,4 +1,4 @@
-import { CssBaseline, Grid, Paper } from "@mui/material";
+import { Button, CssBaseline, Grid, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
@@ -7,11 +7,11 @@ import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
 import { ResetPasswordSchema } from "../../config/userSchema.js";
 import Copyright from "../Copyright.js";
+import "../Login/Login.css";
 import {
     resetPasswordFormFields,
     resetPasswordInitialValues,
 } from "./passwordResetFormFields.js";
-import "../Login/Login.css";
 export default function ForgotPassword() {
     const [hasError, setErrorMessage] = React.useState("");
     const [emailSentText, setEmailSentText] = React.useState("");
@@ -30,7 +30,13 @@ export default function ForgotPassword() {
     return (
         <Grid container component="main" sx={{ height: "100vh" }}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={6} className="signIn-cover" />
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={6}
+                className="signIn-cover password-cover"
+            />
             <Grid
                 item
                 xs={12}
@@ -43,22 +49,50 @@ export default function ForgotPassword() {
             >
                 <Box className="login-container">
                     <Box className="signIn-form">
-                        <Typography variant="h6" gutterBottom>
-                            Reset Your Password
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Enter your email address to receive a reset link
-                        </Typography>
-                        <FormikForm
-                            formSubmit={handleSubmit}
-                            schema={ResetPasswordSchema}
-                            initialValues={resetPasswordInitialValues}
-                            formFields={resetPasswordFormFields}
-                        />
+                        {!emailSentText && (
+                            <>
+                                <Typography variant="h6" gutterBottom>
+                                    Forgot Password?
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Enter your email address to receive a link
+                                    to reset your password
+                                </Typography>
+                                <FormikForm
+                                    formSubmit={handleSubmit}
+                                    schema={ResetPasswordSchema}
+                                    initialValues={resetPasswordInitialValues}
+                                    formFields={resetPasswordFormFields}
+                                />
+                            </>
+                        )}
                         {emailSentText && (
-                            <Typography variant="subtitle2" color="green">
-                                {emailSentText}
-                            </Typography>
+                            <>
+                                <Typography variant="h6" gutterBottom>
+                                    Reset Complete!
+                                </Typography>
+                                <Typography
+                                    variant="subtitle2"
+                                    color="text.success"
+                                >
+                                    {emailSentText}.
+                                </Typography>
+                                <Link to="/">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        fullWidth
+                                        size="medium"
+                                        sx={{ mt: 1, mb: "2em" }}
+                                    >
+                                        Back to Login
+                                    </Button>
+                                </Link>
+                            </>
                         )}
                         {hasError && (
                             <Typography variant="subtitle2" color="red">
