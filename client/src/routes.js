@@ -10,7 +10,7 @@ import SignUp from "./Pages/SignUp/SignUp";
 export default function RoutePages() {
     return (
         <Routes>
-            <Route exact path="/" element={<Login />} />
+            <Route exact path="/" element={<Home />} />
             <Route path="/sign-in" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/home" element={<Home />} />
