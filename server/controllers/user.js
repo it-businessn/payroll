@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
-import { encryptPassword, generateOTP } from "../services/OTP.js";
+import { encryptPassword, generateOTP } from "../services/config.js";
 import sendEmail from "../utils/sendEmail.js";
 
 export const signIn = async (request, response) => {

@@ -15,6 +15,9 @@ a {
     text-decoration: none;
     text-align: right;
 }
+.navbar-linkItem {
+    text-align: left;
+}
 .signUp-grid {
     display: flex;
     flex-direction: column !important;

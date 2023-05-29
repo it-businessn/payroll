@@ -1,13 +1,12 @@
-import { ThemeProvider } from "@mui/material/styles";
+import { ChakraProvider } from "@chakra-ui/react";
 
-import { theme } from "./config/themeConfig";
 import RoutePages from "./routes";
 
 function App() {
     return (
-        <ThemeProvider theme={theme}>
+        <ChakraProvider>
             <RoutePages />
-        </ThemeProvider>
+        </ChakraProvider>
     );
 }
 

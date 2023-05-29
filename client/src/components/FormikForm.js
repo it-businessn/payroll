@@ -1,9 +1,17 @@
-import { Button, TextField } from "@mui/material";
-import { Form, FormikProvider, useFormik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { Link } from "react-router-dom";
-
+import {
+    FormControl,
+    FormLabel,
+    FormErrorMessage,
+    FormHelperText,
+    Input,
+    Button,
+    ButtonGroup,
+} from "@chakra-ui/react";
 function FormikForm({ schema, initialValues, formFields, formSubmit }) {
+    console.log(initialValues);
     const formik = useFormik({
         initialValues,
         validationSchema: schema,
@@ -21,26 +29,22 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
             <Form sx={{ mt: 2 }}>
                 {formFields.map((item) =>
                     item.field === "textField" ? (
-                        <TextField
-                            key={item.id}
-                            margin={item.margin}
-                            fullWidth={item.fullWidth}
-                            id={item.id}
-                            label={item.label}
-                            size={item.size}
-                            name={item.name}
-                            type={item.type}
-                            variant={item.variant}
-                            color={item.color}
-                            {...getFieldProps(item.type)}
-                            error={
-                                Boolean(errors[item.type]) &&
-                                Boolean(touched[item.type])
-                            }
-                            helperText={
-                                Boolean(touched[item.type]) && errors[item.type]
-                            }
-                        />
+                        <Field name={item.name}>
+                            {({ field, form }) => (
+                                <FormControl
+                                    key={item.name}
+                                    // isInvalid={
+                                    //     form.errors.name && form.touched.name
+                                    // }
+                                >
+                                    <FormLabel>{item.label}</FormLabel>
+                                    <Input {...field} type={item.type} />
+                                    {/* <FormErrorMessage>
+                                        {form.errors.name}
+                                    </FormErrorMessage> */}
+                                </FormControl>
+                            )}
+                        </Field>
                     ) : item.field === "link" ? (
                         <Link to={item.path} key={item.id}>
                             <span style={item.style}>{item.label}</span>
@@ -48,14 +52,12 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                     ) : (
                         item.field === "button" && (
                             <Button
-                                key={item.id}
+                                mt={4}
+                                colorScheme={item.color}
                                 variant={item.variant}
-                                color={item.color}
                                 type={item.type}
-                                fullWidth={item.fullWidth}
                                 size={item.size}
-                                disabled={!isValid || !dirty}
-                                sx={item.style}
+                                key={item.label}
                             >
                                 {item.label}
                             </Button>
