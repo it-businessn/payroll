@@ -1,4 +1,5 @@
 import User from "../models/user.js";
+import { calculatePay, getCurrency } from "../services/config.js";
 
 export const getAllEmployees = async (request, response) => {
     try {
@@ -99,7 +100,88 @@ export const updateEmployee = async (request, response) => {
         });
     }
 };
+export const updateEmployeePaymentDetails = async (request, response) => {
+    const { id } = request.params;
+    const employeeRequest = request.body;
 
+    try {
+        const existingEmployee = await User.find({ _id: id });
+        if (!existingEmployee) {
+            return response.status(404).json({ error: "User does not exist" });
+        }
+        employeeRequest.paymentInfo = calculatePay(
+            employeeRequest.annualSalary,
+            employeeRequest.dateOfJoining
+        );
+        const employeePaymentRequestToUpdate = { ...employeeRequest, _id: id };
+        const updatedEmployeePaymentDetails = await User.findByIdAndUpdate(
+            id,
+            employeePaymentRequestToUpdate,
+            { new: true }
+        );
+        response.status(200).json({ data: updatedEmployeePaymentDetails });
+    } catch (error) {
+        console.log(error);
+        response.status(500).json({
+            error: "Something went wrong",
+        });
+    }
+};
+export const updateEmployeeBankDetails = async (request, response) => {
+    const { id } = request.params;
+    const employeeRequest = request.body;
+
+    try {
+        const existingEmployee = await User.find({ _id: id });
+        if (!existingEmployee) {
+            return response.status(404).json({ error: "User does not exist" });
+        }
+        employeeRequest.bankDetails.currency = getCurrency(
+            employeeRequest.country
+        );
+        const employeeBankRequestToUpdate = { ...employeeRequest, _id: id };
+        const updatedEmployeeBankDetails = await User.findByIdAndUpdate(
+            id,
+            employeeBankRequestToUpdate,
+            { new: true }
+        );
+        response.status(200).json({ data: updatedEmployeeBankDetails });
+    } catch (error) {
+        console.log(error);
+        response.status(500).json({
+            error: "Something went wrong",
+        });
+    }
+};
+export const updateEmployeeLeaveAttendanceDetails = async (
+    request,
+    response
+) => {
+    const { id } = request.params;
+    const employeeRequest = request.body;
+
+    try {
+        const existingEmployee = await User.find({ _id: id });
+        if (!existingEmployee) {
+            return response.status(404).json({ error: "User does not exist" });
+        }
+        // employeeRequest.attendanceDetails.currency = getCurrency(
+        //     employeeRequest.country
+        // );
+        // const employeeBankRequestToUpdate = { ...employeeRequest, _id: id };
+        // const updatedEmployeeBankDetails = await User.findByIdAndUpdate(
+        //     id,
+        //     employeeBankRequestToUpdate,
+        //     { new: true }
+        // );
+        // response.status(200).json({ data: updatedEmployeeBankDetails });
+    } catch (error) {
+        console.log(error);
+        response.status(500).json({
+            error: "Something went wrong",
+        });
+    }
+};
 export const deleteEmployee = async (request, response) => {
     const { id } = request.params;
 

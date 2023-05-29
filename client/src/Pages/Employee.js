@@ -94,30 +94,50 @@ function Employee() {
                                                 >
                                                     Edit
                                                 </Button>
-                                                <Link to="/add-payment">
-                                                    <Button
-                                                        colorScheme="blue"
-                                                        variant="link"
-                                                    >
-                                                        Add Payment
-                                                    </Button>
-                                                </Link>
-                                                <Link to="/view-payment">
-                                                    <Button
-                                                        colorScheme="blue"
-                                                        variant="link"
-                                                    >
-                                                        View Payment
-                                                    </Button>
-                                                </Link>
-                                                <Link to="/leave-request">
-                                                    <Button
-                                                        colorScheme="blue"
-                                                        variant="link"
-                                                    >
-                                                        Raise Leave Details
-                                                    </Button>
-                                                </Link>
+                                                <Button
+                                                    colorScheme="blue"
+                                                    variant="link"
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `/add-payment/${_id}`
+                                                        )
+                                                    }
+                                                >
+                                                    Add Payment
+                                                </Button>
+                                                <Button
+                                                    colorScheme="blue"
+                                                    variant="link"
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `/add-bank-detail/${_id}`
+                                                        )
+                                                    }
+                                                >
+                                                    Add Bank Details
+                                                </Button>
+                                                <Button
+                                                    colorScheme="blue"
+                                                    variant="link"
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `/view-payment/${_id}`
+                                                        )
+                                                    }
+                                                >
+                                                    View Payment
+                                                </Button>
+                                                <Button
+                                                    colorScheme="blue"
+                                                    variant="link"
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `/leave-request/${_id}`
+                                                        )
+                                                    }
+                                                >
+                                                    Raise/View Leave Request
+                                                </Button>
                                             </Stack>
                                         </Td>
                                     </Tr>

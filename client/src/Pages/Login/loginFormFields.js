@@ -61,6 +61,32 @@ export const userInitialValues = {
     state: "",
     country: "",
 };
+export const userPaymentInitialValues = {
+    annualSalary: "",
+};
+export const userPaymentFormFields = [
+    {
+        field: "textField",
+        margin: "dense",
+        fullWidth: true,
+        id: "annualSalary",
+        label: "Annual Salary  ",
+        size: "medium",
+        name: "annualSalary",
+        type: "number",
+        variant: "outlined",
+        color: "primary",
+    },
+    {
+        field: "button",
+        variant: "solid",
+        color: "blue",
+        id: "login",
+        type: "submit",
+        size: "lg",
+        label: "Add",
+    },
+];
 export const userFormFields = [
     {
         field: "textField",

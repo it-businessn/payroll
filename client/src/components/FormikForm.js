@@ -1,17 +1,8 @@
+import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    Input,
-    Button,
-    ButtonGroup,
-} from "@chakra-ui/react";
 function FormikForm({ schema, initialValues, formFields, formSubmit }) {
-    console.log(initialValues);
     const formik = useFormik({
         initialValues,
         validationSchema: schema,
@@ -29,7 +20,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
             <Form sx={{ mt: 2 }}>
                 {formFields.map((item) =>
                     item.field === "textField" ? (
-                        <Field name={item.name}>
+                        <Field name={item.name} key={item.name}>
                             {({ field, form }) => (
                                 <FormControl
                                     key={item.name}

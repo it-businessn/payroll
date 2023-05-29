@@ -7,12 +7,12 @@ import {
     userPaymentInitialValues,
 } from "./Login/loginFormFields";
 
-function AddPayment() {
+function AddBankDetail() {
     const navigate = useNavigate();
     const { id } = useParams();
     const handleSubmit = async (values) => {
         try {
-            const updateData = await api.updateEmployeePaymentDetailsById(
+            const updateData = await api.updateEmployeeBankDetailsById(
                 id,
                 values
             );
@@ -34,4 +34,4 @@ function AddPayment() {
     );
 }
 
-export default AddPayment;
+export default AddBankDetail;

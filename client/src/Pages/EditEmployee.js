@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import FormikForm from "../components/FormikForm";
 import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../api/index.js";
+import FormikForm from "../components/FormikForm";
 import { UserSchema } from "../config/userSchema";
-import { userFormFields, userInitialValues } from "./Login/loginFormFields";
+import { userFormFields } from "./Login/loginFormFields";
 
 function EditEmployee() {
     const navigate = useNavigate();
     const { id } = useParams();
     useEffect(() => {
-        fetchEmployeeData();
+        fetchEmployeeData(id);
     }, []);
     const [userFormInitialValues, setUserFormInitialValues] = useState(null);
 
     const [userResponseData, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const fetchEmployeeData = async () => {
+    const fetchEmployeeData = async (id) => {
         try {
             const userData = await api.getEmployeeById(id);
             setData(userData.data.data);
@@ -46,10 +46,8 @@ function EditEmployee() {
 
     const handleSubmit = async (values) => {
         try {
-            console.log(values);
-            const updateData = await api.updateEmployeeById(values);
-            console.log(updateData);
-            // navigate("/");
+            const updateData = await api.updateEmployeeById(id, values);
+            navigate("/");
         } catch (error) {
             // setError(error.response.data.error);
             console.log(error);

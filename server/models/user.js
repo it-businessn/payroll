@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { Address, EmergencyContact } from "./contactDetail.js";
 import { AttendanceRequest } from "./attendanceRequest.js";
 import { BankDetail } from "./bankDetail.js";
+import { Address, EmergencyContact } from "./contactDetail.js";
 import { PaymentTransaction } from "./paymentTransaction.js";
 
 const UserDetailsSchema = new mongoose.Schema(
@@ -65,7 +65,7 @@ const UserDetailsSchema = new mongoose.Schema(
             type: Boolean,
             required: false,
         },
-        salary: {
+        annualSalary: {
             type: Number,
             required: false,
         },

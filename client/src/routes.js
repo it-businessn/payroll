@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
+import AddBankDetail from "./Pages/AddBankDetail";
 import AddEmployee from "./Pages/AddEmployee";
 import AddPayment from "./Pages/AddPayment";
 import EditEmployee from "./Pages/EditEmployee";
@@ -19,9 +20,14 @@ export default function RoutePages() {
             <Route exact path="/" element={<Employee />} />
             <Route exact path="/add-employee" element={<AddEmployee />} />
             <Route exact path="/edit-employee/:id" element={<EditEmployee />} />
-            <Route exact path="/add-payment" element={<AddPayment />} />
-            <Route exact path="/view-payment" element={<ViewPayment />} />
-            <Route exact path="/leave-request" element={<LeaveRequest />} />
+            <Route
+                exact
+                path="/add-bank-detail/:id"
+                element={<AddBankDetail />}
+            />
+            <Route exact path="/add-payment/:id" element={<AddPayment />} />
+            <Route exact path="/view-payment/:id" element={<ViewPayment />} />
+            <Route exact path="/leave-request/:id" element={<LeaveRequest />} />
             <Route path="/sign-in" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/home" element={<Home />} />

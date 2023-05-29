@@ -19,3 +19,9 @@ export const addEmployee = (formData) => API.post("/employee", formData);
 export const getEmployeeById = (id) => API.get("/employee/" + id);
 export const updateEmployeeById = (id, formData) =>
     API.put(`/employee/${id}`, formData);
+export const updateEmployeePaymentDetailsById = (id, formData) =>
+    API.put(`/employee/payment/${id}`, formData);
+export const updateEmployeeBankDetailsById = (id, formData) =>
+    API.put(`/employee/bank/${id}`, formData);
+export const updateEmployeeAttendanceDetailsById = (id, formData) =>
+    API.put(`/employee/attendance/${id}`, formData);
