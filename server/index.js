@@ -10,7 +10,7 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-
+//test comment
 app.use("/users", userRoutes);
 const PORT = process.env.PORT || 5000;
 
