@@ -7,9 +7,8 @@ export const BankDetail = {
         type: String,
         required: true,
     },
-    transitNumber: { type: String, required: true },
-    branchNumber: { type: String, required: true },
-    branchName: { type: String, required: true },
+    branchTransitNumber: { type: String, required: true },
+    institutionNumber: { type: String, required: true },
     created: {
         type: Date,
         default: new Date().toISOString(),

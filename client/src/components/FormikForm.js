@@ -7,8 +7,12 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
+import moment from "moment";
 import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+
 function FormikForm({ schema, initialValues, formFields, formSubmit }) {
     const formik = useFormik({
         initialValues,
@@ -45,6 +49,27 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                     {/* <FormErrorMessage>
                                         {form.errors.name}
                                     </FormErrorMessage> */}
+                                </FormControl>
+                            )}
+                        </Field>
+                    ) : item.field === "date" ? (
+                        <Field name={item.name} key={item.name}>
+                            {({ field, form: { setFieldValue } }) => (
+                                <FormControl key={item.name}>
+                                    <FormLabel>{item.label}</FormLabel>
+                                    <DatePicker
+                                        {...field}
+                                        selected={
+                                            new Date(
+                                                moment(field.value).format(
+                                                    "YYYY-MM-DD"
+                                                )
+                                            )
+                                        }
+                                        onChange={(val) => {
+                                            setFieldValue(field.name, val);
+                                        }}
+                                    />
                                 </FormControl>
                             )}
                         </Field>

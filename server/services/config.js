@@ -23,7 +23,11 @@ export const calculatePay = (annualSalary, paymentStartDate) => {
     return { lastPayDate, nextPayDate, deduction, gross, netPay };
 };
 
-export const getCurrency = (country) => {
+export const getCurrencyAndUpdateBankDetails = (request) => {
     let getCurrencyAbbreviation = currencyMapper.getCurrencyAbbreviation;
-    return getCurrencyAbbreviation(country);
+    let currency = getCurrencyAbbreviation(request.country);
+    let accountNumber = request.accountNumber;
+    let branchTransitNumber = request.branchTransitNumber;
+    let institutionNumber = request.institutionNumber;
+    return { currency, accountNumber, branchTransitNumber, institutionNumber };
 };

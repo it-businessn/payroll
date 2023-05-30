@@ -71,8 +71,8 @@ export default function User() {
                                         </Td>
                                         <Td>
                                             <Stack
-                                                direction="row"
-                                                spacing={4}
+                                                direction="column"
+                                                spacing={2}
                                                 align="center"
                                             >
                                                 <Link to={`/edit-user/${_id}`}>

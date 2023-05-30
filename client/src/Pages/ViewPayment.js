@@ -1,14 +1,16 @@
 import {
+    Box,
     Button,
+    SimpleGrid,
     Stack,
-    Table,
+    Stat,
+    StatLabel,
+    StatNumber,
     TableContainer,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
+    chakra,
+    useColorModeValue,
 } from "@chakra-ui/react";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import * as api from "../api/index.js";
@@ -32,52 +34,91 @@ function ViewPayment() {
     useEffect(() => {
         fetchData();
     }, []);
+    const StatsCard = ({ title, stats }) => {
+        return (
+            <Stat
+                px={{ base: 4, md: 8 }}
+                py={"5"}
+                shadow={"xl"}
+                border={"1px solid"}
+                borderColor={useColorModeValue("gray.800", "gray.500")}
+                rounded={"lg"}
+            >
+                <StatLabel fontWeight={"medium"} isTruncated>
+                    {title}
+                </StatLabel>
+                <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
+                    {stats}
+                </StatNumber>
+            </Stat>
+        );
+    };
     return (
         <div style={{ display: "flex" }}>
             <TableContainer>
                 {loading && <div>Fetching Data...</div>}
                 {data && data.paymentInfo.length ? (
-                    <Table variant="simple">
-                        <Thead>
-                            <Tr>
-                                <Th>Name</Th>
-                                <Th>Gross Payment </Th>
-                                <Th>Net Payment </Th>
-                                <Th>Last PayDate</Th>
-                                <Th>Next PayDate</Th>
-                                <Th>Action</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            <Tr key={data._id}>
-                                <Td>
-                                    {data.firstName} {data.middleName}
-                                    {data.lastName}
-                                </Td>
-                                <Td>{data.paymentInfo[0].gross} </Td>
-                                <Td>{data.paymentInfo[0].netPay} </Td>
-                                <Td>{data.paymentInfo[0].lastPayDate} </Td>
-                                <Td>{data.paymentInfo[0].nextPayDate} </Td>
-
-                                <Td>
-                                    <Stack
-                                        direction="row"
-                                        spacing={4}
-                                        align="center"
-                                    >
-                                        <Link to="/">
-                                            <Button
-                                                colorScheme="blue"
-                                                variant="link"
-                                            >
-                                                Go Back
-                                            </Button>
-                                        </Link>
-                                    </Stack>
-                                </Td>
-                            </Tr>
-                        </Tbody>
-                    </Table>
+                    <Box
+                        maxW="7xl"
+                        mx={"auto"}
+                        pt={5}
+                        px={{ base: 2, sm: 12, md: 17 }}
+                    >
+                        <chakra.h1
+                            textAlign={"center"}
+                            fontSize={"4xl"}
+                            py={10}
+                            fontWeight={"bold"}
+                        >
+                            Payment detail
+                        </chakra.h1>
+                        <SimpleGrid
+                            columns={{ base: 1, md: 5 }}
+                            spacing={{ base: 5, lg: 8 }}
+                        >
+                            <StatsCard
+                                title={"Name"}
+                                stats={
+                                    data.firstName +
+                                    "" +
+                                    data.middleName +
+                                    "" +
+                                    data.lastName
+                                }
+                            />
+                            <StatsCard
+                                title={"Gross Payment"}
+                                stats={Number(
+                                    data.paymentInfo[0].gross.toFixed(2)
+                                )}
+                            />
+                            <StatsCard
+                                title={"Net Payment"}
+                                stats={Number(
+                                    data.paymentInfo[0].netPay.toFixed(2)
+                                )}
+                            />
+                            <StatsCard
+                                title={"Last PayDate"}
+                                stats={moment(
+                                    data.paymentInfo[0].lastPayDate
+                                ).format("YYYY-MM-DD")}
+                            />
+                            <StatsCard
+                                title={"Next PayDate"}
+                                stats={moment(
+                                    data.paymentInfo[0].nextPayDate
+                                ).format("YYYY-MM-DD")}
+                            />
+                        </SimpleGrid>
+                        <Stack direction="row" spacing={4} align="center">
+                            <Link to="/">
+                                <Button colorScheme="blue" variant="link">
+                                    Go Back
+                                </Button>
+                            </Link>
+                        </Stack>
+                    </Box>
                 ) : (
                     <Link to="/">
                         <Button colorScheme="blue" variant="link">

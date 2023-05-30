@@ -12,7 +12,7 @@ export const loginFormFields = [
         size: "medium",
         name: "email",
         type: "email",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -24,7 +24,7 @@ export const loginFormFields = [
         size: "medium",
         name: "password",
         type: "password",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -73,7 +73,7 @@ export const userPaymentFormFields = [
         size: "medium",
         name: "annualSalary",
         type: "number",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -96,7 +96,7 @@ export const userFormFields = [
         size: "medium",
         name: "firstName",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -108,7 +108,7 @@ export const userFormFields = [
         size: "medium",
         name: "middleName",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -120,7 +120,7 @@ export const userFormFields = [
         size: "medium",
         name: "lastName",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -132,7 +132,7 @@ export const userFormFields = [
         size: "medium",
         name: "email",
         type: "email",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -144,7 +144,7 @@ export const userFormFields = [
         size: "medium",
         name: "password",
         type: "password",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -156,11 +156,11 @@ export const userFormFields = [
         size: "medium",
         name: "role",
         type: "select",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
-        field: "textField",
+        field: "date",
         margin: "dense",
         fullWidth: true,
         id: "dateOfJoining",
@@ -168,7 +168,7 @@ export const userFormFields = [
         size: "medium",
         name: "dateOfJoining",
         type: "date",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -180,7 +180,7 @@ export const userFormFields = [
         size: "medium",
         name: "phoneNumber",
         type: "number",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -192,7 +192,7 @@ export const userFormFields = [
         size: "medium",
         name: "streetNumber",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -204,7 +204,7 @@ export const userFormFields = [
         size: "medium",
         name: "city",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -216,7 +216,7 @@ export const userFormFields = [
         size: "medium",
         name: "postalCode",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -228,7 +228,7 @@ export const userFormFields = [
         size: "medium",
         name: "state",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {
@@ -240,7 +240,7 @@ export const userFormFields = [
         size: "medium",
         name: "country",
         type: "text",
-        variant: "outlined",
+        variant: "solid",
         color: "primary",
     },
     {

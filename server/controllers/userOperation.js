@@ -1,5 +1,8 @@
 import User from "../models/user.js";
-import { calculatePay, getCurrency } from "../services/config.js";
+import {
+    calculatePay,
+    getCurrencyAndUpdateBankDetails,
+} from "../services/config.js";
 
 export const updateUser = async (request, response) => {
     const { id } = request.params;
@@ -60,7 +63,7 @@ export const updateUserBankDetails = async (request, response) => {
         if (!existingUser) {
             return response.status(404).json({ error: "User does not exist" });
         }
-        userRequest.bankDetails.currency = getCurrency(userRequest.country);
+        userRequest.bankDetails = getCurrencyAndUpdateBankDetails(userRequest);
         const userBankRequestToUpdate = { ...userRequest, _id: id };
         const updatedUserBankDetails = await User.findByIdAndUpdate(
             id,
