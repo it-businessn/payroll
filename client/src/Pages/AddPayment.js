@@ -12,7 +12,7 @@ function AddPayment() {
     const { id } = useParams();
     const handleSubmit = async (values) => {
         try {
-            const updateData = await api.updateEmployeePaymentDetailsById(
+            const updateData = await api.updateUserPaymentDetailsById(
                 id,
                 values
             );
@@ -24,7 +24,7 @@ function AddPayment() {
     };
     return (
         <div style={{ width: "100%", padding: "5em 10em", margin: 0 }}>
-            <h1>Add New Employee</h1>
+            <h1>Add Payment Details</h1>
             <FormikForm
                 formSubmit={handleSubmit}
                 initialValues={userPaymentInitialValues}

@@ -2,6 +2,8 @@ import express from "express";
 
 import {
     forgotPassword,
+    getAllUsers,
+    getUserById,
     resetPassword,
     setNewPassword,
     signIn,
@@ -12,6 +14,8 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
+router.get("/", auth, getAllUsers);
+router.get("/:id", auth, getUserById);
 router.post("/signIn", auth, signIn);
 router.post("/signUp", auth, signUp);
 router.post("/verify-user", auth, verifyUser);

@@ -12,7 +12,7 @@ export default function SignUp() {
     const [hasError, setError] = React.useState("");
     const handleSubmit = async (values) => {
         try {
-            const userData = await api.addEmployee(values);
+            const userData = await api.signUp(values);
             const userDetails = userData?.data;
             const profile = { userDetails: userDetails.data[1] };
             localStorage.setItem("profile", JSON.stringify(profile));
@@ -53,7 +53,7 @@ export default function SignUp() {
                     </Stack>
                     {/* <Copyright sx={{ mt: 7 }} /> */}
                 </Stack>
-            </Flex>{" "}
+            </Flex>
         </Stack>
     );
 }

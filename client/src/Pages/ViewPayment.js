@@ -19,7 +19,7 @@ function ViewPayment() {
     const [error, setError] = useState(null);
     const fetchData = async () => {
         try {
-            const userData = await api.getEmployeeById(id);
+            const userData = await api.getUserById(id);
             setData(userData.data.data);
             setError(null);
         } catch (error) {
@@ -36,22 +36,22 @@ function ViewPayment() {
         <div style={{ display: "flex" }}>
             <TableContainer>
                 {loading && <div>Fetching Data...</div>}
-                <Table variant="simple">
-                    <Thead>
-                        <Tr>
-                            <Th>Name</Th>
-                            <Th>Gross Payment </Th>
-                            <Th>Net Payment </Th>
-                            <Th>Last PayDate</Th>
-                            <Th>Next PayDate</Th>
-                            <Th>Action</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {data && data.paymentInfo.length ? (
+                {data && data.paymentInfo.length ? (
+                    <Table variant="simple">
+                        <Thead>
+                            <Tr>
+                                <Th>Name</Th>
+                                <Th>Gross Payment </Th>
+                                <Th>Net Payment </Th>
+                                <Th>Last PayDate</Th>
+                                <Th>Next PayDate</Th>
+                                <Th>Action</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
                             <Tr key={data._id}>
                                 <Td>
-                                    {data.firstName} {data.middleName}{" "}
+                                    {data.firstName} {data.middleName}
                                     {data.lastName}
                                 </Td>
                                 <Td>{data.paymentInfo[0].gross} </Td>
@@ -76,15 +76,15 @@ function ViewPayment() {
                                     </Stack>
                                 </Td>
                             </Tr>
-                        ) : (
-                            <Link to="/">
-                                <Button colorScheme="blue" variant="link">
-                                    Go Back
-                                </Button>
-                            </Link>
-                        )}
-                    </Tbody>
-                </Table>
+                        </Tbody>
+                    </Table>
+                ) : (
+                    <Link to="/">
+                        <Button colorScheme="blue" variant="link">
+                            Go Back
+                        </Button>
+                    </Link>
+                )}
             </TableContainer>
             {error && (
                 <div>{`There is a problem fetching the post data - ${error}`}</div>

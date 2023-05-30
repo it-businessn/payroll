@@ -36,7 +36,7 @@ export default function Login() {
                         "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
                     }
                 />
-            </Flex>{" "}
+            </Flex>
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
                 <Stack spacing={4} w={"full"} maxW={"md"}>
                     <Heading fontSize={"2xl"}>Sign in to your account</Heading>
@@ -46,7 +46,7 @@ export default function Login() {
                         initialValues={loginInitialValues}
                         formFields={loginFormFields}
                     />
-                    {hasError && <Text fontSize="md">{hasError}</Text>}{" "}
+                    {hasError && <Text fontSize="md">{hasError}</Text>}
                     <Stack pt={6}>
                         <Text align={"center"}>
                             Don't have an account? &nbsp;

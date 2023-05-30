@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../api/index.js";
-import FormikForm from "../components/FormikForm";
-import { UserSchema } from "../config/userSchema";
-import { userFormFields } from "./Login/loginFormFields";
+import FormikForm from "../components/FormikForm.js";
+import { UserSchema } from "../config/userSchema.js";
+import { userFormFields } from "./Login/loginFormFields.js";
 
-function EditEmployee() {
+export default function EditUser() {
     const navigate = useNavigate();
     const { id } = useParams();
     useEffect(() => {
-        fetchEmployeeData(id);
+        fetchUserData(id);
     }, []);
     const [userFormInitialValues, setUserFormInitialValues] = useState(null);
 
     const [userResponseData, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const fetchEmployeeData = async (id) => {
+    const fetchUserData = async (id) => {
         try {
-            const userData = await api.getEmployeeById(id);
+            const userData = await api.getUserById(id);
             setData(userData.data.data);
             setUserFormInitialValues({
                 firstName: userData.data.data.firstName,
@@ -46,7 +46,7 @@ function EditEmployee() {
 
     const handleSubmit = async (values) => {
         try {
-            const updateData = await api.updateEmployeeById(id, values);
+            const updateData = await api.updateUserById(id, values);
             navigate("/");
         } catch (error) {
             // setError(error.response.data.error);
@@ -55,7 +55,7 @@ function EditEmployee() {
     };
     return (
         <div style={{ width: "100%", padding: "5em 10em", margin: 0 }}>
-            <h1>Edit Employee</h1>
+            <h1>Edit User</h1>
             {!userFormInitialValues ? (
                 "Loading"
             ) : (
@@ -69,5 +69,3 @@ function EditEmployee() {
         </div>
     );
 }
-
-export default EditEmployee;

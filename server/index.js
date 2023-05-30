@@ -2,7 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import employeeRoutes from "./routes/employee.js";
+import userOperationRoutes from "./routes/userOperation.js";
 import userRoutes from "./routes/users.js";
 
 const app = express();
@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-app.use("/users", userRoutes);
-app.use("/employee", employeeRoutes);
+app.use("/user", userRoutes);
+app.use("/userOperation", userOperationRoutes);
 
 const PORT = process.env.PORT || 5000;
 

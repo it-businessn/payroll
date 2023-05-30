@@ -31,13 +31,43 @@ export const signIn = async (request, response) => {
     }
 };
 export const signUp = async (request, response) => {
-    const { name, email, password } = request.body;
+    const {
+        firstName,
+        middleName,
+        lastName,
+        password,
+        email,
+        dateOfJoining,
+        phoneNumber,
+        postalCode,
+        role,
+        streetNumber,
+        country,
+        city,
+        state,
+    } = request.body;
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return response.status(400).json({ error: "User already exists" });
+            return response.status(400).json({
+                error: "User already exists with the given email address",
+            });
         }
-        const newUser = await createUser(name, email, password);
+        const newUser = await createUser(
+            firstName,
+            middleName,
+            lastName,
+            password,
+            email,
+            dateOfJoining,
+            phoneNumber,
+            postalCode,
+            role,
+            streetNumber,
+            country,
+            city,
+            state
+        );
         if (!newUser[0]) {
             return response.status(400).json({
                 error: "Unable to create new user",
@@ -49,6 +79,53 @@ export const signUp = async (request, response) => {
         response.status(500).json({
             error: "Something went wrong",
         });
+    }
+};
+
+const createUser = async (
+    firstName,
+    middleName,
+    lastName,
+    password,
+    email,
+    dateOfJoining,
+    phoneNumber,
+    postalCode,
+    role,
+    streetNumber,
+    country,
+    city,
+    state
+) => {
+    const hashedPassword = await encryptPassword(password);
+    const otpGenerated = generateOTP();
+
+    const newUser = await User.create({
+        firstName,
+        middleName,
+        lastName,
+        password: hashedPassword,
+        otp: otpGenerated,
+        email,
+        dateOfJoining,
+        phoneNumber,
+        role,
+        address: {
+            streetNumber,
+            city,
+            postalCode,
+            state,
+            country,
+        },
+    });
+    if (!newUser) {
+        return [false, "Unable to sign you up"];
+    }
+    try {
+        await sendEmail(email, "Set OTP", otpGenerated);
+        return [true, newUser];
+    } catch (error) {
+        return [false, "Unable to sign up, Please try again later", error];
     }
 };
 export const verifyUser = async (request, response) => {
@@ -75,26 +152,7 @@ const validateUserSignUp = async (email, otp) => {
     });
     return [true, updatedUser];
 };
-const createUser = async (name, email, password) => {
-    const hashedPassword = await encryptPassword(password);
-    const otpGenerated = generateOTP();
 
-    const newUser = await User.create({
-        name,
-        email,
-        password: hashedPassword,
-        otp: otpGenerated,
-    });
-    if (!newUser) {
-        return [false, "Unable to sign you up"];
-    }
-    try {
-        await sendEmail(email, "Set OTP", otpGenerated);
-        return [true, newUser];
-    } catch (error) {
-        return [false, "Unable to sign up, Please try again later", error];
-    }
-};
 export const forgotPassword = async (request, response) => {
     const { email } = request.body;
     try {
@@ -162,5 +220,24 @@ export const setNewPassword = async (request, response) => {
     } catch (error) {
         console.log(error);
         response.json({ error: "Something Went Wrong" });
+    }
+};
+
+export const getAllUsers = async (request, response) => {
+    try {
+        const users = await User.find();
+        response.status(200).json({ data: users });
+    } catch (error) {
+        response.status(404).json({ error: error.message });
+    }
+};
+export const getUserById = async (request, response) => {
+    const { id } = request.params;
+
+    try {
+        const existingUser = await User.findById({ _id: id });
+        response.status(200).json({ data: existingUser });
+    } catch (error) {
+        response.status(404).json({ error: error.message });
     }
 };

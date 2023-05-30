@@ -31,7 +31,6 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                             {({ field, form }) => (
                                 <FormControl
                                     key={item.name}
-                                    isRequired
                                     // isInvalid={
                                     //     form.errors.name && form.touched.name
                                     // }
@@ -66,8 +65,8 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                             )}
                         </Field>
                     ) : item.field === "link" ? (
-                        <Text align={"right"} style={item.style}>
-                            <Link to={item.path} key={item.id}>
+                        <Text align={"right"} style={item.style} key={item.id}>
+                            <Link to={item.path}>
                                 <Button colorScheme="blue" variant="link">
                                     {item.label}
                                 </Button>

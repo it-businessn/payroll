@@ -39,17 +39,17 @@ export default function VerifyEmail() {
         },
     });
     const handleSubmit = async () => {
-        console.log(OTP);
         try {
             resetPasswordInitialValues.otp = OTP;
             const response = await api.verifyUser(resetPasswordInitialValues);
-            navigate("/users");
-            if (response.user[0] === true) {
+            if (response.data.data[0] === true) {
                 setEmailSentText("Email verified successfully");
             } else {
                 setEmailSentText("Invalid OTP");
             }
-            navigate("/verify-email");
+            setTimeout(() => {
+                navigate("/users");
+            }, 3000);
             setErrorMessage("");
         } catch (error) {
             setEmailSentText("");
