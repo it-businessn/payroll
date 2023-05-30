@@ -13,17 +13,17 @@ export const resetPasswordFormFields = [
         type: "email",
         variant: "outlined",
         color: "primary",
+        placeholder: "your-email@example.com",
     },
     {
         field: "button",
-        variant: "contained",
+        variant: "solid",
         color: "primary",
         id: "login",
-        fullWidth: true,
+        fullWidth: "100%",
         type: "submit",
-        size: "large",
-        label: "Send Link",
-        style: { mt: 1, mb: "2em" },
+        size: "md",
+        label: "Request Reset Link",
     },
 ];
 export const otpPasswordFormFields = [

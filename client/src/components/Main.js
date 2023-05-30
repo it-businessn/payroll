@@ -1,5 +1,3 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
@@ -14,13 +12,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
+// import { useTheme } from "@mui/material/styles";
 import * as React from "react";
 import { AppBar, Drawer, DrawerHeader } from "../config/themeConfig";
 import Card from "./DashboardLayout/DashboardLayoutCard";
 
 export default function Main() {
-    const theme = useTheme();
+    // const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -53,13 +51,13 @@ export default function Main() {
             </AppBar>
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
+                    {/* <IconButton onClick={handleDrawerClose}>
                         {theme.direction === "rtl" ? (
                             <ChevronRightIcon />
                         ) : (
                             <ChevronLeftIcon />
                         )}
-                    </IconButton>
+                    </IconButton> */}
                 </DrawerHeader>
                 <Divider />
                 <List>

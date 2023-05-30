@@ -1,38 +1,21 @@
-import { CssBaseline, Grid, Paper } from "@mui/material";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import {
+    Button,
+    Center,
+    Flex,
+    FormControl,
+    HStack,
+    Heading,
+    PinInput,
+    PinInputField,
+    Stack,
+    Text,
+    useColorModeValue,
+} from "@chakra-ui/react";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
-import Copyright from "../Copyright.js";
-import "../Login/Login.css";
 
-const OTPInputFields = [
-    {
-        name: "firstChar",
-        id: "firstChar",
-    },
-    {
-        name: "secondChar",
-        id: "secondChar",
-    },
-    {
-        name: "thirdChar",
-        id: "thirdChar",
-    },
-    {
-        name: "fourthChar",
-        id: "fourthChar",
-    },
-    {
-        name: "fifthChar",
-        id: "fifthChar",
-    },
-    {
-        name: "sixthChar",
-        id: "sixthChar",
-    },
-];
 export default function VerifyEmail() {
     const [user, setUser] = React.useState(
         JSON.parse(localStorage.getItem("profile") || "")
@@ -42,20 +25,25 @@ export default function VerifyEmail() {
         otp: "",
     };
     const [hasError, setErrorMessage] = React.useState("");
+    const [OTP, setOTP] = React.useState("");
     const [emailSentText, setEmailSentText] = React.useState("");
     const navigate = useNavigate();
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
+    const formik = useFormik({
+        initialValues: { pin: "" },
+        onSubmit: (formValues) => {
+            try {
+                handleSubmit();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    });
+    const handleSubmit = async () => {
+        console.log(OTP);
         try {
-            const otpInputNodeValues = document.querySelectorAll("input");
-            let defaultParams = "";
-            const otpValue = Array.prototype.slice
-                .call(otpInputNodeValues)
-                .map((item) => defaultParams + item.value);
-            resetPasswordInitialValues.otp = otpValue.join("");
+            resetPasswordInitialValues.otp = OTP;
             const response = await api.verifyUser(resetPasswordInitialValues);
-            navigate("/home");
+            navigate("/users");
             if (response.user[0] === true) {
                 setEmailSentText("Email verified successfully");
             } else {
@@ -71,71 +59,88 @@ export default function VerifyEmail() {
     };
 
     return (
-        <Grid container component="main" sx={{ height: "100vh" }}>
-            <CssBaseline />
-            <Grid
-                item
-                xs={false}
-                sm={4}
-                md={6}
-                className="signIn-cover  verify-cover"
-            />
-            <Grid
-                item
-                xs={12}
-                sm={8}
-                md={6}
-                component={Paper}
-                elevation={0}
-                square
-                className="login-grid"
+        <Flex
+            minH={"100vh"}
+            align={"center"}
+            justify={"center"}
+            bg={useColorModeValue("gray.50", "gray.800")}
+        >
+            <Stack
+                spacing={4}
+                w={"full"}
+                maxW={"md"}
+                bg={useColorModeValue("white", "gray.700")}
+                rounded={"xl"}
+                boxShadow={"lg"}
+                p={6}
+                my={10}
             >
-                <Box className="login-container">
-                    <Box className="signIn-form">
-                        <Typography variant="h6" gutterBottom>
-                            Verify Your Email
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            A verification code has been sent to your email.
-                            Enter your OTP below
-                        </Typography>
-                        <form onSubmit={handleSubmit} className="otp-container">
-                            <div>
-                                {OTPInputFields.map((item) => (
-                                    <input
-                                        key={item.id}
-                                        type="text"
-                                        name={item.name}
-                                        id={item.id}
-                                        maxLength={1}
-                                        required
-                                    />
-                                ))}
-                            </div>
-                            <button type="submit">Verify Link</button>
-                        </form>
-                        {emailSentText && (
-                            <Typography variant="subtitle2" color="green">
-                                {emailSentText}
-                            </Typography>
-                        )}
-                        {hasError && (
-                            <Typography variant="subtitle2" color="red">
-                                {hasError}
-                            </Typography>
-                        )}
-                    </Box>
-                    <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ textAlign: "center", mt: 2 }}
+                <Center>
+                    <Heading
+                        lineHeight={1.1}
+                        fontSize={{ base: "2xl", md: "3xl" }}
                     >
-                        Don't have an account? &nbsp;
-                        <Link to="/sign-up">Sign Up</Link>
-                    </Typography>
-                </Box>
-                <Copyright sx={{ mt: 7 }} />
-            </Grid>
-        </Grid>
+                        Verify your Email
+                    </Heading>
+                </Center>
+                <Center
+                    fontSize={{ base: "sm", sm: "md" }}
+                    color={useColorModeValue("gray.800", "gray.400")}
+                >
+                    A verification code has been sent to your email.
+                </Center>
+                <Center color={useColorModeValue("gray.800", "gray.400")}>
+                    Enter your OTP below
+                </Center>
+                <Center
+                    fontSize={{ base: "sm", sm: "md" }}
+                    fontWeight="bold"
+                    color={useColorModeValue("gray.800", "gray.400")}
+                >
+                    {user.userDetails.email}
+                </Center>
+                <FormikProvider value={formik}>
+                    <Form>
+                        <Field name="pin">
+                            {({ field, form }) => (
+                                <FormControl>
+                                    <Center>
+                                        <HStack>
+                                            <PinInput
+                                                type="alphanumeric"
+                                                onChange={(value) =>
+                                                    setOTP(value)
+                                                }
+                                            >
+                                                <PinInputField />
+                                                <PinInputField />
+                                                <PinInputField />
+                                                <PinInputField />
+                                                <PinInputField />
+                                                <PinInputField />
+                                            </PinInput>
+                                        </HStack>
+                                    </Center>
+                                </FormControl>
+                            )}
+                        </Field>
+                        <Stack spacing={6}>
+                            <Button
+                                bg={"blue.400"}
+                                color={"white"}
+                                _hover={{
+                                    bg: "blue.500",
+                                }}
+                                type="submit"
+                            >
+                                Verify
+                            </Button>
+                        </Stack>
+                    </Form>
+                </FormikProvider>
+                {emailSentText && <Text align={"center"}>{emailSentText}</Text>}
+                {hasError && <Text align={"center"}>{hasError}</Text>}
+            </Stack>
+        </Flex>
     );
 }

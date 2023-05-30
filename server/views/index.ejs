@@ -67,13 +67,18 @@
             <div class="form-div">
                 <h1>Create Your New Password</h1>
                 <form class="form-content" action="" method="post">
-                    <label>Email : <%= email%></label>
+                    <label>Email Address</label>
+                    <input placeholder="<%= email%>"" value ="<%= email%>"
+                    type="email" name="email" id="email" placeholder="Enter new
+                    password" />
+                    <label>Password </label>
                     <input
                         type="password"
                         name="password"
                         id="password"
                         placeholder="Enter new password"
-                    /><br />
+                    />
+                    <label>Confirm Password </label>
                     <input
                         type="password"
                         name="confirmPassword"

@@ -1,5 +1,11 @@
 import User from "../models/user.js";
-import { calculatePay, getCurrency } from "../services/config.js";
+import {
+    calculatePay,
+    encryptPassword,
+    generateOTP,
+    getCurrency,
+} from "../services/config.js";
+import sendEmail from "../utils/sendEmail.js";
 
 export const getAllEmployees = async (request, response) => {
     try {
@@ -45,8 +51,7 @@ export const addEmployee = async (request, response) => {
                 error: "User already exists with the given email address",
             });
         }
-        let userAddress = streetNumber + city;
-        const newEmployee = await User.create({
+        const newUser = await createUser(
             firstName,
             middleName,
             lastName,
@@ -54,21 +59,19 @@ export const addEmployee = async (request, response) => {
             email,
             dateOfJoining,
             phoneNumber,
+            postalCode,
             role,
-            address: {
-                streetNumber,
-                city,
-                postalCode,
-                state,
-                country,
-            },
-        });
-        if (!newEmployee) {
+            streetNumber,
+            country,
+            city,
+            state
+        );
+        if (!newUser[0]) {
             return response.status(400).json({
-                error: "Unable to create new employee",
+                error: "Unable to create new user",
             });
         }
-        response.status(200).json({ data: newEmployee });
+        response.status(200).json({ data: newUser });
     } catch (error) {
         console.log(error);
         response.status(500).json({
@@ -77,6 +80,52 @@ export const addEmployee = async (request, response) => {
     }
 };
 
+const createUser = async (
+    firstName,
+    middleName,
+    lastName,
+    password,
+    email,
+    dateOfJoining,
+    phoneNumber,
+    postalCode,
+    role,
+    streetNumber,
+    country,
+    city,
+    state
+) => {
+    const hashedPassword = await encryptPassword(password);
+    const otpGenerated = generateOTP();
+
+    const newUser = await User.create({
+        firstName,
+        middleName,
+        lastName,
+        password: hashedPassword,
+        otp: otpGenerated,
+        email,
+        dateOfJoining,
+        phoneNumber,
+        role,
+        address: {
+            streetNumber,
+            city,
+            postalCode,
+            state,
+            country,
+        },
+    });
+    if (!newUser) {
+        return [false, "Unable to sign you up"];
+    }
+    try {
+        await sendEmail(email, "Set OTP", otpGenerated);
+        return [true, newUser];
+    } catch (error) {
+        return [false, "Unable to sign up, Please try again later", error];
+    }
+};
 export const updateEmployee = async (request, response) => {
     const { id } = request.params;
     const employeeRequest = request.body;

@@ -17,7 +17,8 @@ import ViewPayment from "./Pages/ViewPayment";
 export default function RoutePages() {
     return (
         <Routes>
-            <Route exact path="/" element={<Employee />} />
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/users" element={<Employee />} />
             <Route exact path="/add-employee" element={<AddEmployee />} />
             <Route exact path="/edit-employee/:id" element={<EditEmployee />} />
             <Route

@@ -10,7 +10,7 @@ import {
     Tr,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as api from "../api/index.js";
 function Employee() {
     const [data, setData] = useState(null);
@@ -75,14 +75,6 @@ function Employee() {
                                                 spacing={4}
                                                 align="center"
                                             >
-                                                <Link to="/add-employee">
-                                                    <Button
-                                                        colorScheme="blue"
-                                                        variant="link"
-                                                    >
-                                                        Add
-                                                    </Button>
-                                                </Link>
                                                 <Button
                                                     colorScheme="blue"
                                                     variant="link"
