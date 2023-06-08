@@ -31,3 +31,38 @@ export const getCurrencyAndUpdateBankDetails = (request) => {
     let institutionNumber = request.institutionNumber;
     return { currency, accountNumber, branchTransitNumber, institutionNumber };
 };
+
+export const getUserAttendanceDetails = (request, user) => {
+    let totalLeaves = 15;
+    let requestedLeaves = request.requestedLeaves;
+    let usedLeaves = 0; //to be updated after user has not cancelled after end date of requested leave period
+    let leaveBalance = totalLeaves - usedLeaves - requestedLeaves;
+    let leaveReason = request.leaveReason;
+    let leaveDetails =
+        request.role === "Employee"
+            ? {
+                  leaveBalance,
+                  totalLeaves,
+                  requestedLeaves,
+                  usedLeaves,
+                  leaveReason,
+                  leaveApproved: false,
+                  leaveRequestDecisionComment: "",
+                  leaveRequestStatus: "Pending",
+              }
+            : {
+                  leaveBalance,
+                  totalLeaves,
+                  requestedLeaves,
+                  usedLeaves: totalLeaves - requestedLeaves,
+                  leaveReason,
+                  leaveApproved: request.leaveApproved,
+                  leaveRequestDecisionComment:
+                      request.leaveRequestDecisionComment,
+                  leaveRequestStatus:
+                      request.leaveApproved === "true"
+                          ? "Approved"
+                          : "Rejected",
+              };
+    return leaveDetails;
+};
