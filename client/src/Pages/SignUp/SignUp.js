@@ -6,6 +6,7 @@ import FormikForm from "../../components/FormikForm.js";
 import { UserSchema } from "../../config/userSchema.js";
 import { userFormFields, userInitialValues } from "../Login/loginFormFields.js";
 import "./SignUp.css";
+import Copyright from "../Copyright.js";
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -45,13 +46,13 @@ export default function SignUp() {
                         <Text align={"center"}>
                             Already have an account? &nbsp;
                             <Link to="/sign-in">
-                                <Button colorScheme="blue" variant="link">
+                                <Button color="#383ab6" variant="link">
                                     Sign In
                                 </Button>
                             </Link>
                         </Text>
                     </Stack>
-                    {/* <Copyright sx={{ mt: 7 }} /> */}
+                    <Copyright sx={{ mt: 7 }} />
                 </Stack>
             </Flex>
         </Stack>

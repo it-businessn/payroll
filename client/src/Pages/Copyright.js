@@ -1,22 +1,22 @@
-import { Typography } from "@mui/material";
+import { Link, Text } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function Copyright() {
     return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            size="small"
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>
-            &nbsp;
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
+        <>
+            <Text fontSize="xs" color="subtle" textAlign="center">
+                Copyright ©{" "}
+                <Link
+                    color="blue"
+                    target="_blank"
+                    href="https://www.businessn.com/"
+                >
+                    businessn
+                </Link>{" "}
+                &nbsp;
+                {new Date().getFullYear()}
+                {"."}
+            </Text>
+        </>
     );
 }

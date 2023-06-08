@@ -48,7 +48,7 @@ export default function VerifyEmail() {
                 setEmailSentText("Invalid OTP");
             }
             setTimeout(() => {
-                navigate("/users");
+                navigate("/");
             }, 3000);
             setErrorMessage("");
         } catch (error) {
@@ -126,10 +126,10 @@ export default function VerifyEmail() {
                         </Field>
                         <Stack spacing={6}>
                             <Button
-                                bg={"blue.400"}
+                                bg={"#383ab6"}
                                 color={"white"}
                                 _hover={{
-                                    bg: "blue.500",
+                                    bg: "#494bc7",
                                 }}
                                 type="submit"
                             >
@@ -138,7 +138,11 @@ export default function VerifyEmail() {
                         </Stack>
                     </Form>
                 </FormikProvider>
-                {emailSentText && <Text align={"center"}>{emailSentText}</Text>}
+                {emailSentText && (
+                    <Text colorScheme="green" align={"center"}>
+                        {emailSentText}
+                    </Text>
+                )}
                 {hasError && <Text align={"center"}>{hasError}</Text>}
             </Stack>
         </Flex>

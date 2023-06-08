@@ -43,7 +43,7 @@ export const registerFormFields = [
     {
         field: "button",
         variant: "solid",
-        color: "blue",
+        color: "#383ab6",
         id: "login",
         fullWidth: "100%",
         type: "submit",

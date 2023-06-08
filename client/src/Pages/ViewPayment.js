@@ -113,7 +113,7 @@ function ViewPayment() {
                         </SimpleGrid>
                         <Stack direction="row" spacing={4} align="center">
                             <Link to="/">
-                                <Button colorScheme="blue" variant="link">
+                                <Button color="#383ab6" variant="link">
                                     Go Back
                                 </Button>
                             </Link>
@@ -121,7 +121,7 @@ function ViewPayment() {
                     </Box>
                 ) : (
                     <Link to="/">
-                        <Button colorScheme="blue" variant="link">
+                        <Button color="#383ab6" variant="link">
                             Go Back
                         </Button>
                     </Link>

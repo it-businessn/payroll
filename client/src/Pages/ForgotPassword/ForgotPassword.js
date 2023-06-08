@@ -77,13 +77,13 @@ export default function ForgotPassword() {
                         <Link to="/">
                             <Button
                                 size="lg"
-                                bg={"blue.400"}
+                                bg={"#383ab6"}
                                 color={"white"}
                                 _hover={{
-                                    bg: "blue.500",
+                                    bg: "#494bc7",
                                 }}
                                 width="100%"
-                                colorScheme="blue"
+                                color="#383ab6"
                                 variant="solid"
                             >
                                 Back to Login

@@ -6,7 +6,7 @@ import FormikForm from "../../components/FormikForm.js";
 import { LoginSchema } from "../../config/userSchema.js";
 import "./Login.css";
 import { loginFormFields, loginInitialValues } from "./loginFormFields.js";
-
+import Copyright from "../Copyright.js";
 export default function Login() {
     const [hasError, setError] = useState("");
 
@@ -37,7 +37,13 @@ export default function Login() {
                     }
                 />
             </Flex>
-            <Flex p={8} flex={1} align={"center"} justify={"center"}>
+            <Flex
+                p={8}
+                flex={1}
+                flexDirection="column"
+                align={"center"}
+                justify="space-evenly"
+            >
                 <Stack spacing={4} w={"full"} maxW={"md"}>
                     <Heading fontSize={"2xl"}>Sign in to your account</Heading>
                     <FormikForm
@@ -51,14 +57,14 @@ export default function Login() {
                         <Text align={"center"}>
                             Don't have an account? &nbsp;
                             <Link to="/sign-up">
-                                <Button colorScheme="blue" variant="link">
+                                <Button color="#383ab6" variant="link">
                                     Sign Up
                                 </Button>
                             </Link>
                         </Text>
                     </Stack>
-                    {/* <Copyright sx={{ mt: 7 }} /> */}
                 </Stack>
+                <Copyright sx={{ mt: 7 }} />
             </Flex>
         </Stack>
     );

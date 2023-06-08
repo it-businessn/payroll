@@ -37,7 +37,7 @@ export const loginFormFields = [
     {
         field: "button",
         variant: "solid",
-        color: "blue",
+        color: "#383ab6",
         id: "login",
         fullWidth: "100%",
         type: "submit",
@@ -79,7 +79,7 @@ export const userPaymentFormFields = [
     {
         field: "button",
         variant: "solid",
-        color: "blue",
+        color: "#383ab6",
         id: "login",
         type: "submit",
         size: "lg",
@@ -246,7 +246,7 @@ export const userFormFields = [
     {
         field: "button",
         variant: "solid",
-        color: "blue",
+        color: "#383ab6",
         id: "register",
         fullWidth: "100%",
         type: "submit",

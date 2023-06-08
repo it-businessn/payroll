@@ -17,6 +17,9 @@
 .signIn-form {
     width: 70%;
 }
+/* .sidebar-class {
+    display: none !important;
+} */
 .otp-container {
     display: flex;
     flex-direction: column;

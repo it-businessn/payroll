@@ -4,6 +4,7 @@ import {
     FormLabel,
     Input,
     Select,
+    Stack,
     Text,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
@@ -52,23 +53,51 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                 </FormControl>
                             )}
                         </Field>
+                    ) : item.field === "radio" ? (
+                        <Field name={item.name} key={item.name}>
+                            {({ field, form: { setFieldValue } }) => (
+                                <FormControl
+                                    key={item.name}
+                                    // isInvalid={
+                                    //     form.errors.name && form.touched.name
+                                    // }
+                                >
+                                    <FormLabel>{item.label}</FormLabel>
+                                    <Stack direction="row">
+                                        <label className="text-gray-500 font-bold">
+                                            <Field
+                                                {...field}
+                                                name={item.name}
+                                                value="true"
+                                                className="mr-2 leading-tight"
+                                                type={item.type}
+                                            />
+                                            <span class="text-sm">Yes</span>
+                                        </label>
+                                        <label className="text-gray-500 font-bold">
+                                            <Field
+                                                {...field}
+                                                name={item.name}
+                                                value="false"
+                                                className="mr-2 leading-tight"
+                                                type={item.type}
+                                            />
+                                            <span class="text-sm">No</span>
+                                        </label>
+                                    </Stack>
+                                </FormControl>
+                            )}
+                        </Field>
                     ) : item.field === "date" ? (
                         <Field name={item.name} key={item.name}>
                             {({ field, form: { setFieldValue } }) => (
                                 <FormControl key={item.name}>
                                     <FormLabel>{item.label}</FormLabel>
-                                    <DatePicker
+                                    <Input
+                                        placeholder="Select Date and Time"
+                                        size="md"
                                         {...field}
-                                        selected={
-                                            new Date(
-                                                moment(field.value).format(
-                                                    "YYYY-MM-DD"
-                                                )
-                                            )
-                                        }
-                                        onChange={(val) => {
-                                            setFieldValue(field.name, val);
-                                        }}
+                                        type="date"
                                     />
                                 </FormControl>
                             )}
@@ -83,6 +112,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                         {...field}
                                     >
                                         <option>Employee</option>
+                                        <option>Super Manager</option>
                                         <option>HR/Manager</option>
                                         <option>Administrator</option>
                                     </Select>
@@ -92,7 +122,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                     ) : item.field === "link" ? (
                         <Text align={"right"} style={item.style} key={item.id}>
                             <Link to={item.path}>
-                                <Button colorScheme="blue" variant="link">
+                                <Button color="#383ab6" variant="link">
                                     {item.label}
                                 </Button>
                             </Link>
@@ -102,16 +132,16 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                             <Button
                                 loadingText="Submitting"
                                 size="lg"
-                                bg={"blue.400"}
                                 color={"white"}
                                 _hover={{
-                                    bg: "blue.500",
+                                    bg: "#494bc7",
                                 }}
                                 mt={3}
                                 width={item.fullWidth}
                                 colorScheme={item.color}
                                 variant={item.variant}
                                 type={item.type}
+                                bg={"#383ab6"}
                                 key={item.label}
                             >
                                 {item.label}

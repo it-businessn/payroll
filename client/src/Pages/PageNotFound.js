@@ -21,10 +21,9 @@ export default function PageNotFound() {
             </Text>
             <Link to="/">
                 <Button
-                    colorScheme="blue"
+                    color="#383ab6"
                     size="lg"
                     bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
-                    color="white"
                     variant="link"
                 >
                     Go to Home

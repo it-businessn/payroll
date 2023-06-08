@@ -47,7 +47,7 @@ const userBankFormFields = [
     {
         field: "button",
         variant: "solid",
-        color: "blue",
+        color: "#383ab6",
         id: "register",
         fullWidth: "100%",
         type: "submit",
