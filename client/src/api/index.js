@@ -2,9 +2,10 @@ import axios from "axios";
 
 const BASE_URL = {
     LOCAL: "http://localhost:5000",
+    LIVE: "https://backendapp-payroll.onrender.com",
 };
 const API = axios.create({
-    baseURL: BASE_URL.LOCAL,
+    baseURL: BASE_URL.LIVE,
 });
 
 export const signIn = (formData) => API.post("/user/signIn", formData);
