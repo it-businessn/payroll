@@ -53,6 +53,7 @@ export const MemberTable = ({ members }) => {
             email: member.email,
             password: member.password,
             role: member.role,
+            annualSalary: member.annualSalary,
             dateOfJoining: member.dateOfJoining,
             phoneNumber: member.phoneNumber,
             streetNumber: member.address.streetNumber,
@@ -84,7 +85,7 @@ export const MemberTable = ({ members }) => {
                         <Th>Status</Th>
                         <Th>Phone Number</Th>
                         <Th>Email</Th>
-                        <Th>Role</Th>
+                        <Th>Role</Th> <Th>Annual Salary</Th>
                         <Th></Th>
                     </Tr>
                 </Thead>
@@ -119,14 +120,6 @@ export const MemberTable = ({ members }) => {
                                 </Badge>
                             </Td>
                             <Td>
-                                {/* <Badge
-                            size="sm"
-                            colorScheme={
-                                member.status === "active" ? "green" : "red"
-                            }
-                        >
-                            {member.active}
-                        </Badge> */}
                                 <Text>{member.phoneNumber}</Text>
                             </Td>
                             <Td>
@@ -135,6 +128,10 @@ export const MemberTable = ({ members }) => {
                             <Td>
                                 <Text color="muted">{member.role}</Text>
                             </Td>
+                            <Td>
+                                <Text color="muted">{member.annualSalary}</Text>
+                            </Td>
+
                             <Td>
                                 <IconButton
                                     onClick={() => openModal(member)}

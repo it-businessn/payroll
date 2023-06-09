@@ -12,10 +12,7 @@ function AddPayment() {
     const { id } = useParams();
     const handleSubmit = async (values) => {
         try {
-            const updateData = await api.updateUserPaymentDetailsById(
-                id,
-                values
-            );
+            const updateData = await api.addUserPaymentDetailsById(id, values);
             navigate("/");
         } catch (error) {
             // setError(error.response.data.error);

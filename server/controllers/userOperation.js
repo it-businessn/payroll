@@ -28,7 +28,7 @@ export const updateUser = async (request, response) => {
         });
     }
 };
-export const updateUserPaymentDetails = async (request, response) => {
+export const addUserPaymentDetails = async (request, response) => {
     const { id } = request.params;
     const userRequest = request.body;
 
@@ -41,10 +41,10 @@ export const updateUserPaymentDetails = async (request, response) => {
             userRequest.annualSalary,
             userRequest.dateOfJoining
         );
-        const userPaymentRequestToUpdate = { ...userRequest, _id: id };
-        const updatedUserPaymentDetails = await User.findByIdAndUpdate(
-            id,
-            userPaymentRequestToUpdate,
+
+        const updatedUserPaymentDetails = await User.findOneAndUpdate(
+            { _id: id },
+            { $push: { paymentInfo: userRequest.paymentInfo } },
             { new: true }
         );
         response.status(200).json({ data: updatedUserPaymentDetails });

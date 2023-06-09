@@ -41,6 +41,7 @@ export default function EditUser() {
         state: userData.address.state,
         postalCode: userData.address.postalCode,
         country: userData.address.country,
+        annualSalary: userData.annualSalary,
     };
 
     const [userResponseData, setData] = useState(null);
@@ -206,6 +207,24 @@ export default function EditUser() {
                                                             <Input
                                                                 defaultValue={
                                                                     userData.phoneNumber
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                    )}
+                                                </Field>
+                                                <Field
+                                                    name="annualSalary"
+                                                    key="annualSalary"
+                                                >
+                                                    {({ field }) => (
+                                                        <FormControl id="annualSalary">
+                                                            <FormLabel>
+                                                                Annual Salary
+                                                            </FormLabel>
+                                                            <Input
+                                                                defaultValue={
+                                                                    userData.annualSalary
                                                                 }
                                                                 {...field}
                                                             />

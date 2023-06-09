@@ -1,9 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import AddBankDetail from "./Pages/AddBankDetail";
 import AddPayment from "./Pages/AddPayment";
 import Attendance from "./Pages/Attendance/Attendance";
 import AttendanceWidget from "./Pages/Attendance/AttendanceWidget";
+import AddBankDetail from "./Pages/Bank/AddBankDetail";
+import BankDetail from "./Pages/Bank/BankDetail";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import Home from "./Pages/Home/Home";
 import LeaveRequest from "./Pages/LeaveRequest";
@@ -29,7 +30,9 @@ export default function RoutePages() {
             <Route exact path="/users" element={<User />} />
             <Route exact path="/profile" element={<UserDetail />} />
             <Route exact path="/payments" element={<Payment />} />
-            <Route exact path="/payment-detail" element={<PaymentWidget />} />
+            <Route exact path="/bank-detail" element={<BankDetail />} />
+            <Route exact path="/invoice-detail" element={<PaymentWidget />} />
+
             <Route exact path="/leave-detail" element={<AttendanceWidget />} />
             <Route exact path="/attendance" element={<Attendance />} />
             <Route exact path="/edit-user/:id" element={<EditUser />} />

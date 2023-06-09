@@ -17,8 +17,8 @@ export const updateUserById = (id, formData) =>
     API.put(`/userOperation/${id}`, formData);
 export const forgotPassword = (formData) =>
     API.post("/user/forgot-password", formData);
-export const updateUserPaymentDetailsById = (id, formData) =>
-    API.put(`/userOperation/payment/${id}`, formData);
+export const addUserPaymentDetailsById = (id, formData) =>
+    API.post(`/userOperation/payment/${id}`, formData);
 export const updateUserBankDetailsById = (id, formData) =>
     API.put(`/userOperation/bank/${id}`, formData);
 export const updateUserAttendanceDetailsById = (id, formData) =>

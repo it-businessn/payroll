@@ -81,6 +81,14 @@ function PersonalInfoCard({ initialValues, schema, formSubmit, formFields }) {
                                 </FormControl>
                             )}
                         </Field>
+                        <Field name="annualSalary" key="annualSalary">
+                            {({ field, form }) => (
+                                <FormControl id="annualSalary">
+                                    <FormLabel>Annual Salary</FormLabel>
+                                    <Input {...field} />
+                                </FormControl>
+                            )}
+                        </Field>
                         <Field name="streetNumber" key="streetNumber">
                             {({ field, form }) => (
                                 <FormControl id="streetNumber">

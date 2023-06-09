@@ -36,7 +36,7 @@ function AttendanceWidget() {
                     <Card>
                         <CardHeader>
                             <Heading size="md">
-                                Your Profile Information
+                                Your Leave/Attendance Information
                             </Heading>
                         </CardHeader>
 

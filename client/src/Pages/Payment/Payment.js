@@ -16,7 +16,6 @@ import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar.js";
-import { PaymentTable } from "./PaymentTable.js";
 
 export default function Payment() {
     const user = JSON.parse(localStorage.getItem("profile"));
@@ -100,9 +99,9 @@ export default function Payment() {
                                 </InputGroup>
                             </Stack>
                         </Box>
-                        <Box overflowX="auto">
+                        {/* <Box overflowX="auto">
                             {data && <PaymentTable members={data} />}
-                        </Box>
+                        </Box> */}
                         <Box
                             px={{
                                 base: "4",

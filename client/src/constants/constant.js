@@ -10,11 +10,11 @@ export const ADMIN_MENULIST = [
         name: "Users",
         icon: FiUsers,
     },
-    {
-        path: "/payments",
-        name: "Payment",
-        icon: FiDollarSign,
-    },
+    // {
+    //     path: "/invoice-generated",
+    //     name: "Invoice",
+    //     icon: FiDollarSign,
+    // },
     {
         path: "/attendance",
         name: "Attendance ",
@@ -33,8 +33,13 @@ export const EMPLOYEE_MENULIST = [
         icon: FiUsers,
     },
     {
-        path: "/payment-detail",
-        name: "Payment",
+        path: "/bank-detail",
+        name: "Bank",
+        icon: FiDollarSign,
+    },
+    {
+        path: "/invoice-detail",
+        name: "Invoice",
         icon: FiDollarSign,
     },
     {
