@@ -1,7 +1,7 @@
 import {
+    Avatar,
     Badge,
     Box,
-    Button,
     HStack,
     Icon,
     IconButton,
@@ -9,7 +9,6 @@ import {
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalFooter,
     ModalHeader,
     ModalOverlay,
     Stack,
@@ -23,22 +22,46 @@ import {
     Tr,
     useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
+import * as api from "../../api/index.js";
 import { UserSchema } from "../../config/userSchema";
-import { userFormFields, userInitialValues } from "../Login/loginFormFields";
-import PersonalInfoCard from "../User/EditUser/PersonalInfoCard";
-
-export const AttendanceTable = ({ members }) => {
+import { userFormFields } from "../Login/loginFormFields";
+import PersonalInfoCard from "./EditUser/PersonalInfoCard";
+export const MemberTable = ({ members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [users, setMembers] = useState(members);
+    const [record, setRecord] = useState(null);
+    const [userFormInitialValues, setUserFormInitialValues] = useState(null);
     const handleSubmit = async (values) => {
         try {
-            // const updateData = await api.updateUserById(id, values);
-            // navigate("/");
+            const updateData = await api.updateUserById(record._id, values);
+            onClose();
+            setMembers(members);
         } catch (error) {
             // setError(error.response.data.error);
             console.log(error);
         }
+    };
+    const openModal = (member) => {
+        setRecord(member);
+        setUserFormInitialValues({
+            firstName: member.firstName,
+            middleName: member.middleName,
+            lastName: member.lastName,
+            email: member.email,
+            password: member.password,
+            role: member.role,
+            dateOfJoining: member.dateOfJoining,
+            phoneNumber: member.phoneNumber,
+            streetNumber: member.address.streetNumber,
+            city: member.address.city,
+            state: member.address.state,
+            postalCode: member.address.postalCode,
+            country: member.address.country,
+        });
+        onOpen();
     };
     return (
         <>
@@ -71,18 +94,17 @@ export const AttendanceTable = ({ members }) => {
                             <Td>
                                 <HStack spacing="3">
                                     {/* <Checkbox /> */}
-                                    {/* <Avatar
-                                name={member.name}
-                                src={member.avatarUrl}
-                                boxSize="10"
-                            /> */}
+                                    <Avatar
+                                        name={member.name}
+                                        src={member.avatarUrl}
+                                        boxSize="10"
+                                    />
                                     <Box>
-                                        <Text fontWeight="medium">
+                                        <Text textTransform="capitalize">
                                             {member.firstName}
                                             {member.middleName}
                                             {member.lastName}
                                         </Text>
-                                        {/* <Text color="muted">{member.handle}</Text> */}
                                     </Box>
                                 </HStack>
                             </Td>
@@ -114,95 +136,51 @@ export const AttendanceTable = ({ members }) => {
                                 <Text color="muted">{member.role}</Text>
                             </Td>
                             <Td>
-                                {/* <HStack spacing="1">
-                            <IconButton
-                                icon={<FiTrash2 fontSize="1.25rem" />}
-                                variant="ghost"
-                                aria-label="Delete member"
-                            /> 
-                           
-                        </HStack> */}
-                                {/* <Link to={`/edit-user/${member._id}`}> */}
                                 <IconButton
-                                    onClick={onOpen}
+                                    onClick={() => openModal(member)}
                                     icon={<FiEdit2 fontSize="1.25rem" />}
                                     variant="ghost"
                                     aria-label="Edit member"
                                 />
-                                {/* </Link> */}
                             </Td>
                         </Tr>
                     ))}
                 </Tbody>
             </Table>
-            <Modal size="xl" isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Stack divider={<StackDivider />}>
-                            {/* <Stack
-                    direction={{
-                        base: "column",
-                        lg: "row",
-                    }}
-                    spacing={{
-                        base: "5",
-                        lg: "8",
-                    }}
-                    justify="space-between"
-                >
-                    <Box flexShrink={0}>
-                        <Text fontSize="lg" fontWeight="medium">
-                            Your Profile
-                        </Text>
-                        <Text color="muted" fontSize="sm">
-                            Tell others who you are
-                        </Text>
-                    </Box>
-                    {!userFormInitialValues ? (
-                        "Loading"
-                    ) : (
-                        <ProfileCard
-                            maxW={{
-                                lg: "3xl",
-                            }}
-                        />
-                    )}
-                </Stack> */}
-                            <Stack
-                                direction={{
-                                    base: "column",
-                                    lg: "row",
-                                }}
-                                spacing={{
-                                    base: "5",
-                                    lg: "8",
-                                }}
-                                justify="space-between"
-                            >
-                                <PersonalInfoCard
-                                    formSubmit={handleSubmit}
-                                    schema={UserSchema}
-                                    initialValues={userInitialValues}
-                                    formFields={userFormFields}
-                                    maxW={{
-                                        lg: "3xl",
+            {record && (
+                <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Edit Record</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <Stack divider={<StackDivider />}>
+                                <Stack
+                                    direction={{
+                                        base: "column",
+                                        lg: "row",
                                     }}
-                                />
+                                    spacing={{
+                                        base: "5",
+                                        lg: "8",
+                                    }}
+                                    justify="space-between"
+                                >
+                                    <PersonalInfoCard
+                                        formSubmit={handleSubmit}
+                                        schema={UserSchema}
+                                        initialValues={userFormInitialValues}
+                                        formFields={userFormFields}
+                                        maxW={{
+                                            lg: "3xl",
+                                        }}
+                                    />
+                                </Stack>
                             </Stack>
-                        </Stack>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button color="#383ab6" mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant="ghost">Secondary Action</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+            )}
         </>
     );
 };

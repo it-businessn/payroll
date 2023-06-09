@@ -2,19 +2,21 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AddBankDetail from "./Pages/AddBankDetail";
 import AddPayment from "./Pages/AddPayment";
+import Attendance from "./Pages/Attendance/Attendance";
+import AttendanceWidget from "./Pages/Attendance/AttendanceWidget";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 import Home from "./Pages/Home/Home";
 import LeaveRequest from "./Pages/LeaveRequest";
 import Login from "./Pages/Login/Login";
 import PageNotFound from "./Pages/PageNotFound";
+import Payment from "./Pages/Payment/Payment";
+import PaymentWidget from "./Pages/Payment/PaymentWidget";
 import SignUp from "./Pages/SignUp/SignUp";
 import VerifyEmail from "./Pages/SignUp/VerifyEmail";
-import EditUser from "./Pages/UserList/EditUser/EditUser";
-import User from "./Pages/UserList/Users";
+import EditUser from "./Pages/User/EditUser/EditUser";
+import UserDetail from "./Pages/User/UserDetail";
+import User from "./Pages/User/Users";
 import ViewPayment from "./Pages/ViewPayment";
-import Payment from "./Pages/Payment/Payment";
-import Attendance from "./Pages/Attendance/Attendance";
-import UserDetail from "./Pages/UserList/UserDetail";
 
 export default function RoutePages() {
     return (
@@ -27,6 +29,8 @@ export default function RoutePages() {
             <Route exact path="/users" element={<User />} />
             <Route exact path="/profile" element={<UserDetail />} />
             <Route exact path="/payments" element={<Payment />} />
+            <Route exact path="/payment-detail" element={<PaymentWidget />} />
+            <Route exact path="/leave-detail" element={<AttendanceWidget />} />
             <Route exact path="/attendance" element={<Attendance />} />
             <Route exact path="/edit-user/:id" element={<EditUser />} />
             <Route

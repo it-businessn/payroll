@@ -15,12 +15,16 @@ import {
 import React, { useState } from "react";
 import { FiLogOut, FiSearch, FiSettings } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ADMIN_MENULIST, EMPLOYEE_MENULIST } from "../../constants/constant";
-import Logo from "./Logo";
-import { NavButton } from "./NavButton";
-import { UserProfile } from "./UserProfile";
+import {
+    ADMIN_MENULIST,
+    EMPLOYEE_MENULIST,
+    USER_ROLE,
+} from "../constants/constant";
+import Logo from "../Pages/Home/Logo";
+import { NavButton } from "../Pages/Home/NavButton";
+import { UserProfile } from "../Pages/Home/UserProfile";
 const getSideMenu = (role) =>
-    role === "Administrator" ? ADMIN_MENULIST : EMPLOYEE_MENULIST;
+    role === USER_ROLE.EMPLOYEE ? EMPLOYEE_MENULIST : ADMIN_MENULIST;
 
 const Sidebar = ({ user, children }) => {
     const [isOpen, setIsOpen] = useState(true);
@@ -138,7 +142,7 @@ const Sidebar = ({ user, children }) => {
                     </Stack>
                 </Stack>
             </Flex>
-            <main>{children}</main>
+            <main style={{ display: "flex", maxWidth: "80%" }}>{children}</main>
         </Flex>
     );
 };

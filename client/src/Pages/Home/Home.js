@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
 import { Card } from "./Card";
-import Sidebar from "./Sidebar";
 
 function Home() {
     const navigate = useNavigate();

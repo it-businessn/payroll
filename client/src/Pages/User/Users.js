@@ -15,8 +15,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import * as api from "../../api/index.js";
-import { MemberTable } from "./MemberTable";
-import Sidebar from "../Home/Sidebar.jsx";
+import Sidebar from "../../components/Sidebar.js";
+import { MemberTable } from "./MemberTable.js";
 
 export default function User() {
     const user = JSON.parse(localStorage.getItem("profile"));
@@ -30,7 +30,7 @@ export default function User() {
             userDataRecords.forEach((element) => {
                 element.activeStatus = element.active ? "Active" : "Not Active";
             });
-            setData(userData.data.data);
+            setData(userDataRecords);
             setError(null);
         } catch (error) {
             setError(error.message);

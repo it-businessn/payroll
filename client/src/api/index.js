@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = {
     LOCAL: "http://localhost:5000",
-    LIVE: "https://backendapp-payroll.onrender.com",
+    LIVE: "https://payroll-backend-6dzp.onrender.com",
 };
 const API = axios.create({
     baseURL: BASE_URL.LIVE,

@@ -1,4 +1,4 @@
-import { FiHome, FiUsers, FiCalendar, FiDollarSign } from "react-icons/fi";
+import { FiCalendar, FiDollarSign, FiHome, FiUsers } from "react-icons/fi";
 export const ADMIN_MENULIST = [
     {
         path: "/",
@@ -33,13 +33,19 @@ export const EMPLOYEE_MENULIST = [
         icon: FiUsers,
     },
     {
-        path: "/",
+        path: "/payment-detail",
         name: "Payment",
         icon: FiDollarSign,
     },
     {
-        path: "/users",
+        path: "/leave-detail",
         name: "Attendance ",
         icon: FiCalendar,
     },
 ];
+
+export const USER_ROLE = {
+    EMPLOYEE: "Employee",
+    MANAGER: "Super Manager",
+    ADMIN: "Administrator",
+};

@@ -5,14 +5,14 @@ export default function Copyright() {
     return (
         <>
             <Text fontSize="xs" color="subtle" textAlign="center">
-                Copyright ©{" "}
+                Copyright ©
                 <Link
                     color="blue"
                     target="_blank"
                     href="https://www.businessn.com/"
                 >
                     businessn
-                </Link>{" "}
+                </Link>
                 &nbsp;
                 {new Date().getFullYear()}
                 {"."}

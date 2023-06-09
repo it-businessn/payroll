@@ -15,8 +15,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import * as api from "../../api/index.js";
-import { MemberTable } from "../UserList/MemberTable.js";
-import Sidebar from "../Home/Sidebar.jsx";
+import Sidebar from "../../components/Sidebar.js";
 import { AttendanceTable } from "./AttendanceTable.js";
 
 export default function Attendance() {

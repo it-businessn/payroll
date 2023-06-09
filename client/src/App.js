@@ -5,11 +5,11 @@ import RoutePages from "./routes";
 
 function App() {
     return (
-        <ChakraProvider>
-            <Router>
+        <Router>
+            <ChakraProvider>
                 <RoutePages />
-            </Router>
-        </ChakraProvider>
+            </ChakraProvider>
+        </Router>
     );
 }
 

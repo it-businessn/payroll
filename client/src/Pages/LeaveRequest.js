@@ -102,7 +102,7 @@ function LeaveRequest() {
     return (
         <div style={{ width: "100%", padding: "5em 10em", margin: 0 }}>
             <h1>Your Leave/Attendance Summary</h1>
-            employee{" "}
+            employee
             <FormikForm
                 formSubmit={handleSubmit}
                 initialValues={userAttendanceInitialValues}

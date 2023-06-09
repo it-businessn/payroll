@@ -27,7 +27,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
 import { UserSchema } from "../../config/userSchema";
 import { userFormFields, userInitialValues } from "../Login/loginFormFields";
-import PersonalInfoCard from "../UserList/EditUser/AddressCard";
+import PersonalInfoCard from "../User/EditUser/PersonalInfoCard";
 
 export const PaymentTable = ({ members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -78,8 +78,8 @@ export const PaymentTable = ({ members }) => {
                             /> */}
                                     <Box>
                                         <Text fontWeight="medium">
-                                            {member.firstName}{" "}
-                                            {member.middleName}{" "}
+                                            {member.firstName}
+                                            {member.middleName}
                                             {member.lastName}
                                         </Text>
                                         {/* <Text color="muted">{member.handle}</Text> */}
@@ -87,7 +87,6 @@ export const PaymentTable = ({ members }) => {
                                 </HStack>
                             </Td>
                             <Td>
-                                {" "}
                                 <Badge
                                     size="sm"
                                     colorScheme={
@@ -135,7 +134,7 @@ export const PaymentTable = ({ members }) => {
                         </Tr>
                     ))}
                 </Tbody>
-            </Table>{" "}
+            </Table>
             <Modal size="xl" isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
