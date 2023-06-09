@@ -33,7 +33,7 @@ export const getCurrencyAndUpdateBankDetails = (request) => {
 };
 
 export const getUserAttendanceDetails = (request, user) => {
-    let totalLeaves = 15;
+    let totalLeaves = 25;
     let requestedLeaves = request.requestedLeaves;
     let usedLeaves = 0; //to be updated after user has not cancelled after end date of requested leave period
     let leaveBalance = totalLeaves - usedLeaves - requestedLeaves;

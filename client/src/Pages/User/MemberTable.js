@@ -2,6 +2,7 @@ import {
     Avatar,
     Badge,
     Box,
+    Button,
     HStack,
     Icon,
     IconButton,
@@ -64,6 +65,20 @@ export const MemberTable = ({ members }) => {
         });
         onOpen();
     };
+    const generateInvoice = async (member) => {
+        try {
+            let value = {
+                annualSalary: member.annualSalary,
+            };
+            const updateData = await api.addUserPaymentDetailsById(
+                member._id,
+                value
+            );
+        } catch (error) {
+            // setError(error.response.data.error);
+            console.log(error);
+        }
+    };
     return (
         <>
             <Table>
@@ -85,7 +100,7 @@ export const MemberTable = ({ members }) => {
                         <Th>Status</Th>
                         <Th>Phone Number</Th>
                         <Th>Email</Th>
-                        <Th>Role</Th> <Th>Annual Salary</Th>
+                        <Th>Role</Th>
                         <Th></Th>
                     </Tr>
                 </Thead>
@@ -128,17 +143,23 @@ export const MemberTable = ({ members }) => {
                             <Td>
                                 <Text color="muted">{member.role}</Text>
                             </Td>
-                            <Td>
-                                <Text color="muted">{member.annualSalary}</Text>
-                            </Td>
 
                             <Td>
-                                <IconButton
-                                    onClick={() => openModal(member)}
-                                    icon={<FiEdit2 fontSize="1.25rem" />}
-                                    variant="ghost"
-                                    aria-label="Edit member"
-                                />
+                                <HStack spacing="3">
+                                    <IconButton
+                                        onClick={() => openModal(member)}
+                                        icon={<FiEdit2 fontSize="1.25rem" />}
+                                        variant="ghost"
+                                        aria-label="Edit member"
+                                    />
+                                    <Button
+                                        onClick={() => generateInvoice(member)}
+                                        variant="solid"
+                                        color="#383ab6"
+                                    >
+                                        Generate Invoice
+                                    </Button>
+                                </HStack>
                             </Td>
                         </Tr>
                     ))}

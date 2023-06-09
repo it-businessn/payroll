@@ -92,13 +92,9 @@ export const updateUserLeaveAttendanceDetails = async (request, response) => {
             userRequest,
             existingUser
         );
-        const userLeaveAttendanceRequestToUpdate = {
-            ...userRequest,
-            _id: id,
-        };
         const updatedUserLeaveAttendanceDetails = await User.findByIdAndUpdate(
-            id,
-            userLeaveAttendanceRequestToUpdate,
+            { _id: id },
+            { $push: { attendanceDetails: userRequest.attendanceDetails } },
             { new: true }
         );
         response.status(200).json({ data: updatedUserLeaveAttendanceDetails });

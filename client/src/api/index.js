@@ -21,5 +21,5 @@ export const addUserPaymentDetailsById = (id, formData) =>
     API.post(`/userOperation/payment/${id}`, formData);
 export const updateUserBankDetailsById = (id, formData) =>
     API.put(`/userOperation/bank/${id}`, formData);
-export const updateUserAttendanceDetailsById = (id, formData) =>
+export const addUserAttendanceDetailsById = (id, formData) =>
     API.put(`/userOperation/attendance/${id}`, formData);

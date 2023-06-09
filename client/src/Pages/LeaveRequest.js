@@ -89,7 +89,7 @@ function LeaveRequest() {
     const handleSubmit = async (values) => {
         try {
             values.role = user.userDetails.role;
-            const updateData = await api.updateUserAttendanceDetailsById(
+            const updateData = await api.addUserAttendanceDetailsById(
                 id,
                 values
             );

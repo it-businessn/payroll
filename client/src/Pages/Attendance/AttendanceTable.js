@@ -1,15 +1,17 @@
 import {
-    Badge,
     Box,
     Button,
+    Flex,
+    FormControl,
+    FormLabel,
     HStack,
     Icon,
     IconButton,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalFooter,
     ModalHeader,
     ModalOverlay,
     Stack,
@@ -23,18 +25,36 @@ import {
     Tr,
     useDisclosure,
 } from "@chakra-ui/react";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import { FiEdit2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
-import { UserSchema } from "../../config/userSchema";
-import { userFormFields, userInitialValues } from "../Login/loginFormFields";
-import PersonalInfoCard from "../User/EditUser/PersonalInfoCard";
-
+import * as api from "../../api/index.js";
 export const AttendanceTable = ({ members }) => {
+    const user = JSON.parse(localStorage.getItem("profile"));
+    const userData = user.userDetails.data;
     const { isOpen, onOpen, onClose } = useDisclosure();
+    let initialValues = {
+        requestedLeaves: "",
+        leaveReason: "",
+    };
+    const formik = useFormik({
+        initialValues,
+        onSubmit: (formValues) => {
+            try {
+                handleSubmit(formValues);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    });
+
     const handleSubmit = async (values) => {
         try {
-            // const updateData = await api.updateUserById(id, values);
-            // navigate("/");
+            const updateData = await api.addUserAttendanceDetailsById(
+                userData._id,
+                values
+            );
+            onClose();
         } catch (error) {
             // setError(error.response.data.error);
             console.log(error);
@@ -42,165 +62,142 @@ export const AttendanceTable = ({ members }) => {
     };
     return (
         <>
-            <Table>
-                <Thead bg="#f0f2f4">
-                    <Tr>
-                        <Th>
-                            <HStack spacing="3">
-                                {/* <Checkbox /> */}
-                                <HStack spacing="1">
-                                    <Text>Name</Text>
-                                    <Icon
-                                        as={IoArrowDown}
-                                        color="muted"
-                                        boxSize="4"
-                                    />
-                                </HStack>
-                            </HStack>
-                        </Th>
-                        <Th>Status</Th>
-                        <Th>Phone Number</Th>
-                        <Th>Email</Th>
-                        <Th>Role</Th>
-                        <Th></Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {members.map((member) => (
-                        <Tr key={member._id}>
-                            <Td>
+            {members.length ? (
+                <Table>
+                    <Thead bg="#f0f2f4">
+                        <Tr>
+                            <Th>
                                 <HStack spacing="3">
                                     {/* <Checkbox /> */}
-                                    {/* <Avatar
-                                name={member.name}
-                                src={member.avatarUrl}
-                                boxSize="10"
-                            /> */}
-                                    <Box>
-                                        <Text fontWeight="medium">
-                                            {member.firstName}
-                                            {member.middleName}
-                                            {member.lastName}
-                                        </Text>
-                                        {/* <Text color="muted">{member.handle}</Text> */}
-                                    </Box>
+                                    <HStack spacing="1">
+                                        <Text>leaveBalance</Text>
+                                        <Icon
+                                            as={IoArrowDown}
+                                            color="muted"
+                                            boxSize="4"
+                                        />
+                                    </HStack>
                                 </HStack>
-                            </Td>
-                            <Td>
-                                <Badge
-                                    size="sm"
-                                    colorScheme={
-                                        member.active ? "green" : "red"
-                                    }
-                                >
-                                    {member.activeStatus}
-                                </Badge>
-                            </Td>
-                            <Td>
-                                {/* <Badge
-                            size="sm"
-                            colorScheme={
-                                member.status === "active" ? "green" : "red"
-                            }
-                        >
-                            {member.active}
-                        </Badge> */}
-                                <Text>{member.phoneNumber}</Text>
-                            </Td>
-                            <Td>
-                                <Text color="muted">{member.email}</Text>
-                            </Td>
-                            <Td>
-                                <Text color="muted">{member.role}</Text>
-                            </Td>
-                            <Td>
-                                {/* <HStack spacing="1">
-                            <IconButton
-                                icon={<FiTrash2 fontSize="1.25rem" />}
-                                variant="ghost"
-                                aria-label="Delete member"
-                            /> 
-                           
-                        </HStack> */}
-                                {/* <Link to={`/edit-user/${member._id}`}> */}
-                                <IconButton
-                                    onClick={onOpen}
-                                    icon={<FiEdit2 fontSize="1.25rem" />}
-                                    variant="ghost"
-                                    aria-label="Edit member"
-                                />
-                                {/* </Link> */}
-                            </Td>
+                            </Th>
+                            <Th>totalLeaves</Th>
+                            <Th>requestedLeaves</Th>
+                            <Th>usedLeaves</Th>
+                            <Th>leaveApproved</Th>
+                            <Th></Th>
                         </Tr>
-                    ))}
-                </Tbody>
-            </Table>
-            <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+                    </Thead>
+                    <Tbody>
+                        {members.map((member) => (
+                            <Tr key={member._id}>
+                                <Td>
+                                    <HStack spacing="3">
+                                        <Box>
+                                            <Text fontWeight="medium">
+                                                {member.leaveBalance}
+                                            </Text>
+                                        </Box>
+                                    </HStack>
+                                </Td>
+                                <Td>{member.totalLeaves}</Td>
+                                <Td>
+                                    <Text>{member.requestedLeaves}</Text>
+                                </Td>
+                                <Td>
+                                    <Text color="muted">
+                                        {member.usedLeaves}
+                                    </Text>
+                                </Td>
+                                <Td>
+                                    <Text color="muted">
+                                        {member.leaveApproved}
+                                    </Text>
+                                </Td>
+                                <Td>
+                                    <HStack spacing="1">
+                                        <IconButton
+                                            // onClick={() => openModal(member)}
+                                            icon={
+                                                <FiEdit2 fontSize="1.25rem" />
+                                            }
+                                            variant="ghost"
+                                            aria-label="Edit member"
+                                        />
+                                        <Button
+                                            onClick={onOpen}
+                                            variant="solid"
+                                            color="#383ab6"
+                                        >
+                                            Raise Request
+                                        </Button>
+                                    </HStack>
+                                </Td>
+                            </Tr>
+                        ))}
+                    </Tbody>
+                </Table>
+            ) : (
+                <Button onClick={onOpen} variant="solid" color="#383ab6">
+                    Raise Request
+                </Button>
+            )}
+            <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalHeader>Raise Leave Request</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <Stack divider={<StackDivider />}>
-                            {/* <Stack
-                    direction={{
-                        base: "column",
-                        lg: "row",
-                    }}
-                    spacing={{
-                        base: "5",
-                        lg: "8",
-                    }}
-                    justify="space-between"
-                >
-                    <Box flexShrink={0}>
-                        <Text fontSize="lg" fontWeight="medium">
-                            Your Profile
-                        </Text>
-                        <Text color="muted" fontSize="sm">
-                            Tell others who you are
-                        </Text>
-                    </Box>
-                    {!userFormInitialValues ? (
-                        "Loading"
-                    ) : (
-                        <ProfileCard
-                            maxW={{
-                                lg: "3xl",
-                            }}
-                        />
-                    )}
-                </Stack> */}
-                            <Stack
-                                direction={{
-                                    base: "column",
-                                    lg: "row",
-                                }}
-                                spacing={{
-                                    base: "5",
-                                    lg: "8",
-                                }}
-                                justify="space-between"
-                            >
-                                <PersonalInfoCard
-                                    formSubmit={handleSubmit}
-                                    schema={UserSchema}
-                                    initialValues={userInitialValues}
-                                    formFields={userFormFields}
-                                    maxW={{
-                                        lg: "3xl",
-                                    }}
-                                />
-                            </Stack>
+                            <FormikProvider value={formik}>
+                                <Form>
+                                    <Field
+                                        name="requestedLeaves"
+                                        key="firstName"
+                                    >
+                                        {({ field }) => (
+                                            <FormControl id="requestedLeaves">
+                                                <FormLabel>
+                                                    Number of days requested
+                                                </FormLabel>
+                                                <Input {...field} />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    <Field name="leaveReason" key="leaveReason">
+                                        {({ field }) => (
+                                            <FormControl id="leaveReason">
+                                                <FormLabel>Reason</FormLabel>
+                                                <Input {...field} />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    <Flex
+                                        direction="row"
+                                        justify="flex-end"
+                                        py="4"
+                                        px={{
+                                            base: "4",
+                                            md: "6",
+                                        }}
+                                    >
+                                        <Button
+                                            color="#383ab6"
+                                            mr={3}
+                                            onClick={onClose}
+                                        >
+                                            Close
+                                        </Button>
+                                        <Button
+                                            type="submit"
+                                            variant="solid"
+                                            color="#383ab6"
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Flex>
+                                </Form>
+                            </FormikProvider>
                         </Stack>
                     </ModalBody>
-
-                    <ModalFooter>
-                        <Button color="#383ab6" mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant="ghost">Secondary Action</Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>

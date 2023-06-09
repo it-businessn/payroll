@@ -31,4 +31,8 @@ export const AttendanceRequest = {
         type: String,
         required: false,
     },
+    created: {
+        type: Date,
+        default: new Date().toISOString(),
+    },
 };

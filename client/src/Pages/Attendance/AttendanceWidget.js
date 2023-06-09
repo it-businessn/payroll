@@ -8,12 +8,25 @@ import {
     Heading,
     Stack,
     StackDivider,
-    Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar";
+import { AttendanceTable } from "./AttendanceTable.js";
 function AttendanceWidget() {
     const user = JSON.parse(localStorage.getItem("profile"));
+    const [userData, setData] = useState(null);
+    useEffect(() => {
+        fetchUserData(user.userDetails.data._id);
+    }, []);
+    const fetchUserData = async (id) => {
+        try {
+            let user = await api.getUserById(id);
+            setData(user.data.data);
+        } catch (error) {
+        } finally {
+        }
+    };
     return (
         <Flex
             as="section"
@@ -41,60 +54,19 @@ function AttendanceWidget() {
                         </CardHeader>
 
                         <CardBody>
-                            <Stack divider={<StackDivider />} spacing="4">
-                                <Box>
-                                    <Heading
-                                        size="xs"
-                                        textTransform="uppercase"
-                                    >
-                                        Personal Information
-                                    </Heading>
-                                    <Text pt="2" fontSize="sm">
-                                        View a summary of all your clients over
-                                        the last month.
-                                    </Text>
-                                </Box>
-                            </Stack>
-                        </CardBody>
-                    </Card>
-                    <Card>
-                        <CardBody>
-                            <Stack divider={<StackDivider />} spacing="4">
-                                <Box>
-                                    <Heading
-                                        size="xs"
-                                        textTransform="uppercase"
-                                    >
-                                        Address
-                                    </Heading>
-                                    <Text pt="2" fontSize="sm">
-                                        View a summary of all your clients over
-                                        the last month.
-                                    </Text>
-                                </Box>
-                                <Box>
-                                    <Heading
-                                        size="xs"
-                                        textTransform="uppercase"
-                                    >
-                                        Overview
-                                    </Heading>
-                                    <Text pt="2" fontSize="sm">
-                                        Check out the overview of your clients.
-                                    </Text>
-                                </Box>
-                                <Box>
-                                    <Heading
-                                        size="xs"
-                                        textTransform="uppercase"
-                                    >
-                                        Analysis
-                                    </Heading>
-                                    <Text pt="2" fontSize="sm">
-                                        See a detailed analysis of all your
-                                        business clients.
-                                    </Text>
-                                </Box>
+                            <Stack divider={<StackDivider />}>
+                                <Flex>
+                                    <Box p="4">
+                                        {userData && (
+                                            <AttendanceTable
+                                                user={userData}
+                                                members={
+                                                    userData.attendanceDetails
+                                                }
+                                            />
+                                        )}
+                                    </Box>
+                                </Flex>
                             </Stack>
                         </CardBody>
                     </Card>
