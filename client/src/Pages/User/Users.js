@@ -4,16 +4,11 @@ import {
     ButtonGroup,
     Container,
     HStack,
-    Icon,
-    Input,
-    InputGroup,
-    InputLeftElement,
     Stack,
     Text,
     useBreakpointValue,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar.js";
 import { MemberTable } from "./MemberTable.js";
@@ -46,6 +41,20 @@ export default function User() {
         base: true,
         md: false,
     });
+    const generateInvoice = async (member) => {
+        try {
+            let value = {
+                annualSalary: member.annualSalary,
+            };
+            const updateData = await api.addUserPaymentDetailsById(
+                member._id,
+                value
+            );
+        } catch (error) {
+            // setError(error.response.data.error);
+            console.log(error);
+        }
+    };
     return (
         <Sidebar user={user.userDetails.data}>
             <Container
@@ -71,13 +80,7 @@ export default function User() {
                     }}
                 >
                     <Stack spacing="5">
-                        <Box
-                            px={{
-                                base: "4",
-                                md: "6",
-                            }}
-                            pt="5"
-                        >
+                        <Box pt="5">
                             <Stack
                                 direction={{
                                     base: "column",
@@ -88,16 +91,23 @@ export default function User() {
                                 <Text fontSize="lg" fontWeight="medium">
                                     Members
                                 </Text>
-                                <InputGroup maxW="xs">
-                                    <InputLeftElement pointerEvents="none">
-                                        <Icon
-                                            as={FiSearch}
-                                            color="fg.muted"
-                                            boxSize="5"
-                                        />
-                                    </InputLeftElement>
-                                    <Input placeholder="Search" />
-                                </InputGroup>
+                                <Button
+                                    onClick={() => generateInvoice(data)}
+                                    variant="solid"
+                                    color="#383ab6"
+                                >
+                                    Process Payroll
+                                </Button>
+                                {/* <InputGroup>
+                                        <InputLeftElement pointerEvents="none">
+                                            <Icon
+                                                as={FiSearch}
+                                                color="fg.muted"
+                                                boxSize="5"
+                                            />
+                                        </InputLeftElement>
+                                        <Input placeholder="Search" />
+                                    </InputGroup> */}
                             </Stack>
                         </Box>
                         <Box overflowX="auto">

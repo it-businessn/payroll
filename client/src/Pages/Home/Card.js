@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 
-export const Card = (props) => (
+export const Card = ({ children, ...props }) => (
     <Box
         borderWidth="1px"
         minH="3xs"
@@ -8,5 +8,7 @@ export const Card = (props) => (
         boxShadow="sm"
         borderRadius="lg"
         {...props}
-    />
+    >
+        {children}
+    </Box>
 );

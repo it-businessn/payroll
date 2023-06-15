@@ -2,7 +2,6 @@ import {
     Avatar,
     Badge,
     Box,
-    Button,
     HStack,
     Icon,
     IconButton,
@@ -64,20 +63,6 @@ export const MemberTable = ({ members }) => {
             country: member.address.country,
         });
         onOpen();
-    };
-    const generateInvoice = async (member) => {
-        try {
-            let value = {
-                annualSalary: member.annualSalary,
-            };
-            const updateData = await api.addUserPaymentDetailsById(
-                member._id,
-                value
-            );
-        } catch (error) {
-            // setError(error.response.data.error);
-            console.log(error);
-        }
     };
     return (
         <>
@@ -152,13 +137,6 @@ export const MemberTable = ({ members }) => {
                                         variant="ghost"
                                         aria-label="Edit member"
                                     />
-                                    <Button
-                                        onClick={() => generateInvoice(member)}
-                                        variant="solid"
-                                        color="#383ab6"
-                                    >
-                                        Generate Invoice
-                                    </Button>
                                 </HStack>
                             </Td>
                         </Tr>

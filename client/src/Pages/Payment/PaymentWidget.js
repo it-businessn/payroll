@@ -1,14 +1,4 @@
-import {
-    Box,
-    Card,
-    CardBody,
-    CardHeader,
-    Container,
-    Flex,
-    Heading,
-    Stack,
-    StackDivider,
-} from "@chakra-ui/react";
+import { Box, Container, Flex, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar";
@@ -38,41 +28,56 @@ function PaymentWidget() {
             bg="bg.canvas"
             overflowY="auto"
         >
-            <Sidebar user={user.userDetails.data}></Sidebar>
-            <Container py="8" flex="1" maxW="100%">
-                {userData && (
-                    <Stack
-                        spacing={{
-                            base: "8",
-                            lg: "6",
+            <Sidebar user={user.userDetails.data}>
+                <Container
+                    py={{
+                        base: "4",
+                        md: "8",
+                    }}
+                    px={{
+                        base: "0",
+                        md: 8,
+                    }}
+                    maxW="100%"
+                >
+                    {" "}
+                    <Box
+                        bg="#fff"
+                        boxShadow={{
+                            base: "none",
+                            md: "sm",
+                        }}
+                        borderRadius={{
+                            base: "none",
+                            md: "lg",
                         }}
                     >
-                        <Card>
-                            <CardHeader>
-                                <Heading size="md">
-                                    Your Invoice Information
-                                </Heading>
-                            </CardHeader>
-                            <CardBody>
-                                <Stack divider={<StackDivider />}>
-                                    <Flex>
-                                        <Box p="4">
-                                            {userData && (
-                                                <PaymentTable
-                                                    user={userData}
-                                                    members={
-                                                        userData.paymentInfo
-                                                    }
-                                                />
-                                            )}
-                                        </Box>
-                                    </Flex>
+                        <Stack spacing="5">
+                            <Box pt="5">
+                                <Stack
+                                    direction={{
+                                        base: "column",
+                                        md: "row",
+                                    }}
+                                    justify="space-between"
+                                >
+                                    <Text fontSize="lg" fontWeight="medium">
+                                        Your Payroll Information
+                                    </Text>
                                 </Stack>
-                            </CardBody>
-                        </Card>
-                    </Stack>
-                )}
-            </Container>
+                            </Box>
+                            <Box overflowX="auto">
+                                {userData && (
+                                    <PaymentTable
+                                        user={userData}
+                                        members={userData.paymentInfo}
+                                    />
+                                )}
+                            </Box>
+                        </Stack>
+                    </Box>
+                </Container>
+            </Sidebar>
         </Flex>
     );
 }

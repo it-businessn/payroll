@@ -19,11 +19,13 @@ import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar";
+import { userCurrency } from "../../config/userSchema.js";
 import { UserProfile } from "../Home/UserProfile";
 function UserDetail() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const navigate = useNavigate();
     const [userData, setData] = useState(null);
+
     useEffect(() => {
         fetchUserData(user.userDetails.data._id);
     }, []);
@@ -137,7 +139,13 @@ function UserDetail() {
                                                     Annual Salary
                                                 </FormLabel>
                                                 <Text>
-                                                    {userData.annualSalary}
+                                                    {userCurrency(
+                                                        user.userDetails.data
+                                                            .bankDetails
+                                                            .currency
+                                                    ).format(
+                                                        userData.annualSalary
+                                                    )}
                                                 </Text>
                                             </FormControl>
 

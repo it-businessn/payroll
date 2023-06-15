@@ -24,12 +24,21 @@ export const calculatePay = (annualSalary, paymentStartDate) => {
 };
 
 export const getCurrencyAndUpdateBankDetails = (request) => {
-    let getCurrencyAbbreviation = currencyMapper.getCurrencyAbbreviation;
-    let currency = getCurrencyAbbreviation(request.country);
+    if (request.country === "USA") {
+        request.country = "United States";
+    }
+    let getCurrency = currencyMapper.getCountry;
     let accountNumber = request.accountNumber;
     let branchTransitNumber = request.branchTransitNumber;
     let institutionNumber = request.institutionNumber;
-    return { currency, accountNumber, branchTransitNumber, institutionNumber };
+    let result = getCurrency(request.country);
+    let currency = result.currency;
+    return {
+        currency,
+        accountNumber,
+        branchTransitNumber,
+        institutionNumber,
+    };
 };
 
 export const getUserAttendanceDetails = (request, user) => {

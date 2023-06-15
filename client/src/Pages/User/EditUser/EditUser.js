@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../../api/index.js";
 import Sidebar from "../../../components/Sidebar.js";
-import { UserSchema } from "../../../config/userSchema.js";
+import { UserSchema, userCurrency } from "../../../config/userSchema.js";
 import { UserProfile } from "../../Home/UserProfile.js";
 export default function EditUser() {
     const user = JSON.parse(localStorage.getItem("profile"));
@@ -223,9 +223,13 @@ export default function EditUser() {
                                                                 Annual Salary
                                                             </FormLabel>
                                                             <Input
-                                                                defaultValue={
+                                                                defaultValue={userCurrency(
+                                                                    userData
+                                                                        .bankDetails
+                                                                        .currency
+                                                                ).format(
                                                                     userData.annualSalary
-                                                                }
+                                                                )}
                                                                 {...field}
                                                             />
                                                         </FormControl>

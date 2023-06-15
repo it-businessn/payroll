@@ -1,16 +1,23 @@
 import {
     Container,
     Flex,
-    Heading,
+    FormControl,
+    FormLabel,
+    Select,
     SimpleGrid,
     Stack,
-    Text,
     useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
+import { AreaChart } from "./AreaChart";
+import { BarChart } from "./BarChart";
 import { Card } from "./Card";
+import { DoughnutChart } from "./DoughnutChart";
+import { LineChart } from "./LineChart";
+import { PieChart } from "./PieChart";
+import { StackedBarChart } from "./StackedBarChart";
 
 function Home() {
     const navigate = useNavigate();
@@ -56,20 +63,29 @@ function Home() {
                             lg: "center",
                         }}
                     >
-                        <Stack spacing="1">
-                            <Heading
-                                size={{
-                                    base: "xs",
-                                    lg: "sm",
-                                }}
-                                fontWeight="medium"
-                            >
-                                Dashboard
-                            </Heading>
-                            <Text color="fg.muted">
-                                All important metrics at a glance
-                            </Text>
-                        </Stack>
+                        <Flex justifyContent="flex-end">
+                            <FormControl>
+                                <FormLabel>Country</FormLabel>
+                                <Select placeholder="Select country">
+                                    <option>United Arab Emirates</option>
+                                    <option>Nigeria</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Country</FormLabel>
+                                <Select placeholder="Select country">
+                                    <option>United Arab Emirates</option>
+                                    <option>Nigeria</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Country</FormLabel>
+                                <Select placeholder="Select country">
+                                    <option>United Arab Emirates</option>
+                                    <option>Nigeria</option>
+                                </Select>
+                            </FormControl>
+                        </Flex>
                     </Stack>
                     <Stack
                         spacing={{
@@ -84,12 +100,26 @@ function Home() {
                             }}
                             gap="6"
                         >
-                            <Card />
-                            <Card />
-                            <Card />
+                            <Card>
+                                <BarChart />
+                            </Card>
+                            <Card>
+                                <DoughnutChart />
+                            </Card>
+                            <Card>
+                                <LineChart />
+                            </Card>
+                            <Card>
+                                <AreaChart />
+                            </Card>
+                            <Card>
+                                <StackedBarChart />
+                            </Card>
+                            <Card>
+                                <PieChart />
+                            </Card>
                         </SimpleGrid>
                     </Stack>
-                    <Card minH="sm" />
                 </Stack>
             </Container>
         </Flex>

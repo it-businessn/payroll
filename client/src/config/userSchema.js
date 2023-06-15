@@ -35,3 +35,8 @@ export const ResetPasswordSchema = object().shape({
         .required("Please enter email")
         .email("Email must be a valid email address"),
 });
+export const userCurrency = (currency) =>
+    new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: currency,
+    });
