@@ -1,71 +1,131 @@
-import { Button, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as api from "../../api/index.js";
-import FormikForm from "../../components/FormikForm.js";
-import { LoginSchema } from "../../config/userSchema.js";
-import Copyright from "../Copyright.js";
-import "./Login.css";
-import { loginFormFields, loginInitialValues } from "./loginFormFields.js";
-export default function Login() {
-    const [hasError, setError] = useState("");
-
-    const navigate = useNavigate();
-    const handleSubmit = async (values) => {
-        try {
-            const userData = await api.signIn(values);
-            const userDetails = userData?.data;
-            const userToken = userData?.token;
-            const profile = { userDetails, userToken };
-            localStorage.setItem("profile", JSON.stringify(profile));
-            userDetails.data.active
-                ? navigate("/home")
-                : navigate("/verify-email");
-        } catch (error) {
-            setError(error.response.data.error);
-            console.log(error);
-        }
-    };
-    return (
-        <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-            <Flex flex={1}>
-                <Image
-                    alt={"Login Image"}
-                    objectFit={"cover"}
-                    src={
-                        "https://img.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg?w=1060&t=st=1686351582~exp=1686352182~hmac=ccf1a43bb22cebc2353784a5fa04abf12c61f774a97936d1d825985b9e45ad39"
-                    }
-                />
-            </Flex>
-            <Flex
-                p={8}
-                flex={1}
-                flexDirection="column"
-                align={"center"}
-                justify="space-evenly"
+import {
+    Avatar,
+    AvatarGroup,
+    Box,
+    Center,
+    DarkMode,
+    Flex,
+    HStack,
+    Heading,
+    Stack,
+    Text,
+    useColorModeValue as mode,
+    useBreakpointValue,
+} from "@chakra-ui/react";
+import Logo from "../Home/Logo";
+import { SignInForm } from "./SignInForm";
+export const Login = () => (
+    <Flex
+        minH={{
+            base: "auto",
+            md: "100vh",
+        }}
+        bgGradient={{
+            md: mode(
+                "linear(to-r, purple.600 50%, white 50%)",
+                "linear(to-r, purple.600 50%, gray.900 50%)"
+            ),
+        }}
+    >
+        <Flex maxW="8xl" mx="auto" width="full">
+            <Box
+                flex="1"
+                display={{
+                    base: "none",
+                    md: "block",
+                }}
             >
-                <Stack spacing={4} w={"full"} maxW={"md"}>
-                    <Heading fontSize={"2xl"}>Sign in to your account</Heading>
-                    <FormikForm
-                        formSubmit={handleSubmit}
-                        schema={LoginSchema}
-                        initialValues={loginInitialValues}
-                        formFields={loginFormFields}
-                    />
-                    {hasError && <Text fontSize="md">{hasError}</Text>}
-                    <Stack pt={6}>
-                        <Text align={"center"}>
-                            Don't have an account? &nbsp;
-                            <Link to="/sign-up">
-                                <Button color="#383ab6" variant="link">
-                                    Sign Up
-                                </Button>
-                            </Link>
-                        </Text>
-                    </Stack>
-                </Stack>
-                <Copyright sx={{ mt: 7 }} />
-            </Flex>
-        </Stack>
-    );
-}
+                <DarkMode>
+                    <Flex
+                        direction="column"
+                        px={{
+                            base: "4",
+                            md: "8",
+                        }}
+                        height="full"
+                        color="fg.accent.default"
+                    >
+                        <Flex align="center" h="24">
+                            <Logo />
+                        </Flex>
+                        <Flex flex="1" align="center">
+                            <Stack spacing="8">
+                                <Stack spacing="6">
+                                    <Heading
+                                        size={{
+                                            md: "lg",
+                                            xl: "xl",
+                                        }}
+                                    >
+                                        Start making your dreams come true
+                                    </Heading>
+                                    <Text
+                                        textStyle="lg"
+                                        maxW="md"
+                                        fontWeight="medium"
+                                    >
+                                        Create an account and discover the
+                                        worlds' best UI component framework.
+                                    </Text>
+                                </Stack>
+                                <HStack spacing="4">
+                                    <AvatarGroup
+                                        size="md"
+                                        max={useBreakpointValue({
+                                            base: 2,
+                                            lg: 5,
+                                        })}
+                                        borderColor="fg.accent.default"
+                                    >
+                                        <Avatar
+                                            name="Ryan Florence"
+                                            src="https://bit.ly/ryan-florence"
+                                        />
+                                        <Avatar
+                                            name="Segun Adebayo"
+                                            src="https://bit.ly/sage-adebayo"
+                                        />
+                                        <Avatar
+                                            name="Kent Dodds"
+                                            src="https://bit.ly/kent-c-dodds"
+                                        />
+                                        <Avatar
+                                            name="Prosper Otemuyiwa"
+                                            src="https://bit.ly/prosper-baba"
+                                        />
+                                        <Avatar
+                                            name="Christian Nwamba"
+                                            src="https://bit.ly/code-beast"
+                                        />
+                                    </AvatarGroup>
+                                    <Text fontWeight="medium">
+                                        Join 10.000+ users
+                                    </Text>
+                                </HStack>
+                            </Stack>
+                        </Flex>
+                        <Flex align="center" h="24">
+                            <Text color="fg.accent.subtle" textStyle="sm">
+                                © 2023 BusinessN. All rights reserved.
+                            </Text>
+                        </Flex>
+                    </Flex>
+                </DarkMode>
+            </Box>
+            <Center flex="1">
+                <SignInForm
+                    px={{
+                        base: "4",
+                        md: "8",
+                    }}
+                    py={{
+                        base: "12",
+                        md: "48",
+                    }}
+                    width="full"
+                    maxW="md"
+                />
+            </Center>
+        </Flex>
+    </Flex>
+);

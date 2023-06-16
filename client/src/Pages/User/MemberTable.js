@@ -56,17 +56,17 @@ export const MemberTable = ({ members }) => {
             annualSalary: member.annualSalary,
             dateOfJoining: member.dateOfJoining,
             phoneNumber: member.phoneNumber,
-            streetNumber: member.address.streetNumber,
-            city: member.address.city,
-            state: member.address.state,
-            postalCode: member.address.postalCode,
-            country: member.address.country,
+            streetNumber: member.streetNumber,
+            city: member.city,
+            state: member.state,
+            postalCode: member.postalCode,
+            country: member.country,
         });
         onOpen();
     };
     return (
         <>
-            <Table>
+            <Table size="sm" maxWidth="100%" variant="simple">
                 <Thead bg="#f0f2f4">
                     <Tr>
                         <Th>
@@ -113,7 +113,9 @@ export const MemberTable = ({ members }) => {
                                 <Badge
                                     size="sm"
                                     colorScheme={
-                                        member.active ? "green" : "red"
+                                        member.active === "Yes"
+                                            ? "green"
+                                            : "red"
                                     }
                                 >
                                     {member.activeStatus}
@@ -144,7 +146,7 @@ export const MemberTable = ({ members }) => {
                 </Tbody>
             </Table>
             {record && (
-                <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+                <Modal size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
                         <ModalHeader>Edit Record</ModalHeader>

@@ -11,7 +11,7 @@ export default function Copyright() {
                     target="_blank"
                     href="https://www.businessn.com/"
                 >
-                    businessn
+                    BusinessN
                 </Link>
                 &nbsp;
                 {new Date().getFullYear()}

@@ -2,15 +2,13 @@ import {
     Button,
     FormControl,
     FormLabel,
+    HStack,
     Input,
     Select,
     Stack,
-    Text,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
-import moment from "moment";
 import React from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 
@@ -26,42 +24,29 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
             }
         },
     });
-    const { errors, isValid, touched, dirty, getFieldProps } = formik;
     return (
         <FormikProvider value={formik}>
-            <Form sx={{ mt: 2 }}>
+            <Form>
                 {formFields.map((item) =>
                     item.field === "textField" ? (
                         <Field name={item.name} key={item.name}>
                             {({ field, form }) => (
-                                <FormControl
-                                    key={item.name}
-                                    // isInvalid={
-                                    //     form.errors.name && form.touched.name
-                                    // }
-                                >
-                                    <FormLabel>{item.label}</FormLabel>
+                                <FormControl>
+                                    <FormLabel marginTop=".5em">
+                                        {item.label}
+                                    </FormLabel>
                                     <Input
                                         {...field}
                                         type={item.type}
                                         placeholder={item.placeholder}
-                                        _placeholder={{ color: "gray.500" }}
                                     />
-                                    {/* <FormErrorMessage>
-                                        {form.errors.name}
-                                    </FormErrorMessage> */}
                                 </FormControl>
                             )}
                         </Field>
                     ) : item.field === "radio" ? (
                         <Field name={item.name} key={item.name}>
                             {({ field, form: { setFieldValue } }) => (
-                                <FormControl
-                                    key={item.name}
-                                    // isInvalid={
-                                    //     form.errors.name && form.touched.name
-                                    // }
-                                >
+                                <FormControl>
                                     <FormLabel>{item.label}</FormLabel>
                                     <Stack direction="row">
                                         <label className="text-gray-500 font-bold">
@@ -91,7 +76,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                     ) : item.field === "date" ? (
                         <Field name={item.name} key={item.name}>
                             {({ field, form: { setFieldValue } }) => (
-                                <FormControl key={item.name}>
+                                <FormControl>
                                     <FormLabel>{item.label}</FormLabel>
                                     <Input
                                         placeholder="Select Date and Time"
@@ -120,32 +105,25 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                             )}
                         </Field>
                     ) : item.field === "link" ? (
-                        <Text align={"right"} style={item.style} key={item.id}>
+                        <HStack justify="end" marginTop=".5em" key={item.label}>
                             <Link to={item.path}>
-                                <Button color="#383ab6" variant="link">
+                                <Button variant={item.variant} size="sm">
                                     {item.label}
                                 </Button>
                             </Link>
-                        </Text>
+                        </HStack>
                     ) : (
                         item.field === "button" && (
-                            <Button
-                                loadingText="Submitting"
-                                size="lg"
-                                color={"white"}
-                                _hover={{
-                                    bg: "#494bc7",
-                                }}
-                                mt={3}
-                                width={item.fullWidth}
-                                colorScheme={item.color}
-                                variant={item.variant}
-                                type={item.type}
-                                bg={"#383ab6"}
-                                key={item.label}
-                            >
-                                {item.label}
-                            </Button>
+                            <Stack marginTop=".5em" key={item.label}>
+                                <Button
+                                    loadingText="Submitting"
+                                    variant={item.variant}
+                                    type={item.type}
+                                    size={item.size}
+                                >
+                                    {item.label}
+                                </Button>
+                            </Stack>
                         )
                     )
                 )}

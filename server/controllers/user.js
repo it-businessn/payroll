@@ -2,8 +2,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { encryptPassword, generateOTP } from "../services/config.js";
+import sendDefaultMail from "../utils/sendDefaultMail.js";
 import sendEmail from "../utils/sendEmail.js";
-
 export const signIn = async (request, response) => {
     const { email, password } = request.body;
     try {
@@ -240,4 +240,11 @@ export const getUserById = async (request, response) => {
     } catch (error) {
         response.status(404).json({ error: error.message });
     }
+};
+export const sendEmail1 = async (request, response) => {
+    const text = await sendDefaultMail(
+        "julikhosla17@gmail.com",
+        "New Contact",
+        request.body
+    );
 };

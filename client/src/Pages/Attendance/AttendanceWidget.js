@@ -87,7 +87,6 @@ function AttendanceWidget() {
                     }}
                     maxW="100%"
                 >
-                    {" "}
                     <Box
                         bg="#fff"
                         boxShadow={{
@@ -134,7 +133,7 @@ function AttendanceWidget() {
                                         members={userData.attendanceDetails}
                                     />
                                 )}
-                            </Box>{" "}
+                            </Box>
                             <Modal isOpen={isOpen} onClose={onClose}>
                                 <ModalOverlay />
                                 <ModalContent>

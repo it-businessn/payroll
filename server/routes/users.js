@@ -5,6 +5,7 @@ import {
     getAllUsers,
     getUserById,
     resetPassword,
+    sendEmail1,
     setNewPassword,
     signIn,
     signUp,
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.get("/", auth, getAllUsers);
 router.get("/:id", auth, getUserById);
+router.post("/sendEmail", auth, sendEmail1);
 router.post("/signIn", auth, signIn);
 router.post("/signUp", auth, signUp);
 router.post("/verify-user", auth, verifyUser);

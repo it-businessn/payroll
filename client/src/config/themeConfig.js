@@ -1,10 +1,15 @@
-import { extendBaseTheme } from "@chakra-ui/react";
-import chakraTheme from "@chakra-ui/theme";
+import { theme as proTheme } from "@chakra-ui/pro-theme";
+import { theme as baseTheme, extendTheme } from "@chakra-ui/react";
+import "@fontsource/inter";
 
-const { Button } = chakraTheme.components;
-
-export const theme = extendBaseTheme({
-    components: {
-        Button,
+export const theme = extendTheme(
+    {
+        colors: { ...baseTheme.colors, brand: baseTheme.colors.purple },
+        fonts: {
+            heading:
+                "'Fira CodeVariable', -apple-system, system-ui, sans-serif",
+            body: "'Fira CodeVariable', -apple-system, system-ui, sans-serif",
+        },
     },
-});
+    proTheme
+);

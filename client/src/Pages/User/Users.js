@@ -11,31 +11,39 @@ import {
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar.js";
+import fakeData from "../../constants/fakedata";
 import { MemberTable } from "./MemberTable.js";
-
 export default function User() {
     const user = JSON.parse(localStorage.getItem("profile"));
-    const [data, setData] = useState(null);
+    // const [data, setData] = useState(null);
+    const data = fakeData;
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const fetchData = async () => {
-        try {
-            const userData = await api.getAllUsers();
-            let userDataRecords = userData.data.data;
-            userDataRecords.forEach((element) => {
-                element.activeStatus = element.active ? "Active" : "Not Active";
-            });
-            setData(userDataRecords);
-            setError(null);
-        } catch (error) {
-            setError(error.message);
-            setData(null);
-        } finally {
-            setLoading(false);
-        }
-    };
+
+    data.forEach((element) => {
+        element.activeStatus =
+            element.active === "Yes" ? "Active" : "Not Active";
+        element.address = `${element.streetNumber} ${element.city} ${element.state} ${element.postalCode} ${element.country}`;
+    });
+    // const fetchData = async () => {
+    //     try {
+    //         // const userData = await api.getAllUsers();
+    //         const userData = fakeData;
+    //         // let userDataRecords = userData.data.data;
+    //         // userDataRecords.forEach((element) => {
+    //         //     element.activeStatus = element.active ? "Active" : "Not Active";
+    //         // });
+    //         // setData(userData);
+    //         setError(null);
+    //     } catch (error) {
+    //         setError(error.message);
+    //         setData(null);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
     useEffect(() => {
-        fetchData();
+        // fetchData();
     }, []);
     const isMobile = useBreakpointValue({
         base: true,
@@ -111,7 +119,8 @@ export default function User() {
                             </Stack>
                         </Box>
                         <Box overflowX="auto">
-                            {data && <MemberTable members={data} />}
+                            {/* data && <MemberTable members={data} /> */}
+                            <MemberTable members={data} />
                         </Box>
                         <Box
                             px={{

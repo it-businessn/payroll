@@ -40,7 +40,6 @@ function PaymentWidget() {
                     }}
                     maxW="100%"
                 >
-                    {" "}
                     <Box
                         bg="#fff"
                         boxShadow={{
