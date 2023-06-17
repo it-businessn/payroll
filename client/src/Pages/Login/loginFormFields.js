@@ -88,6 +88,7 @@ export const userFormFields = [
         margin: "dense",
         fullWidth: true,
         id: "firstName",
+        isRequired: true,
         label: "First Name",
         size: "medium",
         name: "firstName",
@@ -98,6 +99,7 @@ export const userFormFields = [
     {
         field: "textField",
         margin: "dense",
+        isRequired: true,
         fullWidth: true,
         id: "middleName",
         label: "Middle Name",
@@ -111,6 +113,7 @@ export const userFormFields = [
         field: "textField",
         margin: "dense",
         fullWidth: true,
+        isRequired: true,
         id: "lastName",
         label: "Last Name",
         size: "medium",
@@ -241,12 +244,10 @@ export const userFormFields = [
     },
     {
         field: "button",
-        variant: "solid",
-        color: "#383ab6",
+        variant: "primary",
         id: "register",
         fullWidth: "100%",
         type: "submit",
-        size: "lg",
-        label: "Sign up",
+        label: "Create account",
     },
 ];

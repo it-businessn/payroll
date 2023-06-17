@@ -1,10 +1,11 @@
 import {
+    Box,
     Button,
     Center,
-    Flex,
+    Container,
     FormControl,
-    HStack,
     Heading,
+    HStack,
     PinInput,
     PinInputField,
     Stack,
@@ -12,21 +13,21 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
-import * as React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
+import Logo from "../Home/Logo";
 
-export default function VerifyEmail() {
-    const [user, setUser] = React.useState(
-        JSON.parse(localStorage.getItem("profile") || "")
-    );
+export const VerifyEmail = () => {
+    const user = JSON.parse(localStorage.getItem("profile") || "");
+
     const resetPasswordInitialValues = {
         email: user.userDetails.email,
         otp: "",
     };
-    const [hasError, setErrorMessage] = React.useState("");
-    const [OTP, setOTP] = React.useState("");
-    const [emailSentText, setEmailSentText] = React.useState("");
+    const [hasError, setErrorMessage] = useState("");
+    const [OTP, setOTP] = useState("");
+    const [emailSentText, setEmailSentText] = useState("");
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: { pin: "" },
@@ -57,94 +58,129 @@ export default function VerifyEmail() {
             console.log(error);
         }
     };
-
     return (
-        <Flex
-            minH={"100vh"}
-            align={"center"}
-            justify={"center"}
-            bg={useColorModeValue("gray.50", "gray.800")}
+        <Box
+            bgGradient={{
+                sm: "linear(to-r, purple.600, purple.600)",
+            }}
+            py={{
+                base: "12",
+                md: "24",
+            }}
+            height="100vh"
+            display="flex"
+            alignItems="center"
         >
-            <Stack
-                spacing={4}
-                w={"full"}
-                maxW={"md"}
-                bg={useColorModeValue("white", "gray.700")}
-                rounded={"xl"}
-                boxShadow={"lg"}
-                p={6}
-                my={10}
+            <Container
+                maxW="md"
+                py={{
+                    base: "0",
+                    sm: "8",
+                }}
+                px={{
+                    base: "4",
+                    sm: "10",
+                }}
+                bg={{
+                    base: "transparent",
+                    sm: "bg.surface",
+                }}
+                boxShadow={{
+                    base: "none",
+                    sm: "xl",
+                }}
+                borderRadius={{
+                    base: "none",
+                    sm: "xl",
+                }}
             >
-                <Center>
-                    <Heading
-                        lineHeight={1.1}
-                        fontSize={{ base: "2xl", md: "3xl" }}
-                    >
-                        Verify your Email
-                    </Heading>
-                </Center>
-                <Center
-                    fontSize={{ base: "sm", sm: "md" }}
-                    color={useColorModeValue("gray.800", "gray.400")}
-                >
-                    A verification code has been sent to your email.
-                </Center>
-                <Center color={useColorModeValue("gray.800", "gray.400")}>
-                    Enter your OTP below
-                </Center>
-                <Center
-                    fontSize={{ base: "sm", sm: "md" }}
-                    fontWeight="bold"
-                    color={useColorModeValue("gray.800", "gray.400")}
-                >
-                    {user.userDetails.email}
-                </Center>
-                <FormikProvider value={formik}>
-                    <Form>
-                        <Field name="pin">
-                            {({ field, form }) => (
-                                <FormControl>
-                                    <Center>
-                                        <HStack>
-                                            <PinInput
-                                                type="alphanumeric"
-                                                onChange={(value) =>
-                                                    setOTP(value)
-                                                }
-                                            >
-                                                <PinInputField />
-                                                <PinInputField />
-                                                <PinInputField />
-                                                <PinInputField />
-                                                <PinInputField />
-                                                <PinInputField />
-                                            </PinInput>
-                                        </HStack>
-                                    </Center>
-                                </FormControl>
-                            )}
-                        </Field>
-                        <Stack spacing={6}>
-                            <Button
-                                bg={"#383ab6"}
-                                color={"white"}
-                                _hover={{
-                                    bg: "#494bc7",
+                <Stack spacing="8">
+                    <Stack spacing="6">
+                        <Logo />
+                        <Stack
+                            spacing={{
+                                base: "6",
+                                md: "3",
+                            }}
+                            textAlign="center"
+                        >
+                            <Heading
+                                size={{
+                                    base: "xs",
+                                    md: "sm",
                                 }}
-                                type="submit"
                             >
-                                Verify
-                            </Button>
+                                Verify your Email
+                            </Heading>
+                            <Center
+                                fontSize={{ base: "sm", sm: "md" }}
+                                color={useColorModeValue(
+                                    "gray.800",
+                                    "gray.400"
+                                )}
+                            >
+                                A verification code has been sent to your email
+                                at
+                            </Center>
+                            <Center
+                                fontSize={{ base: "sm", sm: "md" }}
+                                fontWeight="bold"
+                                color={useColorModeValue(
+                                    "gray.800",
+                                    "gray.400"
+                                )}
+                            >
+                                {user.userDetails.email}
+                            </Center>
+                            <HStack spacing="1" justify="center">
+                                <FormikProvider value={formik}>
+                                    <Form>
+                                        <Field name="pin">
+                                            {({ field, form }) => (
+                                                <FormControl>
+                                                    <HStack>
+                                                        <PinInput
+                                                            type="alphanumeric"
+                                                            onChange={(value) =>
+                                                                setOTP(value)
+                                                            }
+                                                        >
+                                                            <PinInputField />
+                                                            <PinInputField />
+                                                            <PinInputField />
+                                                            <PinInputField />
+                                                            <PinInputField />
+                                                            <PinInputField />
+                                                        </PinInput>
+                                                    </HStack>
+                                                </FormControl>
+                                            )}
+                                        </Field>
+                                        <Stack>
+                                            <Button
+                                                marginTop="1em"
+                                                variant="primary"
+                                                type="submit"
+                                            >
+                                                Verify
+                                            </Button>
+                                        </Stack>
+                                    </Form>
+                                </FormikProvider>
+
+                                {hasError && (
+                                    <Text align={"center"}>{hasError}</Text>
+                                )}
+                            </HStack>
+                            {emailSentText && (
+                                <Text color="green" align="center">
+                                    {emailSentText}
+                                </Text>
+                            )}
                         </Stack>
-                    </Form>
-                </FormikProvider>
-                {emailSentText && (
-                    <Text colorScheme="green" align={"center"}>
-                        {emailSentText}
-                    </Text>
-                )}
-                {hasError && <Text align={"center"}>{hasError}</Text>}
-            </Stack>
-        </Flex>
+                    </Stack>
+                </Stack>
+            </Container>
+        </Box>
     );
-}
+};

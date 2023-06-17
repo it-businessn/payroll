@@ -1,16 +1,23 @@
-import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
-import React from "react";
+import {
+    Box,
+    Button,
+    Container,
+    Heading,
+    HStack,
+    Stack,
+    Text,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
 import { UserSchema } from "../../config/userSchema.js";
+import Logo from "../Home/Logo";
 import { userFormFields, userInitialValues } from "../Login/loginFormFields.js";
-import "./SignUp.css";
-import Copyright from "../Copyright.js";
 
-export default function SignUp() {
+export const SignUp = () => {
     const navigate = useNavigate();
-    const [hasError, setError] = React.useState("");
+    const [hasError, setError] = useState("");
     const handleSubmit = async (values) => {
         try {
             const userData = await api.signUp(values);
@@ -24,37 +31,46 @@ export default function SignUp() {
         }
     };
     return (
-        <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-            <Flex
-                flex={1}
-                align={"center"}
-                justify={"center"}
-                sx={{ padding: "2em 0" }}
-            >
-                <Stack spacing={4} w={"full"} maxW={"1200px"}>
-                    <Heading fontSize={"2xl"}>
-                        Let's create your account
-                    </Heading>
+        <Container
+            py={{
+                base: "3",
+            }}
+            maxW="3xl"
+        >
+            <Box>
+                <Stack spacing="8">
+                    <Stack align="center">
+                        <Logo />
+                        <Stack spacing="3" textAlign="center">
+                            <Heading
+                                size={{
+                                    base: "xs",
+                                    md: "sm",
+                                }}
+                            >
+                                Create an account
+                            </Heading>
+                        </Stack>
+                    </Stack>
                     <FormikForm
                         formSubmit={handleSubmit}
                         schema={UserSchema}
                         initialValues={userInitialValues}
                         formFields={userFormFields}
                     />
-                    {hasError && <Text fontSize="md">{hasError}</Text>}
-                    <Stack pt={6}>
-                        <Text align={"center"}>
-                            Already have an account? &nbsp;
-                            <Link to="/sign-in">
-                                <Button color="#383ab6" variant="link">
-                                    Sign In
-                                </Button>
-                            </Link>
+                    <HStack justify="center" spacing="1">
+                        <Text textStyle="sm" color="fg.muted">
+                            Already have an account?
                         </Text>
-                    </Stack>
-                    <Copyright sx={{ mt: 7 }} />
+                        <Link to="/sign-in">
+                            <Button variant="text" size="sm">
+                                Log in
+                            </Button>
+                        </Link>
+                    </HStack>
+                    {hasError && <Text color="red">{hasError}</Text>}
                 </Stack>
-            </Flex>
-        </Stack>
+            </Box>
+        </Container>
     );
-}
+};

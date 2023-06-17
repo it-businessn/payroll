@@ -1,18 +1,22 @@
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
     Button,
     FormControl,
     FormLabel,
     HStack,
     Input,
+    InputGroup,
+    InputRightElement,
     Select,
     Stack,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 
 function FormikForm({ schema, initialValues, formFields, formSubmit }) {
+    const [showPassword, setShowPassword] = useState(false);
     const formik = useFormik({
         initialValues,
         validationSchema: schema,
@@ -31,15 +35,48 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                     item.field === "textField" ? (
                         <Field name={item.name} key={item.name}>
                             {({ field, form }) => (
-                                <FormControl>
+                                <FormControl
+                                    id={item.id}
+                                    isRequired={item.isRequired}
+                                >
                                     <FormLabel marginTop=".5em">
                                         {item.label}
                                     </FormLabel>
-                                    <Input
-                                        {...field}
-                                        type={item.type}
-                                        placeholder={item.placeholder}
-                                    />
+                                    {item.id === "password" ? (
+                                        <InputGroup>
+                                            <Input
+                                                {...field}
+                                                type={
+                                                    showPassword
+                                                        ? "text"
+                                                        : "password"
+                                                }
+                                            />
+                                            <InputRightElement h={"full"}>
+                                                <Button
+                                                    variant={"ghost"}
+                                                    onClick={() =>
+                                                        setShowPassword(
+                                                            (showPassword) =>
+                                                                !showPassword
+                                                        )
+                                                    }
+                                                >
+                                                    {showPassword ? (
+                                                        <ViewIcon />
+                                                    ) : (
+                                                        <ViewOffIcon />
+                                                    )}
+                                                </Button>
+                                            </InputRightElement>
+                                        </InputGroup>
+                                    ) : (
+                                        <Input
+                                            {...field}
+                                            type={item.type}
+                                            placeholder={item.placeholder}
+                                        />
+                                    )}
                                 </FormControl>
                             )}
                         </Field>
