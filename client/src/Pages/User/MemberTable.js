@@ -27,7 +27,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
 import * as api from "../../api/index.js";
 import { UserSchema } from "../../config/userSchema";
-import { userFormFields } from "../Login/loginFormFields";
+import { userFormFields } from "../../constants/constant.js";
 import PersonalInfoCard from "./EditUser/PersonalInfoCard";
 export const MemberTable = ({ members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();

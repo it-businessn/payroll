@@ -1,0 +1,4 @@
+div:has(> a.active) {
+    background: #bae25d66;
+    border-radius: 8px;
+}

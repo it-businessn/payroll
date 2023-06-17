@@ -11,8 +11,11 @@ import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm";
 import { LoginSchema } from "../../config/userSchema";
+import {
+    loginFormFields,
+    loginInitialValues,
+} from "../../constants/constant.js";
 import Logo from "../Home/Logo";
-import { loginFormFields, loginInitialValues } from "./loginFormFields";
 export const SignInForm = (props) => {
     const [hasError, setError] = useState("");
     const navigate = useNavigate();

@@ -1,5 +1,4 @@
 import {
-    Box,
     Card,
     CardBody,
     Container,
@@ -19,7 +18,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar";
-import { UserProfile } from "../Home/UserProfile";
+import { UserProfile } from "../User/UserProfile.js";
 function BankDetail() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const navigate = useNavigate();
@@ -58,32 +57,29 @@ function BankDetail() {
                         <Card>
                             <CardBody>
                                 <Flex>
-                                    <Box p="4">
-                                        <Heading
-                                            size="xs"
-                                            textTransform="uppercase"
-                                        >
-                                            <UserProfile
-                                                user={userData}
-                                                image="https://tinyurl.com/yhkm2ek8"
-                                            />
-                                        </Heading>
-                                    </Box>
-                                    <Spacer />
-                                    <Box p="4">
-                                        <IconButton
-                                            onClick={() =>
-                                                navigate(
-                                                    `/add-bank-detail/${userData._id}`
-                                                )
-                                            }
-                                            icon={
-                                                <FiEdit2 fontSize="1.25rem" />
-                                            }
-                                            variant="ghost"
-                                            aria-label="Edit member"
+                                    <Stack
+                                        spacing={{
+                                            base: "5",
+                                            sm: "6",
+                                        }}
+                                    >
+                                        <UserProfile
+                                            user={userData}
+                                            image="https://tinyurl.com/yhkm2ek8"
                                         />
-                                    </Box>
+                                    </Stack>
+                                    <Spacer />
+                                    <IconButton
+                                        onClick={() =>
+                                            navigate(
+                                                `/add-bank-detail/${userData._id}`
+                                            )
+                                        }
+                                        icon={<FiEdit2 fontSize="1.25rem" />}
+                                        variant="ghost"
+                                        color="primary"
+                                        aria-label="Edit member"
+                                    />
                                 </Flex>
                             </CardBody>
                         </Card>
@@ -91,72 +87,59 @@ function BankDetail() {
                             <CardBody>
                                 <Stack divider={<StackDivider />}>
                                     <Flex>
-                                        <Box p="4">
-                                            <Heading
-                                                size="xs"
-                                                textTransform="uppercase"
-                                            >
-                                                Bank Information
-                                            </Heading>
-                                        </Box>
+                                        <Heading size="xs">
+                                            Bank Information
+                                        </Heading>
 
                                         <Spacer />
                                     </Flex>
-                                    <Box>
-                                        <SimpleGrid columns={3} spacing={8}>
-                                            <FormControl id="accountNumber">
-                                                <FormLabel>
-                                                    Account Number
-                                                </FormLabel>
-                                                <Text>
-                                                    {
-                                                        userData?.bankDetails
-                                                            ?.accountNumber
-                                                    }
-                                                </Text>
-                                            </FormControl>
-                                            <FormControl id="branchTransitNumber">
-                                                <FormLabel>
-                                                    Branch Transit Number
-                                                </FormLabel>
-                                                <Text>
-                                                    {
-                                                        userData?.bankDetails
-                                                            ?.branchTransitNumber
-                                                    }
-                                                </Text>
-                                            </FormControl>
-                                            <FormControl id="institutionNumber">
-                                                <FormLabel>
-                                                    Institution Number
-                                                </FormLabel>
-                                                <Text>
-                                                    {
-                                                        userData?.bankDetails
-                                                            ?.institutionNumber
-                                                    }
-                                                </Text>
-                                            </FormControl>
-                                            <FormControl id="email">
-                                                <FormLabel>
-                                                    Email address
-                                                </FormLabel>
-                                                <Text>{userData.email}</Text>
-                                            </FormControl>
-                                            <FormControl id="phone">
-                                                <FormLabel>
-                                                    Phone Number
-                                                </FormLabel>
-                                                <Text>
-                                                    {userData.phoneNumber}
-                                                </Text>
-                                            </FormControl>
-                                            <FormControl id="role">
-                                                <FormLabel>Role</FormLabel>
-                                                <Text>{userData.role}</Text>
-                                            </FormControl>
-                                        </SimpleGrid>
-                                    </Box>
+                                    <SimpleGrid columns={3} spacing={8}>
+                                        <FormControl id="accountNumber">
+                                            <FormLabel>
+                                                Account Number
+                                            </FormLabel>
+                                            <Text>
+                                                {
+                                                    userData?.bankDetails
+                                                        ?.accountNumber
+                                                }
+                                            </Text>
+                                        </FormControl>
+                                        <FormControl id="branchTransitNumber">
+                                            <FormLabel>
+                                                Branch Transit Number
+                                            </FormLabel>
+                                            <Text>
+                                                {
+                                                    userData?.bankDetails
+                                                        ?.branchTransitNumber
+                                                }
+                                            </Text>
+                                        </FormControl>
+                                        <FormControl id="institutionNumber">
+                                            <FormLabel>
+                                                Institution Number
+                                            </FormLabel>
+                                            <Text>
+                                                {
+                                                    userData?.bankDetails
+                                                        ?.institutionNumber
+                                                }
+                                            </Text>
+                                        </FormControl>
+                                        <FormControl id="email">
+                                            <FormLabel>Email address</FormLabel>
+                                            <Text>{userData.email}</Text>
+                                        </FormControl>
+                                        <FormControl id="phone">
+                                            <FormLabel>Phone Number</FormLabel>
+                                            <Text>{userData.phoneNumber}</Text>
+                                        </FormControl>
+                                        <FormControl id="role">
+                                            <FormLabel>Role</FormLabel>
+                                            <Text>{userData.role}</Text>
+                                        </FormControl>
+                                    </SimpleGrid>
                                 </Stack>
                             </CardBody>
                         </Card>

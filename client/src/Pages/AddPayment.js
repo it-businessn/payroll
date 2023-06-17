@@ -5,7 +5,7 @@ import FormikForm from "../components/FormikForm";
 import {
     userPaymentFormFields,
     userPaymentInitialValues,
-} from "./Login/loginFormFields";
+} from "../constants/constant.js";
 
 function AddPayment() {
     const navigate = useNavigate();

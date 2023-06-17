@@ -15,7 +15,7 @@ import PaymentWidget from "./Pages/Payment/PaymentWidget";
 import { SignUp } from "./Pages/SignUp/SignUp";
 import { VerifyEmail } from "./Pages/SignUp/VerifyEmail";
 import EditUser from "./Pages/User/EditUser/EditUser";
-import UserDetail from "./Pages/User/UserDetail";
+import Profile from "./Pages/User/Profile";
 import User from "./Pages/User/Users";
 import ViewPayment from "./Pages/ViewPayment";
 
@@ -28,7 +28,7 @@ export default function RoutePages() {
             <Route exact path="/sign-up" element={<SignUp />} />
             <Route exact path="/verify-email" element={<VerifyEmail />} />
             <Route exact path="/users" element={<User />} />
-            <Route exact path="/profile" element={<UserDetail />} />
+            <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/payments" element={<Payment />} />
             <Route exact path="/bank-detail" element={<BankDetail />} />
             <Route exact path="/invoice-detail" element={<PaymentWidget />} />

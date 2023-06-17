@@ -12,8 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
 import { UserSchema } from "../../config/userSchema.js";
+import { userFormFields, userInitialValues } from "../../constants/constant.js";
 import Logo from "../Home/Logo";
-import { userFormFields, userInitialValues } from "../Login/loginFormFields.js";
 
 export const SignUp = () => {
     const navigate = useNavigate();

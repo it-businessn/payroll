@@ -77,11 +77,6 @@ export default function User() {
                 }}
             >
                 <Box
-                    bg="#fff"
-                    boxShadow={{
-                        base: "none",
-                        md: "sm",
-                    }}
                     borderRadius={{
                         base: "none",
                         md: "lg",
@@ -101,8 +96,7 @@ export default function User() {
                                 </Text>
                                 <Button
                                     onClick={() => generateInvoice(data)}
-                                    variant="solid"
-                                    color="#383ab6"
+                                    variant="primary"
                                 >
                                     Process Payroll
                                 </Button>

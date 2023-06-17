@@ -15,14 +15,15 @@ import {
 import React, { useState } from "react";
 import { FiLogOut, FiSearch, FiSettings } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
+import Logo from "../Pages/Home/Logo";
+import { NavButton } from "../Pages/Home/NavButton";
+import { UserProfile } from "../Pages/User/UserProfile";
 import {
     ADMIN_MENULIST,
     EMPLOYEE_MENULIST,
     USER_ROLE,
 } from "../constants/constant";
-import Logo from "../Pages/Home/Logo";
-import { NavButton } from "../Pages/Home/NavButton";
-import { UserProfile } from "../Pages/Home/UserProfile";
+import "./Sidebar.css";
 const getSideMenu = (role) =>
     role === USER_ROLE.EMPLOYEE ? EMPLOYEE_MENULIST : ADMIN_MENULIST;
 
@@ -32,10 +33,10 @@ const Sidebar = ({ user, children }) => {
     const toggle = () => setIsOpen(!isOpen);
     const menuItem = getSideMenu(user.role);
     return (
-        <Flex as="section" minH="100vh" bg="bg-canvas">
+        <Flex as="section" minH="100vh" bg="bg.canvas">
             <Flex
                 flex="1"
-                bg="bg-surface"
+                bg="bg.surface"
                 overflowY="auto"
                 boxShadow="md"
                 maxW={{
@@ -50,15 +51,9 @@ const Sidebar = ({ user, children }) => {
                     base: "4",
                     sm: "6",
                 }}
-                className="sidebar-class"
             >
-                <Stack justify="space-between" spacing="1">
-                    <Stack
-                        spacing={{
-                            base: "5",
-                            sm: "3",
-                        }}
-                    >
+                <Stack justify="space-between" spacing="1" width="full">
+                    <Stack shouldWrapChildren>
                         <Logo />
                         <InputGroup>
                             <InputLeftElement pointerEvents="none">
@@ -67,13 +62,10 @@ const Sidebar = ({ user, children }) => {
                             <Input placeholder="Search" />
                         </InputGroup>
                         {menuItem.map((item, index) => (
-                            <NavLink
-                                to={item.path}
-                                key={index}
-                                className="link"
-                            >
-                                <Stack spacing="1">
+                            <NavLink to={item.path} key={index}>
+                                <Stack>
                                     <NavButton
+                                        color="primary"
                                         label={item.name}
                                         icon={item.icon}
                                     />
@@ -89,8 +81,13 @@ const Sidebar = ({ user, children }) => {
                         }}
                     >
                         <Stack spacing="1">
-                            <NavButton label="Settings" icon={FiSettings} />
                             <NavButton
+                                color="primary"
+                                label="Settings"
+                                icon={FiSettings}
+                            />
+                            <NavButton
+                                color="primary"
                                 label="Logout"
                                 onClick={() => {
                                     localStorage.removeItem("profile");
@@ -127,7 +124,7 @@ const Sidebar = ({ user, children }) => {
                                     </Button>
                                     <Button
                                         variant="text"
-                                        color="#383ab6"
+                                        color="primary"
                                         size="sm"
                                     >
                                         Update profile

@@ -18,10 +18,10 @@ import React, { useEffect, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar.js";
 import { userCurrency } from "../../config/userSchema.js";
-import { UserProfile } from "../Home/UserProfile";
-function UserDetail() {
+import { UserProfile } from "./UserProfile.js";
+function Profile() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const navigate = useNavigate();
     const [userData, setData] = useState(null);
@@ -33,9 +33,7 @@ function UserDetail() {
         try {
             let user = await api.getUserById(id);
             setData(user.data.data);
-        } catch (error) {
-        } finally {
-        }
+        } catch (error) {}
     };
     return (
         <Flex
@@ -60,32 +58,29 @@ function UserDetail() {
                         <Card>
                             <CardBody>
                                 <Flex>
-                                    <Box p="4">
-                                        <Heading
-                                            size="xs"
-                                            textTransform="uppercase"
-                                        >
-                                            <UserProfile
-                                                user={userData}
-                                                image="https://tinyurl.com/yhkm2ek8"
-                                            />
-                                        </Heading>
-                                    </Box>
-                                    <Spacer />
-                                    <Box p="4">
-                                        <IconButton
-                                            onClick={() =>
-                                                navigate(
-                                                    `/edit-user/${userData._id}`
-                                                )
-                                            }
-                                            icon={
-                                                <FiEdit2 fontSize="1.25rem" />
-                                            }
-                                            variant="ghost"
-                                            aria-label="Edit member"
+                                    <Stack
+                                        spacing={{
+                                            base: "5",
+                                            sm: "6",
+                                        }}
+                                    >
+                                        <UserProfile
+                                            user={userData}
+                                            image="https://tinyurl.com/yhkm2ek8"
                                         />
-                                    </Box>
+                                    </Stack>
+                                    <Spacer />
+                                    <IconButton
+                                        onClick={() =>
+                                            navigate(
+                                                `/edit-user/${userData._id}`
+                                            )
+                                        }
+                                        icon={<FiEdit2 fontSize="1.25rem" />}
+                                        variant="ghost"
+                                        color="primary"
+                                        aria-label="Edit member"
+                                    />
                                 </Flex>
                             </CardBody>
                         </Card>
@@ -93,16 +88,9 @@ function UserDetail() {
                             <CardBody>
                                 <Stack divider={<StackDivider />}>
                                     <Flex>
-                                        <Box p="4">
-                                            <Heading
-                                                size="xs"
-                                                textTransform="uppercase"
-                                            >
-                                                Personal Information
-                                            </Heading>
-                                        </Box>
-
-                                        <Spacer />
+                                        <Heading size="xs">
+                                            Personal Information
+                                        </Heading>
                                     </Flex>
                                     <Box>
                                         <SimpleGrid columns={3} spacing={8}>
@@ -138,15 +126,17 @@ function UserDetail() {
                                                 <FormLabel>
                                                     Annual Salary
                                                 </FormLabel>
-                                                <Text>
-                                                    {userCurrency(
-                                                        user.userDetails.data
-                                                            .bankDetails
-                                                            .currency
-                                                    ).format(
-                                                        userData.annualSalary
-                                                    )}
-                                                </Text>
+                                                {userData?.bankDetails && (
+                                                    <Text>
+                                                        {userCurrency(
+                                                            userData
+                                                                ?.bankDetails
+                                                                .currency
+                                                        ).format(
+                                                            userData.annualSalary
+                                                        )}
+                                                    </Text>
+                                                )}
                                             </FormControl>
 
                                             <FormControl id="role">
@@ -162,25 +152,7 @@ function UserDetail() {
                             <CardBody>
                                 <Stack divider={<StackDivider />}>
                                     <Flex>
-                                        <Box p="4">
-                                            <Heading
-                                                size="xs"
-                                                textTransform="uppercase"
-                                            >
-                                                Address
-                                            </Heading>
-                                        </Box>
-
-                                        <Spacer />
-                                        {/* <Box p="4">
-                                        <IconButton
-                                            icon={
-                                                <FiEdit2 fontSize="1.25rem" />
-                                            }
-                                            variant="ghost"
-                                            aria-label="Edit member"
-                                        />
-                                    </Box> */}
+                                        <Heading size="xs">Address</Heading>
                                     </Flex>
 
                                     <Box>
@@ -239,4 +211,4 @@ function UserDetail() {
     );
 }
 
-export default UserDetail;
+export default Profile;

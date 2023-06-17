@@ -4,8 +4,8 @@ export const UserProfile = (props) => {
     const { user, image } = props;
     const userName = `${user.firstName} ${user.middleName} ${user.lastName}`;
     return (
-        <HStack spacing="3" ps="2">
-            <Avatar name={userName} src={image} boxSize="10" />
+        <HStack spacing="3">
+            <Avatar name={userName} src="" boxSize="12" />
             <Box>
                 <Text
                     fontWeight="medium"

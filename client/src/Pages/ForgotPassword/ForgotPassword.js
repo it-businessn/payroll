@@ -13,11 +13,11 @@ import { Link } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
 import { ResetPasswordSchema } from "../../config/userSchema";
-import Logo from "../Home/Logo";
 import {
     resetPasswordFormFields,
     resetPasswordInitialValues,
-} from "./passwordResetFormFields.js";
+} from "../../constants/constant.js";
+import Logo from "../Home/Logo";
 
 export const ForgotPassword = () => {
     const [hasError, setErrorMessage] = useState("");
