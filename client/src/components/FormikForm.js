@@ -17,11 +17,13 @@ import { Link } from "react-router-dom";
 
 function FormikForm({ schema, initialValues, formFields, formSubmit }) {
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const formik = useFormik({
         initialValues,
         validationSchema: schema,
         onSubmit: (formValues) => {
             try {
+                setIsLoading(true);
                 formSubmit(formValues);
             } catch (error) {
                 console.log(error);
@@ -153,7 +155,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                         item.field === "button" && (
                             <Stack marginTop=".5em" key={item.label}>
                                 <Button
-                                    loadingText="Submitting"
+                                    isLoading={isLoading}
                                     variant={item.variant}
                                     type={item.type}
                                     size={item.size}

@@ -8,6 +8,8 @@ import {
     FormLabel,
     Heading,
     Input,
+    InputGroup,
+    InputLeftElement,
     SimpleGrid,
     Spacer,
     Stack,
@@ -204,12 +206,20 @@ export default function EditUser() {
                                                         <FormLabel>
                                                             Annual Salary
                                                         </FormLabel>
-                                                        <Input
-                                                            defaultValue={
-                                                                userData.annualSalary
-                                                            }
-                                                            {...field}
-                                                        />
+                                                        <InputGroup>
+                                                            <InputLeftElement
+                                                                pointerEvents="none"
+                                                                color="gray.300"
+                                                                fontSize="1.2em"
+                                                                children="$"
+                                                            />
+                                                            <Input
+                                                                defaultValue={
+                                                                    userData.annualSalary
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </InputGroup>
                                                     </FormControl>
                                                 )}
                                             </Field>

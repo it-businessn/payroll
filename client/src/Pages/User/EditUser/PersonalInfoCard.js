@@ -1,9 +1,12 @@
+import { PhoneIcon } from "@chakra-ui/icons";
 import {
     Button,
     Flex,
     FormControl,
     FormLabel,
     Input,
+    InputGroup,
+    InputLeftElement,
     Stack,
 } from "@chakra-ui/react";
 
@@ -64,7 +67,16 @@ function PersonalInfoCard({ initialValues, schema, formSubmit, formFields }) {
                         {({ field, form }) => (
                             <FormControl id="phoneNumber">
                                 <FormLabel>Phone Number</FormLabel>
-                                <Input {...field} />
+                                <InputGroup>
+                                    <InputLeftElement pointerEvents="none">
+                                        <PhoneIcon color="gray.300" />
+                                    </InputLeftElement>
+                                    <Input
+                                        type="tel"
+                                        placeholder="Phone number"
+                                        {...field}
+                                    />
+                                </InputGroup>
                             </FormControl>
                         )}
                     </Field>
@@ -72,7 +84,15 @@ function PersonalInfoCard({ initialValues, schema, formSubmit, formFields }) {
                         {({ field, form }) => (
                             <FormControl id="annualSalary">
                                 <FormLabel>Annual Salary</FormLabel>
-                                <Input {...field} />
+                                <InputGroup>
+                                    <InputLeftElement
+                                        pointerEvents="none"
+                                        color="gray.300"
+                                        fontSize="1.2em"
+                                        children="$"
+                                    />
+                                    <Input {...field} />
+                                </InputGroup>
                             </FormControl>
                         )}
                     </Field>
