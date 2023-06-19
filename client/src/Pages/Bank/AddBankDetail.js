@@ -23,12 +23,12 @@ import { UserProfile } from "../User/UserProfile.js";
 function AddBankDetail() {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("profile"));
-    const userData = user.userDetails.data;
+    const userData = JSON.parse(localStorage.getItem("updatedData")).data;
     const { id } = useParams();
     let initialValues = {
-        accountNumber: "",
-        branchTransitNumber: "",
-        institutionNumber: "",
+        accountNumber: userData.bankDetails.accountNumber,
+        branchTransitNumber: userData.bankDetails.branchTransitNumber,
+        institutionNumber: userData.bankDetails.institutionNumber,
         dateOfJoining: userData.dateOfJoining,
     };
     const formik = useFormik({
@@ -45,12 +45,15 @@ function AddBankDetail() {
         values.country = userData.address.country;
         try {
             const updateData = await api.updateUserBankDetailsById(id, values);
+            localStorage.setItem(
+                "updatedData",
+                JSON.stringify(updateData.data)
+            );
         } catch (error) {
             // setError(error.response.data.error);
             console.log(error);
         }
     };
-
     return (
         <Flex
             as="section"
@@ -62,7 +65,7 @@ function AddBankDetail() {
             bg="bg.canvas"
             overflowY="auto"
         >
-            <Sidebar user={userData}></Sidebar>
+            <Sidebar user={user.userDetails.data}></Sidebar>
             <Container py="8" flex="1" maxW="100%">
                 <Stack
                     spacing={{
@@ -124,8 +127,8 @@ function AddBankDetail() {
                                                         <Input
                                                             defaultValue={
                                                                 userData
-                                                                    ?.bankDetails
-                                                                    ?.accountNumber
+                                                                    .bankDetails
+                                                                    .accountNumber
                                                             }
                                                             {...field}
                                                         />

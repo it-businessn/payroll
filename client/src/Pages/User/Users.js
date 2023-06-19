@@ -3,7 +3,9 @@ import {
     Button,
     ButtonGroup,
     Container,
+    Flex,
     HStack,
+    Heading,
     Stack,
     Text,
     useBreakpointValue,
@@ -64,7 +66,17 @@ export default function User() {
         }
     };
     return (
-        <Sidebar user={user.userDetails.data}>
+        <Flex
+            as="section"
+            direction={{
+                base: "column",
+                lg: "row",
+            }}
+            height="100vh"
+            bg="bg.canvas"
+            overflowY="auto"
+        >
+            <Sidebar user={user.userDetails.data}> </Sidebar>
             <Container
                 maxW="100%"
                 py={{
@@ -76,76 +88,49 @@ export default function User() {
                     md: 8,
                 }}
             >
-                <Box
-                    borderRadius={{
-                        base: "none",
-                        md: "lg",
-                    }}
-                >
-                    <Stack spacing="5">
-                        <Box pt="5">
-                            <Stack
-                                direction={{
-                                    base: "column",
-                                    md: "row",
-                                }}
-                                justify="space-between"
-                            >
-                                <Text fontSize="lg" fontWeight="medium">
-                                    Members
-                                </Text>
-                                <Button
-                                    onClick={() => generateInvoice(data)}
-                                    variant="primary"
-                                >
-                                    Process Payroll
-                                </Button>
-                                {/* <InputGroup>
-                                        <InputLeftElement pointerEvents="none">
-                                            <Icon
-                                                as={FiSearch}
-                                                color="fg.muted"
-                                                boxSize="5"
-                                            />
-                                        </InputLeftElement>
-                                        <Input placeholder="Search" />
-                                    </InputGroup> */}
-                            </Stack>
-                        </Box>
-                        <Box overflowX="auto">
-                            {/* data && <MemberTable members={data} /> */}
-                            <MemberTable members={data} />
-                        </Box>
-                        <Box
-                            px={{
-                                base: "4",
-                                md: "6",
-                            }}
-                            pb="5"
+                <Stack spacing="3">
+                    <Flex justify="space-between">
+                        <Heading size="xs">Members</Heading>
+                        <Button
+                            onClick={() => generateInvoice(data)}
+                            variant="primary"
                         >
-                            <HStack spacing="3" justify="space-between">
-                                {!isMobile && (
-                                    <Text color="fg.muted" fontSize="sm">
-                                        Showing 1 to 5 of 42 results
-                                    </Text>
-                                )}
-                                <ButtonGroup
-                                    spacing="3"
-                                    justifyContent="space-between"
-                                    width={{
-                                        base: "full",
-                                        md: "auto",
-                                    }}
-                                    variant="secondary"
-                                >
-                                    <Button borderWidth="2px">Previous</Button>
-                                    <Button borderWidth="2px">Next</Button>
-                                </ButtonGroup>
-                            </HStack>
-                        </Box>
-                    </Stack>
-                </Box>
+                            Process Payroll
+                        </Button>
+                    </Flex>
+
+                    {/* data && <MemberTable members={data} /> */}
+                    <MemberTable members={data} />
+
+                    <Box
+                        px={{
+                            base: "4",
+                            md: "6",
+                        }}
+                        pb="5"
+                    >
+                        <HStack spacing="3" justify="space-between">
+                            {!isMobile && (
+                                <Text color="fg.muted" fontSize="sm">
+                                    Showing 1 to 5 of 42 results
+                                </Text>
+                            )}
+                            <ButtonGroup
+                                spacing="3"
+                                justifyContent="space-between"
+                                width={{
+                                    base: "full",
+                                    md: "auto",
+                                }}
+                                variant="secondary"
+                            >
+                                <Button borderWidth="2px">Previous</Button>
+                                <Button borderWidth="2px">Next</Button>
+                            </ButtonGroup>
+                        </HStack>
+                    </Box>
+                </Stack>
             </Container>
-        </Sidebar>
+        </Flex>
     );
 }

@@ -1,10 +1,10 @@
 import {
-    Box,
     Button,
     Container,
     Flex,
     FormControl,
     FormLabel,
+    Heading,
     Input,
     Modal,
     ModalBody,
@@ -14,7 +14,6 @@ import {
     ModalOverlay,
     Stack,
     StackDivider,
-    Text,
     useDisclosure,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
@@ -75,142 +74,100 @@ function AttendanceWidget() {
             bg="bg.canvas"
             overflowY="auto"
         >
-            <Sidebar user={user.userDetails.data}>
-                <Container
-                    py={{
-                        base: "4",
-                        md: "8",
-                    }}
-                    px={{
-                        base: "0",
-                        md: 8,
-                    }}
-                    maxW="100%"
-                >
-                    <Box
-                        bg="#fff"
-                        boxShadow={{
-                            base: "none",
-                            md: "sm",
-                        }}
-                        borderRadius={{
-                            base: "none",
-                            md: "lg",
-                        }}
-                    >
-                        <Stack spacing="5">
-                            <Box pt="5">
-                                <Stack
-                                    direction={{
-                                        base: "column",
-                                        md: "row",
-                                    }}
-                                    justify="space-between"
-                                >
-                                    <Text fontSize="lg" fontWeight="medium">
-                                        Your Leave/Attendance Information
-                                    </Text>
-
-                                    <Flex
-                                        direction="row"
-                                        justify="flex-end"
-                                        py="4"
-                                    >
-                                        <Button
-                                            onClick={onOpen}
-                                            variant="solid"
-                                            color="#383ab6"
-                                        >
-                                            Raise Request
-                                        </Button>
-                                    </Flex>
+            <Sidebar user={user.userDetails.data}></Sidebar>
+            <Container
+                py={{
+                    base: "4",
+                    md: "8",
+                }}
+                px={{
+                    base: "0",
+                    md: 8,
+                }}
+                maxW="100%"
+            >
+                <Stack spacing="3">
+                    <Flex direction="row" py="4" justifyContent="space-between">
+                        <Heading size="xs">
+                            Your Leave/Attendance Information
+                        </Heading>
+                        <Button onClick={onOpen} variant="primary">
+                            Raise Request
+                        </Button>
+                    </Flex>
+                    {userData && (
+                        <AttendanceTable
+                            user={userData}
+                            members={userData.attendanceDetails}
+                        />
+                    )}
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Raise Leave Request</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                                <Stack divider={<StackDivider />}>
+                                    <FormikProvider value={formik}>
+                                        <Form>
+                                            <Field
+                                                name="requestedLeaves"
+                                                key="firstName"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="requestedLeaves">
+                                                        <FormLabel>
+                                                            Number of days
+                                                            requested
+                                                        </FormLabel>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                )}
+                                            </Field>
+                                            <Field
+                                                name="leaveReason"
+                                                key="leaveReason"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="leaveReason">
+                                                        <FormLabel>
+                                                            Reason
+                                                        </FormLabel>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                )}
+                                            </Field>
+                                            <Flex
+                                                direction="row"
+                                                justify="flex-end"
+                                                py="4"
+                                                px={{
+                                                    base: "4",
+                                                    md: "6",
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="outline"
+                                                    mr={3}
+                                                    onClick={onClose}
+                                                >
+                                                    Close
+                                                </Button>
+                                                <Button
+                                                    type="submit"
+                                                    variant="primary"
+                                                >
+                                                    Submit
+                                                </Button>
+                                            </Flex>
+                                        </Form>
+                                    </FormikProvider>
                                 </Stack>
-                            </Box>
-                            <Box overflowX="auto">
-                                {userData && (
-                                    <AttendanceTable
-                                        user={userData}
-                                        members={userData.attendanceDetails}
-                                    />
-                                )}
-                            </Box>
-                            <Modal isOpen={isOpen} onClose={onClose}>
-                                <ModalOverlay />
-                                <ModalContent>
-                                    <ModalHeader>
-                                        Raise Leave Request
-                                    </ModalHeader>
-                                    <ModalCloseButton />
-                                    <ModalBody>
-                                        <Stack divider={<StackDivider />}>
-                                            <FormikProvider value={formik}>
-                                                <Form>
-                                                    <Field
-                                                        name="requestedLeaves"
-                                                        key="firstName"
-                                                    >
-                                                        {({ field }) => (
-                                                            <FormControl id="requestedLeaves">
-                                                                <FormLabel>
-                                                                    Number of
-                                                                    days
-                                                                    requested
-                                                                </FormLabel>
-                                                                <Input
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                        )}
-                                                    </Field>
-                                                    <Field
-                                                        name="leaveReason"
-                                                        key="leaveReason"
-                                                    >
-                                                        {({ field }) => (
-                                                            <FormControl id="leaveReason">
-                                                                <FormLabel>
-                                                                    Reason
-                                                                </FormLabel>
-                                                                <Input
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                        )}
-                                                    </Field>
-                                                    <Flex
-                                                        direction="row"
-                                                        justify="flex-end"
-                                                        py="4"
-                                                        px={{
-                                                            base: "4",
-                                                            md: "6",
-                                                        }}
-                                                    >
-                                                        <Button
-                                                            color="#383ab6"
-                                                            mr={3}
-                                                            onClick={onClose}
-                                                        >
-                                                            Close
-                                                        </Button>
-                                                        <Button
-                                                            type="submit"
-                                                            variant="solid"
-                                                            color="#383ab6"
-                                                        >
-                                                            Submit
-                                                        </Button>
-                                                    </Flex>
-                                                </Form>
-                                            </FormikProvider>
-                                        </Stack>
-                                    </ModalBody>
-                                </ModalContent>
-                            </Modal>
-                        </Stack>
-                    </Box>
-                </Container>
-            </Sidebar>
+                            </ModalBody>
+                        </ModalContent>
+                    </Modal>
+                </Stack>
+            </Container>
         </Flex>
     );
 }

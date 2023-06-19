@@ -16,7 +16,7 @@ export const ADMIN_MENULIST = [
         icon: FiDollarSign,
     },
     {
-        path: "/invoice-detail",
+        path: "/payroll-detail",
         name: "Payroll",
         icon: FiDollarSign,
     },
@@ -43,7 +43,7 @@ export const EMPLOYEE_MENULIST = [
         icon: FiDollarSign,
     },
     {
-        path: "/invoice-detail",
+        path: "/payroll-detail",
         name: "Payroll",
         icon: FiDollarSign,
     },

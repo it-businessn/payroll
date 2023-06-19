@@ -12,11 +12,10 @@ import {
 } from "@chakra-ui/react";
 import moment from "moment";
 import { IoArrowDown } from "react-icons/io5";
-import { userCurrency } from "../../config/userSchema";
 
 export const PaymentTable = ({ user, members }) => {
     return (
-        <Table>
+        <Table variant="simple">
             <Thead bg="#f0f2f4">
                 <Tr>
                     <Th>
@@ -33,8 +32,6 @@ export const PaymentTable = ({ user, members }) => {
                         </HStack>
                     </Th>
                     <Th>End Pay Period</Th>
-                    <Th>Annual Salary</Th>
-                    <Th>Deduction</Th>
                     <Th>Gross</Th>
                     <Th>Net Pay</Th>
                 </Tr>
@@ -55,16 +52,6 @@ export const PaymentTable = ({ user, members }) => {
                         </Td>
                         <Td>
                             {moment(member.nextPayDate).format("YYYY-MM-DD")}
-                        </Td>
-                        <Td>
-                            <Text>
-                                {userCurrency(user.bankDetails.currency).format(
-                                    user.annualSalary
-                                )}
-                            </Text>
-                        </Td>
-                        <Td>
-                            <Text>{member.deduction}</Text>
                         </Td>
                         <Td>
                             <Text color="muted">

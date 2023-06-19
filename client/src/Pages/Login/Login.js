@@ -57,15 +57,15 @@ export const Login = () => (
                                             xl: "xl",
                                         }}
                                     >
-                                        Start making your dreams come true
+                                        Simplify your payroll process
                                     </Heading>
                                     <Text
                                         textStyle="lg"
                                         maxW="md"
                                         fontWeight="medium"
                                     >
-                                        Create an account and discover the
-                                        worlds' best UI component framework.
+                                        Create/Login an account and discover the
+                                        best Payroll accounting software.
                                     </Text>
                                 </Stack>
                                 <HStack spacing="4">

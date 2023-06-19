@@ -48,68 +48,64 @@ export const AttendanceTable = ({ members }) => {
         }
     };
     return (
-        <>
-            <Table>
-                <Thead bg="#f0f2f4">
-                    <Tr>
-                        <Th>
-                            <HStack spacing="3">
-                                {/* <Checkbox /> */}
-                                <HStack spacing="1">
-                                    <Text>leaveBalance</Text>
-                                    <Icon
-                                        as={IoArrowDown}
-                                        color="muted"
-                                        boxSize="4"
-                                    />
-                                </HStack>
+        <Table variant="simple">
+            <Thead bg="#f0f2f4">
+                <Tr>
+                    <Th>
+                        <HStack spacing="3">
+                            {/* <Checkbox /> */}
+                            <HStack spacing="1">
+                                <Text>leaveBalance</Text>
+                                <Icon
+                                    as={IoArrowDown}
+                                    color="muted"
+                                    boxSize="4"
+                                />
                             </HStack>
-                        </Th>
-                        <Th>totalLeaves</Th>
-                        <Th>requestedLeaves</Th>
-                        <Th>usedLeaves</Th>
-                        <Th>leaveApproved</Th>
-                        <Th></Th>
+                        </HStack>
+                    </Th>
+                    <Th>totalLeaves</Th>
+                    <Th>requestedLeaves</Th>
+                    <Th>usedLeaves</Th>
+                    <Th>leaveApproved</Th>
+                    <Th></Th>
+                </Tr>
+            </Thead>
+            <Tbody>
+                {members.map((member) => (
+                    <Tr key={member._id}>
+                        <Td>
+                            <HStack spacing="3">
+                                <Box>
+                                    <Text fontWeight="medium">
+                                        {member.leaveBalance}
+                                    </Text>
+                                </Box>
+                            </HStack>
+                        </Td>
+                        <Td>{member.totalLeaves}</Td>
+                        <Td>
+                            <Text>{member.requestedLeaves}</Text>
+                        </Td>
+                        <Td>
+                            <Text color="muted">{member.usedLeaves}</Text>
+                        </Td>
+                        <Td>
+                            <Text color="muted">{member.leaveApproved}</Text>
+                        </Td>
+                        <Td>
+                            <HStack spacing="1">
+                                <IconButton
+                                    // onClick={() => openModal(member)}
+                                    icon={<FiEdit2 fontSize="1.25rem" />}
+                                    variant="ghost"
+                                    aria-label="Edit member"
+                                />
+                            </HStack>
+                        </Td>
                     </Tr>
-                </Thead>
-                <Tbody>
-                    {members.map((member) => (
-                        <Tr key={member._id}>
-                            <Td>
-                                <HStack spacing="3">
-                                    <Box>
-                                        <Text fontWeight="medium">
-                                            {member.leaveBalance}
-                                        </Text>
-                                    </Box>
-                                </HStack>
-                            </Td>
-                            <Td>{member.totalLeaves}</Td>
-                            <Td>
-                                <Text>{member.requestedLeaves}</Text>
-                            </Td>
-                            <Td>
-                                <Text color="muted">{member.usedLeaves}</Text>
-                            </Td>
-                            <Td>
-                                <Text color="muted">
-                                    {member.leaveApproved}
-                                </Text>
-                            </Td>
-                            <Td>
-                                <HStack spacing="1">
-                                    <IconButton
-                                        // onClick={() => openModal(member)}
-                                        icon={<FiEdit2 fontSize="1.25rem" />}
-                                        variant="ghost"
-                                        aria-label="Edit member"
-                                    />
-                                </HStack>
-                            </Td>
-                        </Tr>
-                    ))}
-                </Tbody>
-            </Table>
-        </>
+                ))}
+            </Tbody>
+        </Table>
     );
 };

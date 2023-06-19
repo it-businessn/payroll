@@ -77,8 +77,7 @@ function Profile() {
                                             )
                                         }
                                         icon={<FiEdit2 fontSize="1.25rem" />}
-                                        variant="ghost"
-                                        color="primary"
+                                        variant="outline"
                                         aria-label="Edit member"
                                     />
                                 </Flex>

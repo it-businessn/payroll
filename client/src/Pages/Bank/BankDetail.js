@@ -30,9 +30,7 @@ function BankDetail() {
         try {
             let user = await api.getUserById(id);
             setData(user.data.data);
-        } catch (error) {
-        } finally {
-        }
+        } catch (error) {}
     };
     return (
         <Flex
@@ -90,7 +88,6 @@ function BankDetail() {
                                         <Heading size="xs">
                                             Bank Information
                                         </Heading>
-
                                         <Spacer />
                                     </Flex>
                                     <SimpleGrid columns={3} spacing={8}>

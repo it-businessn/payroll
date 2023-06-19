@@ -29,18 +29,17 @@ export default function RoutePages() {
             <Route exact path="/verify-email" element={<VerifyEmail />} />
             <Route exact path="/users" element={<User />} />
             <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/edit-user/:id" element={<EditUser />} />
             <Route exact path="/payments" element={<Payment />} />
             <Route exact path="/bank-detail" element={<BankDetail />} />
-            <Route exact path="/invoice-detail" element={<PaymentWidget />} />
-
-            <Route exact path="/leave-detail" element={<AttendanceWidget />} />
-            <Route exact path="/attendance" element={<Attendance />} />
-            <Route exact path="/edit-user/:id" element={<EditUser />} />
             <Route
                 exact
                 path="/add-bank-detail/:id"
                 element={<AddBankDetail />}
             />
+            <Route exact path="/payroll-detail" element={<PaymentWidget />} />
+            <Route exact path="/leave-detail" element={<AttendanceWidget />} />
+            <Route exact path="/attendance" element={<Attendance />} />
             <Route exact path="/add-payment/:id" element={<AddPayment />} />
             <Route exact path="/view-payment/:id" element={<ViewPayment />} />
             <Route exact path="/leave-request/:id" element={<LeaveRequest />} />

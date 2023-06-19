@@ -19,10 +19,10 @@ import * as api from "../../api/index.js";
 import Logo from "../Home/Logo";
 
 export const VerifyEmail = () => {
-    const user = JSON.parse(localStorage.getItem("profile") || "");
+    const user = JSON.parse(localStorage.getItem("profile")) || "";
 
     const resetPasswordInitialValues = {
-        email: user.userDetails.email,
+        email: user?.userDetails?.email,
         otp: "",
     };
     const [hasError, setErrorMessage] = useState("");
@@ -130,7 +130,7 @@ export const VerifyEmail = () => {
                                     "gray.400"
                                 )}
                             >
-                                {user.userDetails.email}
+                                {user?.userDetails?.email}
                             </Center>
                             <HStack spacing="1" justify="center">
                                 <FormikProvider value={formik}>

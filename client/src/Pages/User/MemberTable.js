@@ -11,8 +11,6 @@ import {
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    Stack,
-    StackDivider,
     Table,
     Tbody,
     Td,
@@ -66,7 +64,7 @@ export const MemberTable = ({ members }) => {
     };
     return (
         <>
-            <Table size="sm" maxWidth="100%" variant="simple">
+            <Table variant="simple">
                 <Thead bg="#f0f2f4">
                     <Tr>
                         <Th>
@@ -149,32 +147,15 @@ export const MemberTable = ({ members }) => {
                 <Modal size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Edit Record</ModalHeader>
+                        <ModalHeader>Edit Records</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <Stack divider={<StackDivider />}>
-                                <Stack
-                                    direction={{
-                                        base: "column",
-                                        lg: "row",
-                                    }}
-                                    spacing={{
-                                        base: "5",
-                                        lg: "8",
-                                    }}
-                                    justify="space-between"
-                                >
-                                    <PersonalInfoCard
-                                        formSubmit={handleSubmit}
-                                        schema={UserSchema}
-                                        initialValues={userFormInitialValues}
-                                        formFields={userFormFields}
-                                        maxW={{
-                                            lg: "3xl",
-                                        }}
-                                    />
-                                </Stack>
-                            </Stack>
+                            <PersonalInfoCard
+                                formSubmit={handleSubmit}
+                                schema={UserSchema}
+                                initialValues={userFormInitialValues}
+                                formFields={userFormFields}
+                            />
                         </ModalBody>
                     </ModalContent>
                 </Modal>

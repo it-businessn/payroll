@@ -2,7 +2,6 @@ import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
-import Dashboard from "./Dashboard";
 
 function Home() {
     const navigate = useNavigate();
@@ -28,7 +27,7 @@ function Home() {
             ) : (
                 navigate("/sign-in")
             )}
-            <Dashboard />
+            {/* <Dashboard /> */}
         </Flex>
     );
 }
