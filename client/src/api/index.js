@@ -23,3 +23,4 @@ export const updateUserBankDetailsById = (id, formData) =>
     API.put(`/userOperation/bank/${id}`, formData);
 export const addUserAttendanceDetailsById = (id, formData) =>
     API.put(`/userOperation/attendance/${id}`, formData);
+export const getGroupedDataByMonth = () => API.get("/getCategory");

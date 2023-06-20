@@ -24,7 +24,7 @@ import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
 import * as api from "../../api/index.js";
-import { UserSchema } from "../../config/userSchema";
+import { UserSchema, userCurrency } from "../../config/userSchema";
 import { userFormFields } from "../../constants/constant.js";
 import PersonalInfoCard from "./EditUser/PersonalInfoCard";
 export const MemberTable = ({ members }) => {
@@ -64,7 +64,7 @@ export const MemberTable = ({ members }) => {
     };
     return (
         <>
-            <Table variant="simple">
+            <Table variant="simple" size="sm">
                 <Thead bg="#f0f2f4">
                     <Tr>
                         <Th>
@@ -84,6 +84,7 @@ export const MemberTable = ({ members }) => {
                         <Th>Phone Number</Th>
                         <Th>Email</Th>
                         <Th>Role</Th>
+                        <Th>Annual Salary</Th>
                         <Th></Th>
                     </Tr>
                 </Thead>
@@ -127,6 +128,13 @@ export const MemberTable = ({ members }) => {
                             </Td>
                             <Td>
                                 <Text color="muted">{member.role}</Text>
+                            </Td>
+                            <Td>
+                                <Text color="muted">
+                                    {userCurrency(member.currency).format(
+                                        member.annualSalary
+                                    )}
+                                </Text>
                             </Td>
 
                             <Td>

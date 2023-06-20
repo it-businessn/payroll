@@ -7,11 +7,7 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
-import {
-    FiArrowDownRight,
-    FiArrowUpRight,
-    FiMoreVertical,
-} from "react-icons/fi";
+import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 
 export const Stat = (props) => {
     const { label, value, icon, delta, ...boxProps } = props;
@@ -46,7 +42,7 @@ export const Stat = (props) => {
                         </Square>
                         <Text fontWeight="medium">{label}</Text>
                     </HStack>
-                    <Icon as={FiMoreVertical} boxSize="5" color="fg.muted" />
+                    {/* <Icon as={FiMoreVertical} boxSize="5" color="fg.muted" /> */}
                 </Stack>
                 <Stack spacing="4">
                     <Heading

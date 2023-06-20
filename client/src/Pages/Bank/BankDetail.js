@@ -74,9 +74,8 @@ function BankDetail() {
                                             )
                                         }
                                         icon={<FiEdit2 fontSize="1.25rem" />}
-                                        variant="ghost"
-                                        color="primary"
-                                        aria-label="Edit member"
+                                        variant="outline"
+                                        aria-label="Add Bank Detail"
                                     />
                                 </Flex>
                             </CardBody>

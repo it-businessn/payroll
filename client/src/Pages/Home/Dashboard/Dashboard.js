@@ -21,8 +21,10 @@ import {
     Stack,
     useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import GaugeChart from "react-gauge-chart";
 import { FiFilter } from "react-icons/fi";
+import fakedata from "../../../constants/fakedata.json";
 import { Card } from "../Card";
 import { AreaChart } from "./Charts/AreaChart";
 import { BarChart } from "./Charts/BarChart";
@@ -32,6 +34,21 @@ import { StackedBarChart } from "./Charts/StackedBarChart";
 import { Header } from "./Header";
 function Dashboard() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [data, setData] = useState(fakedata);
+    // useEffect(() => {
+    //     fetchUserData();
+    // }, []);
+    // const fetchUserData = async () => {
+    //     try {
+    //         let result = await api.getGroupedDataByMonth();
+    //         setData(result.data);
+    //     } catch (error) {}
+    // };
+    let result = fakedata.reduce((a, c) => ({
+        annualSalary: a.annualSalary + c.annualSalary / 100,
+    }));
+
+    let average = result.annualSalary * 100;
     return (
         <Container py="8" flex="1" maxW="100%">
             <Stack>
@@ -62,20 +79,22 @@ function Dashboard() {
                         gap="6"
                         height="600px"
                     >
-                        <Card>
-                            <BarChart />
-                        </Card>
+                        <Card>{data && <BarChart data1={data} />}</Card>
                         <Card>
                             <DoughnutChart />
                         </Card>
-                        <Card>
-                            <LineChart />
-                        </Card>
+                        <Card>{data && <LineChart data1={data} />}</Card>
                         <Card>
                             <AreaChart />
                         </Card>
                         <Card>
-                            <GaugeChart textColor="#000" hideText={true} />
+                            <GaugeChart
+                                id="gauge-chart4"
+                                nrOfLevels={10}
+                                arcPadding={0.1}
+                                cornerRadius={3}
+                                percent={average}
+                            />
                         </Card>
                         <Card>
                             <StackedBarChart />

@@ -7,10 +7,9 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import * as faker from "faker";
 import React from "react";
 import { Bar } from "react-chartjs-2";
-
+import { LABELS } from "../../../../constants/constant";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -24,30 +23,38 @@ export const options = {
     responsive: true,
     plugins: {
         legend: {
-            position: "top",
+            position: "bottom",
         },
         title: {
             display: true,
-            text: "Chart.js Bar Chart",
+            text: "Members Joined by Month",
         },
     },
 };
-const labels = ["Active", "Not Active"];
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: "Dataset 1",
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
-        },
-    ],
-};
+export function BarChart({ data1 }) {
+    // data1.map((element) => {
+    //     element.month = moment(element.monthNum, "MM").format("MMM");
 
-export function BarChart() {
-    return (
-        <>
-            <Bar options={options} data={data} />;
-        </>
-    );
+    //     let j = labels.findIndex((x) => x !== element.month);
+    //     if (!labels.length) {
+    //         labels.push(element.month);
+    //     } else if (j !== -1) {
+    //         labels.push(element.month);
+    //     }
+    //     return labels;
+    // });
+    const data = {
+        labels: LABELS,
+        datasets: [
+            {
+                label: "Number of Employees",
+
+                data: data1.map((x) => x.countMonth),
+                // data: labels.map((x) => data1.find((y) => y.month === x).count),
+                backgroundColor: ["#e4f4c1"],
+            },
+        ],
+    };
+    // console.log(data);
+    return <>{LABELS.length && <Bar options={options} data={data} />}</>;
 }
