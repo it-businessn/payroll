@@ -248,3 +248,20 @@ export const sendEmail1 = async (request, response) => {
         request.body
     );
 };
+export const getCategoryByMonth = async (request, response) => {
+    try {
+        const categoryCount = await User.aggregate([
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: "%m", date: "$dateOfJoining" },
+                    },
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+        response.status(200).json({ data: categoryCount });
+    } catch (error) {
+        response.status(404).json({ error: error.message });
+    }
+};

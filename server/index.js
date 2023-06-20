@@ -2,6 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import categoryRoutes from "./routes/category.js";
 import userOperationRoutes from "./routes/userOperation.js";
 import userRoutes from "./routes/users.js";
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/user", userRoutes);
+app.use("/getCategory", categoryRoutes);
 app.use("/userOperation", userOperationRoutes);
 
 const PORT = process.env.PORT || 5000;
