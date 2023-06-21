@@ -50,20 +50,24 @@ export const raiseLeaveRequest = async (request, response) => {
 export const updateLeaveRequest = async (request, response) => {
     const { id } = request.params;
     const userRequest = request.body;
+    userRequest.leaveRequestStatus = userRequest.leaveApproved
+        ? "Approved"
+        : "Rejected";
     const userRequestToUpdate = { ...userRequest, _id: id };
 
     try {
-        const existingUser = await LeaveRequest.find({ _id: id });
-        if (!existingUser) {
-            return response.status(404).json({ error: "User does not exist" });
+        const existingLeaveRequest = await LeaveRequest.find({ _id: id });
+        if (!existingLeaveRequest) {
+            return response
+                .status(404)
+                .json({ error: "Leave Request does not exist" });
         }
-        const updatedUser = await LeaveRequest.findByIdAndUpdate(
+        const updatedLeaveRequest = await LeaveRequest.findByIdAndUpdate(
             id,
             userRequestToUpdate,
             { new: true }
         );
-        console.log(existingUser, updatedUser);
-        response.status(200).json({ data: updatedUser });
+        response.status(200).json({ data: updatedLeaveRequest });
     } catch (error) {
         console.log(error);
         response.status(500).json({

@@ -1,3 +1,4 @@
+import { PhoneIcon } from "@chakra-ui/icons";
 import {
     Button,
     Card,
@@ -188,12 +189,19 @@ export default function EditUser() {
                                                         <FormLabel>
                                                             Phone Number
                                                         </FormLabel>
-                                                        <Input
-                                                            defaultValue={
-                                                                userData.phoneNumber
-                                                            }
-                                                            {...field}
-                                                        />
+                                                        <InputGroup>
+                                                            <InputLeftElement pointerEvents="none">
+                                                                <PhoneIcon color="gray.300" />
+                                                            </InputLeftElement>
+                                                            <Input
+                                                                type="tel"
+                                                                placeholder="Phone number"
+                                                                defaultValue={
+                                                                    userData.phoneNumber
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </InputGroup>
                                                     </FormControl>
                                                 )}
                                             </Field>

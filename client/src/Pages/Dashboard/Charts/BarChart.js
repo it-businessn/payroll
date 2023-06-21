@@ -9,7 +9,7 @@ import {
 } from "chart.js";
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { LABELS } from "../../../../constants/constant";
+import { LABELS } from "../../../constants/constant";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -55,6 +55,5 @@ export function BarChart({ data1 }) {
             },
         ],
     };
-    // console.log(data);
     return <>{LABELS.length && <Bar options={options} data={data} />}</>;
 }

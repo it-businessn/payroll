@@ -1,6 +1,5 @@
 import {
     Avatar,
-    Badge,
     Box,
     HStack,
     Icon,
@@ -80,7 +79,6 @@ export const MemberTable = ({ members }) => {
                                 </HStack>
                             </HStack>
                         </Th>
-                        <Th>Status</Th>
                         <Th>Phone Number</Th>
                         <Th>Email</Th>
                         <Th>Role</Th>
@@ -102,18 +100,6 @@ export const MemberTable = ({ members }) => {
                                         </Text>
                                     </Box>
                                 </HStack>
-                            </Td>
-                            <Td>
-                                <Badge
-                                    size="sm"
-                                    colorScheme={
-                                        member.active === "Yes"
-                                            ? "green"
-                                            : "red"
-                                    }
-                                >
-                                    {member.activeStatus}
-                                </Badge>
                             </Td>
                             <Td>
                                 <Text>{member.phoneNumber}</Text>

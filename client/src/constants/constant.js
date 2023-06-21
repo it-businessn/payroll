@@ -227,7 +227,7 @@ export const userFormFields = [
         label: "Phone Number",
         size: "medium",
         name: "phoneNumber",
-        type: "number",
+        type: "text",
         variant: "solid",
         color: "primary",
     },

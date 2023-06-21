@@ -3,8 +3,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import { USER_ROLE } from "../../constants/constant";
-import Dashboard from "./Dashboard/Dashboard";
-import EmployeeDashboard from "./Dashboard/EmployeeDashboard";
+import Dashboard from "../Dashboard/Dashboard";
+import EmployeeDashboard from "../Dashboard/EmployeeDashboard";
 
 function Home() {
     const navigate = useNavigate();

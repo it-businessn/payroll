@@ -53,23 +53,29 @@ export const Stat = (props) => {
                     >
                         {value}
                     </Heading>
-                    <HStack spacing="1" fontWeight="medium">
-                        <Icon
-                            color={delta.isUpwardsTrend ? "success" : "error"}
-                            as={
-                                delta.isUpwardsTrend
-                                    ? FiArrowUpRight
-                                    : FiArrowDownRight
-                            }
-                            boxSize="5"
-                        />
-                        <Text
-                            color={delta.isUpwardsTrend ? "success" : "error"}
-                        >
-                            {delta.value}
-                        </Text>
-                        <Text color="fg.muted">vs last week</Text>
-                    </HStack>
+                    {delta && (
+                        <HStack spacing="1" fontWeight="medium">
+                            <Icon
+                                color={
+                                    delta.isUpwardsTrend ? "success" : "error"
+                                }
+                                as={
+                                    delta.isUpwardsTrend
+                                        ? FiArrowUpRight
+                                        : FiArrowDownRight
+                                }
+                                boxSize="5"
+                            />
+                            <Text
+                                color={
+                                    delta.isUpwardsTrend ? "success" : "error"
+                                }
+                            >
+                                {delta.value}
+                            </Text>
+                            <Text color="fg.muted">vs last week</Text>
+                        </HStack>
+                    )}
                 </Stack>
             </Stack>
         </Box>

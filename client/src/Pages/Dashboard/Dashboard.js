@@ -24,8 +24,8 @@ import {
 import { useState } from "react";
 import GaugeChart from "react-gauge-chart";
 import { FiFilter } from "react-icons/fi";
-import fakedata from "../../../constants/fakedata.json";
-import { Card } from "../Card";
+import { Card } from "../../components/Card";
+import fakedata from "../../constants/fakedata.json";
 import { AreaChart } from "./Charts/AreaChart";
 import { BarChart } from "./Charts/BarChart";
 import { DoughnutChart } from "./Charts/DoughnutChart";

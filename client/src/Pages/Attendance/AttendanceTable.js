@@ -63,10 +63,9 @@ export const AttendanceTable = ({ user, members }) => {
         values.leaveApproved = "Yes" ? true : false;
         try {
             const updateData = await api.updateLeaveRequestDetailsById(
-                user._id,
+                recordId,
                 values
             );
-            console.log(updateData);
             onClose();
         } catch (error) {
             // setError(error.response.data.error);
@@ -74,7 +73,6 @@ export const AttendanceTable = ({ user, members }) => {
         }
     };
     const openApproveModal = (member) => {
-        console.log(member);
         setRecordId(member._id);
         initialValues = {
             leaveRequestDecisionComment: "",
@@ -100,6 +98,7 @@ export const AttendanceTable = ({ user, members }) => {
                             </HStack>
                         </Th>
                         <Th>Duration</Th>
+                        <Th>Balance</Th>
                         <Th>Created On</Th>
                         <Th>Request Type</Th>
                         <Th>Leave Reason</Th>
@@ -121,6 +120,7 @@ export const AttendanceTable = ({ user, members }) => {
                                     </HStack>
                                 </Td>
                                 <Td>{member.durationOfLeave}</Td>
+                                <Td>{member.leaveBalance}</Td>
                                 <Td>
                                     <Text>
                                         {moment(member.created).format(
@@ -284,7 +284,7 @@ export const AttendanceTable = ({ user, members }) => {
                                                     {({ field }) => (
                                                         <FormControl id="leaveRequestDecisionComment">
                                                             <FormLabel>
-                                                                Reason
+                                                                Comment
                                                             </FormLabel>
                                                             <Textarea
                                                                 {...field}

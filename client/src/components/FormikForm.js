@@ -1,4 +1,4 @@
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { EmailIcon, PhoneIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
     Button,
     FormControl,
@@ -6,6 +6,7 @@ import {
     HStack,
     Input,
     InputGroup,
+    InputLeftElement,
     InputRightElement,
     Select,
     Stack,
@@ -71,6 +72,28 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                                     )}
                                                 </Button>
                                             </InputRightElement>
+                                        </InputGroup>
+                                    ) : item.id === "email" ? (
+                                        <InputGroup>
+                                            <InputLeftElement pointerEvents="none">
+                                                <EmailIcon color="gray.300" />
+                                            </InputLeftElement>
+                                            <Input
+                                                type={item.type}
+                                                placeholder={item.placeholder}
+                                                {...field}
+                                            />
+                                        </InputGroup>
+                                    ) : item.id === "phoneNumber" ? (
+                                        <InputGroup>
+                                            <InputLeftElement pointerEvents="none">
+                                                <PhoneIcon color="gray.300" />
+                                            </InputLeftElement>
+                                            <Input
+                                                type={item.type}
+                                                placeholder={item.placeholder}
+                                                {...field}
+                                            />
                                         </InputGroup>
                                     ) : (
                                         <Input
