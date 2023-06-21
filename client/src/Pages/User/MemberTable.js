@@ -93,12 +93,7 @@ export const MemberTable = ({ members }) => {
                         <Tr key={member._id}>
                             <Td>
                                 <HStack spacing="3">
-                                    {/* <Checkbox /> */}
-                                    <Avatar
-                                        name={member.name}
-                                        src={member.avatarUrl}
-                                        boxSize="10"
-                                    />
+                                    <Avatar name={member.name} src="" />
                                     <Box>
                                         <Text textTransform="capitalize">
                                             {member.firstName}

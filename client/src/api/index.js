@@ -24,3 +24,8 @@ export const updateUserBankDetailsById = (id, formData) =>
 export const addUserAttendanceDetailsById = (id, formData) =>
     API.put(`/userOperation/attendance/${id}`, formData);
 export const getGroupedDataByMonth = () => API.get("/getCategory");
+export const raiseLeaveRequest = (id, formData) =>
+    API.post(`/leaveRequest/${id}`, formData);
+export const getLeaveRequest = () => API.get("/leaveRequest");
+export const updateLeaveRequestDetailsById = (id, formData) =>
+    API.put(`/leaveRequest/${id}`, formData);

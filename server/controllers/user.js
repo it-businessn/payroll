@@ -250,6 +250,7 @@ export const sendEmail1 = async (request, response) => {
 };
 export const getCategoryByMonth = async (request, response) => {
     try {
+        // db.collection.insertMany(arrData);
         const categoryCount = await User.aggregate([
             {
                 $group: {

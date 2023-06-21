@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import categoryRoutes from "./routes/category.js";
+import timeSheetRoutes from "./routes/timesheet.js";
 import userOperationRoutes from "./routes/userOperation.js";
 import userRoutes from "./routes/users.js";
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use("/user", userRoutes);
 app.use("/getCategory", categoryRoutes);
 app.use("/userOperation", userOperationRoutes);
+app.use("/leaveRequest", timeSheetRoutes);
 
 const PORT = process.env.PORT || 5000;
 

@@ -23,6 +23,7 @@ export default function User() {
     const [error, setError] = useState(null);
 
     data.forEach((element) => {
+        element.name = `${element.firstName} ${element.middleName} ${element.lastName}`;
         element.activeStatus =
             element.active === "Yes" ? "Active" : "Not Active";
         element.address = `${element.streetNumber} ${element.city} ${element.state} ${element.postalCode} ${element.country}`;

@@ -17,27 +17,28 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar";
 import { AttendanceTable } from "./AttendanceTable.js";
 function AttendanceWidget() {
-    const user = JSON.parse(localStorage.getItem("profile"));
+    const user = JSON.parse(localStorage.getItem("profile")).userDetails.data;
     const [userData, setData] = useState(null);
     useEffect(() => {
-        fetchUserData(user.userDetails.data._id);
+        // fetchUserData(user.userDetails.data._id);
+        fetchUserData();
     }, []);
-    const fetchUserData = async (id) => {
+    const fetchUserData = async () => {
         try {
-            let user = await api.getUserById(id);
-            setData(user.data.data);
+            let result = await api.getLeaveRequest();
+            setData(result.data.data);
         } catch (error) {
         } finally {
         }
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
     let initialValues = {
-        requestedLeaves: "",
         leaveReason: "",
     };
     const formik = useFormik({
@@ -52,11 +53,14 @@ function AttendanceWidget() {
     });
 
     const handleSubmit = async (values) => {
+        values.raisedBy = user.email;
+        values.durationOfLeave =
+            moment(values.leaveEndDate).diff(
+                moment(values.leaveStartDate),
+                "days"
+            ) + 1;
         try {
-            const updateData = await api.addUserAttendanceDetailsById(
-                userData._id,
-                values
-            );
+            const updateData = await api.raiseLeaveRequest(user._id, values);
             onClose();
         } catch (error) {
             // setError(error.response.data.error);
@@ -74,7 +78,7 @@ function AttendanceWidget() {
             bg="bg.canvas"
             overflowY="auto"
         >
-            <Sidebar user={user.userDetails.data}></Sidebar>
+            <Sidebar user={user}></Sidebar>
             <Container
                 py={{
                     base: "4",
@@ -88,18 +92,13 @@ function AttendanceWidget() {
             >
                 <Stack spacing="3">
                     <Flex direction="row" py="4" justifyContent="space-between">
-                        <Heading size="xs">
-                            Your Leave/Attendance Information
-                        </Heading>
+                        <Heading size="xs">Leave Requests</Heading>
                         <Button onClick={onOpen} variant="primary">
-                            Raise Request
+                            Raise New Request
                         </Button>
                     </Flex>
                     {userData && (
-                        <AttendanceTable
-                            user={userData}
-                            members={userData.attendanceDetails}
-                        />
+                        <AttendanceTable user={user} members={userData} />
                     )}
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
@@ -111,14 +110,58 @@ function AttendanceWidget() {
                                     <FormikProvider value={formik}>
                                         <Form>
                                             <Field
-                                                name="requestedLeaves"
-                                                key="firstName"
+                                                name="approverName"
+                                                key="approverName"
                                             >
                                                 {({ field }) => (
-                                                    <FormControl id="requestedLeaves">
+                                                    <FormControl id="approverName">
                                                         <FormLabel>
-                                                            Number of days
-                                                            requested
+                                                            Leave Approver Name
+                                                        </FormLabel>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                )}
+                                            </Field>{" "}
+                                            <Field
+                                                name="leaveStartDate"
+                                                key="leaveStartDate"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="leaveStartDate">
+                                                        <FormLabel>
+                                                            From
+                                                        </FormLabel>
+                                                        <Input
+                                                            {...field}
+                                                            type="date"
+                                                        />
+                                                    </FormControl>
+                                                )}
+                                            </Field>{" "}
+                                            <Field
+                                                name="leaveEndDate"
+                                                key="leaveEndDate"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="leaveEndDate">
+                                                        <FormLabel>
+                                                            To
+                                                        </FormLabel>
+                                                        <Input
+                                                            type="date"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                )}
+                                            </Field>{" "}
+                                            <Field
+                                                name="leaveType"
+                                                key="leaveType"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="leaveType">
+                                                        <FormLabel>
+                                                            Leave Type
                                                         </FormLabel>
                                                         <Input {...field} />
                                                     </FormControl>
@@ -141,10 +184,6 @@ function AttendanceWidget() {
                                                 direction="row"
                                                 justify="flex-end"
                                                 py="4"
-                                                px={{
-                                                    base: "4",
-                                                    md: "6",
-                                                }}
                                             >
                                                 <Button
                                                     variant="outline"
