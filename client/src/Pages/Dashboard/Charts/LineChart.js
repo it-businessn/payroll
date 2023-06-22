@@ -54,5 +54,5 @@ export function LineChart({ data1 }) {
             },
         ],
     };
-    return <Line options={options} data={data} />;
+    return <Line height={300} options={options} data={data} />;
 }

@@ -8,22 +8,39 @@ import {
     InputGroup,
     InputLeftElement,
     InputRightElement,
-    Select,
+    Select as SelectChakra,
     Stack,
 } from "@chakra-ui/react";
+import { City, State } from "country-state-city";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 
-function FormikForm({ schema, initialValues, formFields, formSubmit }) {
+function FormikForm({
+    schema,
+    initialValues,
+    formFields,
+    formSubmit,
+    ...props
+}) {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedState, setSelectedState] = useState(null);
     const formik = useFormik({
         initialValues,
         validationSchema: schema,
         onSubmit: (formValues) => {
             try {
+                if (props.id === "sign-up") {
+                    formValues.city = selectedCity.name;
+                    formValues.state = selectedState.name;
+                    formValues.country = selectedCountry.name;
+                    formValues.currency = selectedCountry.currency;
+                }
                 setIsLoading(true);
                 formSubmit(formValues);
             } catch (error) {
@@ -141,6 +158,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                 <FormControl>
                                     <FormLabel>{item.label}</FormLabel>
                                     <Input
+                                        onChange={(i) => console.log(i)}
                                         placeholder="Select Date and Time"
                                         size="md"
                                         {...field}
@@ -154,7 +172,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                             {({ field, form }) => (
                                 <FormControl>
                                     <FormLabel>{item.label}</FormLabel>
-                                    <Select
+                                    <SelectChakra
                                         placeholder="Select role"
                                         {...field}
                                     >
@@ -162,7 +180,7 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                         <option>Super Manager</option>
                                         <option>HR/Manager</option>
                                         <option>Administrator</option>
-                                    </Select>
+                                    </SelectChakra>
                                 </FormControl>
                             )}
                         </Field>
@@ -174,6 +192,79 @@ function FormikForm({ schema, initialValues, formFields, formSubmit }) {
                                 </Button>
                             </Link>
                         </HStack>
+                    ) : item.field === "country" && props.countryList ? (
+                        <Field name={item.name} key={item.name}>
+                            {({ field, form }) => {
+                                return (
+                                    <FormControl>
+                                        <FormLabel>{item.label}</FormLabel>
+                                        <Select
+                                            {...field}
+                                            options={props.countryList}
+                                            getOptionLabel={(options) => {
+                                                return options["name"];
+                                            }}
+                                            getOptionValue={(options) => {
+                                                return options["name"];
+                                            }}
+                                            value={selectedCountry}
+                                            onChange={(item) => {
+                                                setSelectedCountry(item);
+                                            }}
+                                        />
+                                    </FormControl>
+                                );
+                            }}
+                        </Field>
+                    ) : item.field === "state" ? (
+                        <Field name={item.name} key={item.name}>
+                            {({ field, form }) => (
+                                <FormControl>
+                                    <FormLabel>{item.label}</FormLabel>
+                                    <Select
+                                        {...field}
+                                        options={State?.getStatesOfCountry(
+                                            selectedCountry?.isoCode
+                                        )}
+                                        getOptionLabel={(options) => {
+                                            return options["name"];
+                                        }}
+                                        getOptionValue={(options) => {
+                                            return options["name"];
+                                        }}
+                                        value={selectedState}
+                                        onChange={(item) => {
+                                            setSelectedState(item);
+                                        }}
+                                    />
+                                </FormControl>
+                            )}
+                        </Field>
+                    ) : item.field === "city" ? (
+                        <Field name={item.name} key={item.name}>
+                            {({ field, form }) => (
+                                <FormControl>
+                                    <FormLabel>{item.label}</FormLabel>
+                                    <Select
+                                        {...field}
+                                        options={City.getCitiesOfState(
+                                            selectedState?.countryCode,
+                                            selectedState?.isoCode
+                                        )}
+                                        getOptionLabel={(options) => {
+                                            return options["name"];
+                                        }}
+                                        getOptionValue={(options) => {
+                                            return options["name"];
+                                        }}
+                                        value={selectedCity}
+                                        onChange={(item) => {
+                                            setSelectedCity(item);
+                                        }}
+                                    />
+                                </FormControl>
+                            )}
+                        </Field>
                     ) : (
                         item.field === "button" && (
                             <Stack marginTop=".5em" key={item.label}>

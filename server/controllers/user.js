@@ -45,6 +45,7 @@ export const signUp = async (request, response) => {
         country,
         city,
         state,
+        currency,
     } = request.body;
     try {
         const existingUser = await User.findOne({ email });
@@ -66,7 +67,8 @@ export const signUp = async (request, response) => {
             streetNumber,
             country,
             city,
-            state
+            state,
+            currency
         );
         if (!newUser[0]) {
             return response.status(400).json({
@@ -95,6 +97,7 @@ const createUser = async (
     streetNumber,
     country,
     city,
+    currency,
     state
 ) => {
     const hashedPassword = await encryptPassword(password);
@@ -117,6 +120,7 @@ const createUser = async (
             state,
             country,
         },
+        bankDetails: { currency },
     });
     if (!newUser) {
         return [false, "Unable to sign you up"];

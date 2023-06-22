@@ -7,7 +7,8 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { Country } from "country-state-city";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.js";
@@ -18,6 +19,7 @@ import Logo from "../Home/Logo";
 export const SignUp = () => {
     const navigate = useNavigate();
     const [hasError, setError] = useState("");
+    const [countryList, setCountryList] = useState("");
     const handleSubmit = async (values) => {
         try {
             const userData = await api.signUp(values);
@@ -28,6 +30,17 @@ export const SignUp = () => {
         } catch (error) {
             setError(error.response.data.error);
             console.log(error);
+        }
+    };
+    useEffect(() => {
+        fetchCountry();
+    }, []);
+    const fetchCountry = async () => {
+        try {
+            let result = await Country.getAllCountries();
+            setCountryList(result);
+        } catch (error) {
+        } finally {
         }
     };
     return (
@@ -52,12 +65,16 @@ export const SignUp = () => {
                             </Heading>
                         </Stack>
                     </Stack>
-                    <FormikForm
-                        formSubmit={handleSubmit}
-                        schema={UserSchema}
-                        initialValues={userInitialValues}
-                        formFields={userFormFields}
-                    />
+                    {countryList && (
+                        <FormikForm
+                            id="sign-up"
+                            formSubmit={handleSubmit}
+                            schema={UserSchema}
+                            initialValues={userInitialValues}
+                            formFields={userFormFields}
+                            countryList={countryList}
+                        />
+                    )}
                     <HStack justify="center" spacing="1">
                         <Text textStyle="sm" color="fg.muted">
                             Already have an account?

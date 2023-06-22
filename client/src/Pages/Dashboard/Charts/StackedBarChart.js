@@ -68,5 +68,5 @@ export const data = {
 };
 
 export function StackedBarChart() {
-    return <Bar options={options} data={data} />;
+    return <Bar height={300} options={options} data={data} />;
 }

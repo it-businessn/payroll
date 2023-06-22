@@ -55,5 +55,11 @@ export function BarChart({ data1 }) {
             },
         ],
     };
-    return <>{LABELS.length && <Bar options={options} data={data} />}</>;
+    return (
+        <>
+            {LABELS.length && (
+                <Bar height={300} options={options} data={data} />
+            )}
+        </>
+    );
 }

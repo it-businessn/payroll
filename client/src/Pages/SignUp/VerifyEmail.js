@@ -167,14 +167,15 @@ export const VerifyEmail = () => {
                                         </Stack>
                                     </Form>
                                 </FormikProvider>
-
-                                {hasError && (
-                                    <Text align={"center"}>{hasError}</Text>
-                                )}
                             </HStack>
                             {emailSentText && (
                                 <Text color="green" align="center">
                                     {emailSentText}
+                                </Text>
+                            )}
+                            {hasError && (
+                                <Text color="red" align={"center"}>
+                                    {hasError}
                                 </Text>
                             )}
                         </Stack>

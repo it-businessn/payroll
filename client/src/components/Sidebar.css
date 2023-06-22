@@ -2,3 +2,7 @@ div:has(> a.active) {
     background: #bae25d66;
     border-radius: 0.375rem;
 }
+.react-calendar {
+    background: none !important;
+    border: none !important;
+}

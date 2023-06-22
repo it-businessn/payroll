@@ -29,5 +29,5 @@ export const data = {
 };
 
 export function DoughnutChart() {
-    return <Doughnut options={options} data={data} />;
+    return <Doughnut height={600} options={options} data={data} />;
 }

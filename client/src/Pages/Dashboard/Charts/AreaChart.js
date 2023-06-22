@@ -55,5 +55,5 @@ export const data = {
 };
 
 export function AreaChart() {
-    return <Line options={options} data={data} />;
+    return <Line height={300} options={options} data={data} />;
 }

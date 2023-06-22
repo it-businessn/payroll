@@ -5,10 +5,10 @@ export const BankDetail = {
     },
     accountNumber: {
         type: String,
-        required: true,
+        required: false,
     },
-    branchTransitNumber: { type: String, required: true },
-    institutionNumber: { type: String, required: true },
+    branchTransitNumber: { type: String, required: false },
+    institutionNumber: { type: String, required: false },
     created: {
         type: Date,
         default: new Date().toISOString(),

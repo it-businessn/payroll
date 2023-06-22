@@ -1,5 +1,5 @@
 import { SimpleGrid } from "@chakra-ui/react";
-import { FiDollarSign, FiMail, FiSend, FiUsers } from "react-icons/fi";
+import { FiActivity, FiDollarSign, FiSend, FiUsers } from "react-icons/fi";
 import { Stat } from "./Stat";
 import { UserStat } from "./UserStat";
 const stats = [
@@ -13,7 +13,7 @@ const stats = [
         },
     },
     {
-        icon: FiMail,
+        icon: FiDollarSign,
         label: "Avg. Salary",
         value: "56.87%",
         delta: {
@@ -22,7 +22,7 @@ const stats = [
         },
     },
     {
-        icon: FiSend,
+        icon: FiActivity,
         label: "Payrolls Processed",
         value: "12.87%",
         delta: {
