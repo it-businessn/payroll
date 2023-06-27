@@ -7,6 +7,7 @@ import AddBankDetail from "./Pages/Bank/AddBankDetail";
 import BankDetail from "./Pages/Bank/BankDetail";
 import { ForgotPassword } from "./Pages/ForgotPassword/ForgotPassword";
 import Home from "./Pages/Home/Home";
+import LeaveWidget from "./Pages/Leave/LeaveWidget";
 import LeaveRequest from "./Pages/LeaveRequest";
 import { Login } from "./Pages/Login/Login";
 import PageNotFound from "./Pages/PageNotFound";
@@ -38,7 +39,12 @@ export default function RoutePages() {
                 element={<AddBankDetail />}
             />
             <Route exact path="/payroll-detail" element={<PaymentWidget />} />
-            <Route exact path="/leave-detail" element={<AttendanceWidget />} />
+            <Route
+                exact
+                path="/attendance-detail"
+                element={<AttendanceWidget />}
+            />
+            <Route exact path="/leave-detail" element={<LeaveWidget />} />
             <Route exact path="/attendance" element={<Attendance />} />
             <Route exact path="/add-payment/:id" element={<AddPayment />} />
             <Route exact path="/view-payment/:id" element={<ViewPayment />} />

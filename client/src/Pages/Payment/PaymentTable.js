@@ -1,6 +1,8 @@
 import {
     Box,
     Button,
+    Center,
+    Divider,
     Drawer,
     DrawerBody,
     DrawerCloseButton,
@@ -21,7 +23,7 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import moment from "moment";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { IoArrowDown } from "react-icons/io5";
 import { useReactToPrint } from "react-to-print";
 import { userCurrency } from "../../config/userSchema";
@@ -32,10 +34,11 @@ export const PaymentTable = ({ user, members }) => {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
+    const [businessHeader, setBusinessHeader] = useState(null);
     return (
         <>
             <Table variant="simple">
-                <Thead bg="#f0f2f4">
+                <Thead>
                     <Tr>
                         <Th>
                             <HStack spacing="3">
@@ -90,34 +93,61 @@ export const PaymentTable = ({ user, members }) => {
                             </Td>
                             <Td>
                                 <Button onClick={onOpen} variant="link">
-                                    View
+                                    View Details
                                 </Button>
                             </Td>
                         </Tr>
                     ))}
                 </Tbody>
             </Table>
-            <Drawer isOpen={isOpen} onClose={onClose} size="lg">
+            <Drawer
+                isOpen={isOpen}
+                onClose={() => {
+                    setBusinessHeader(false);
+                    onClose();
+                }}
+                size="lg"
+            >
                 <DrawerOverlay />
-                <DrawerContent ref={componentRef}>
+                <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader textAlign="center" spacing={3}>
-                        <Heading size="sm">Payslip</Heading>
-                        <Text fontSize="md" color="fg.muted">
-                            View a summary of all your paystub details
-                        </Text>
-                    </DrawerHeader>
-
-                    <DrawerBody>
+                    <DrawerBody ref={componentRef}>
+                        <DrawerHeader>
+                            <Heading size="sm" textAlign="center">
+                                PaySlip
+                                {businessHeader && (
+                                    <Box
+                                        position="relative"
+                                        fontSize="initial"
+                                        lineHeight="1.5rem"
+                                    >
+                                        <Center spacing={2}>
+                                            BusinessN Inc
+                                        </Center>
+                                        <Center>5 Washington Square</Center>
+                                        <Center> New York, USA</Center>
+                                    </Box>
+                                )}
+                                {!businessHeader && (
+                                    <Text fontSize="md" color="fg.muted">
+                                        View a summary of all your paystub
+                                        details
+                                    </Text>
+                                )}
+                            </Heading>
+                        </DrawerHeader>
+                        <Divider />
                         <PaySlip />
                     </DrawerBody>
-
                     <DrawerFooter>
-                        <Button variant="ghost" onClick={handlePrint}>
+                        <Button
+                            variant="primary"
+                            onClick={() => {
+                                setBusinessHeader(true);
+                                setTimeout(() => handlePrint(), 1000);
+                            }}
+                        >
                             Print
-                        </Button>
-                        <Button type="submit" form="my-form">
-                            Download
                         </Button>
                     </DrawerFooter>
                 </DrawerContent>

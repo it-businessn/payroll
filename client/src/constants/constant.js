@@ -22,6 +22,11 @@ export const ADMIN_MENULIST = [
     },
     {
         path: "/leave-detail",
+        name: "Leave ",
+        icon: FiCalendar,
+    },
+    {
+        path: "/attendance-detail",
         name: "Attendance ",
         icon: FiCalendar,
     },
@@ -49,6 +54,11 @@ export const EMPLOYEE_MENULIST = [
     },
     {
         path: "/leave-detail",
+        name: "Leave ",
+        icon: FiCalendar,
+    },
+    {
+        path: "/attendance-detail",
         name: "Attendance ",
         icon: FiCalendar,
     },

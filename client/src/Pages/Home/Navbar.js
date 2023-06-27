@@ -6,10 +6,10 @@ import {
     Flex,
     useDisclosure,
 } from "@chakra-ui/react";
-import Sidebar from "./Sidebar";
+import Sidebar from "../../components/Sidebar";
 import { ToggleButton } from "./ToggleButton";
 
-export const Navbar = () => {
+export const Navbar = ({ user }) => {
     const { isOpen, onToggle, onClose } = useDisclosure();
     return (
         <Box
@@ -40,7 +40,7 @@ export const Navbar = () => {
                 >
                     <DrawerOverlay />
                     <DrawerContent>
-                        <Sidebar />
+                        <Sidebar user={user} />
                     </DrawerContent>
                 </Drawer>
             </Flex>

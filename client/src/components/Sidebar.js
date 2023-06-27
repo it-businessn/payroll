@@ -1,19 +1,14 @@
 import { Icon } from "@chakra-ui/icons";
 import {
-    Box,
-    Button,
     Divider,
     Flex,
-    HStack,
     Input,
     InputGroup,
     InputLeftElement,
-    Progress,
     Stack,
-    Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { FiLogOut, FiSearch, FiSettings } from "react-icons/fi";
+import { FiLogOut, FiSearch } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../Pages/Home/Logo";
 import { NavButton } from "../Pages/Home/NavButton";
@@ -37,7 +32,6 @@ const Sidebar = ({ user, children }) => {
             <Flex
                 flex="1"
                 bg="bg.surface"
-                overflowY="auto"
                 boxShadow="md"
                 maxW={{
                     base: "full",
@@ -83,11 +77,6 @@ const Sidebar = ({ user, children }) => {
                         <Stack spacing="1">
                             <NavButton
                                 color="primary"
-                                label="Settings"
-                                icon={FiSettings}
-                            />
-                            <NavButton
-                                color="primary"
                                 label="Logout"
                                 onClick={() => {
                                     localStorage.removeItem("profile");
@@ -96,8 +85,8 @@ const Sidebar = ({ user, children }) => {
                                 icon={FiLogOut}
                             />
                         </Stack>
-                        <Box bg="bg.subtle" px="4" py="5" borderRadius="lg">
-                            <Stack spacing="4">
+                        {/* <Box bg="bg.subtle" px="4" py="5" borderRadius="lg">
+                           <Stack spacing="4">
                                 <Stack spacing="1">
                                     <Text fontSize="sm" fontWeight="medium">
                                         Almost there
@@ -108,7 +97,7 @@ const Sidebar = ({ user, children }) => {
                                     </Text>
                                 </Stack>
                                 <Progress
-                                    colorScheme="linkedin"
+                                    colorScheme="brand"
                                     hasStripe
                                     value={80}
                                     size="sm"
@@ -130,8 +119,8 @@ const Sidebar = ({ user, children }) => {
                                         Update profile
                                     </Button>
                                 </HStack>
-                            </Stack>
-                        </Box>
+                            </Stack> 
+                        </Box> */}
                         <UserProfile
                             user={user}
                             image="https://tinyurl.com/yhkm2ek8"
@@ -139,7 +128,7 @@ const Sidebar = ({ user, children }) => {
                     </Stack>
                 </Stack>
             </Flex>
-            <main style={{ display: "flex", maxWidth: "80%" }}>{children}</main>
+            <main>{children}</main>
         </Flex>
     );
 };

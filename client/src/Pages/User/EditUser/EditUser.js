@@ -72,12 +72,20 @@ export default function EditUser() {
                 base: "column",
                 lg: "row",
             }}
-            height="100vh"
             bg="bg.canvas"
-            overflowY="auto"
         >
             <Sidebar user={userData}></Sidebar>
-            <Container py="8" flex="1" maxW="100%">
+            <Container
+                maxW="100%"
+                py={{
+                    base: "4",
+                    md: "8",
+                }}
+                px={{
+                    base: "0",
+                    md: 8,
+                }}
+            >
                 <Stack
                     spacing={{
                         base: "8",

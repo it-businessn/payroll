@@ -33,7 +33,7 @@ export const UserStat = (props) => {
                     <StatNumber>{value}</StatNumber>
                     <StatHelpText>{period}</StatHelpText>
                     {range && (
-                        <Progress value={range} size="xs" colorScheme="blue" />
+                        <Progress value={range} size="xs" colorScheme="brand" />
                     )}
                     {delta && delta.link ? (
                         <Button rightIcon={<FiArrowRight />} variant="link">

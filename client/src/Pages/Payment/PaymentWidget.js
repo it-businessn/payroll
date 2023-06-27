@@ -24,9 +24,7 @@ function PaymentWidget() {
                 base: "column",
                 lg: "row",
             }}
-            height="100vh"
             bg="bg.canvas"
-            overflowY="auto"
         >
             <Sidebar user={user.userDetails.data}></Sidebar>
             <Container

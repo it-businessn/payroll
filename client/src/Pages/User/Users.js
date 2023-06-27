@@ -73,9 +73,7 @@ export default function User() {
                 base: "column",
                 lg: "row",
             }}
-            height="100vh"
             bg="bg.canvas"
-            overflowY="auto"
         >
             <Sidebar user={user.userDetails.data}> </Sidebar>
             <Container
@@ -103,14 +101,8 @@ export default function User() {
                     {/* data && <MemberTable members={data} /> */}
                     <MemberTable members={data} />
 
-                    <Box
-                        px={{
-                            base: "4",
-                            md: "6",
-                        }}
-                        pb="5"
-                    >
-                        <HStack spacing="3" justify="space-between">
+                    <Box>
+                        <HStack justify="space-between">
                             {!isMobile && (
                                 <Text color="fg.muted" fontSize="sm">
                                     Showing 1 to 5 of 42 results

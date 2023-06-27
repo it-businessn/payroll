@@ -36,14 +36,14 @@ export const ForgotPassword = () => {
     return (
         <Box
             bgGradient={{
-                sm: "linear(to-r, purple.600, purple.600)",
+                sm: "linear(to-r, brand.600, brand.600)",
             }}
             py={{
                 base: "12",
                 md: "24",
             }}
-            height="100vh"
             display="flex"
+            minH="100vh"
             alignItems="center"
         >
             <Container

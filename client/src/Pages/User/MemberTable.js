@@ -63,10 +63,15 @@ export const MemberTable = ({ members }) => {
     };
     return (
         <>
-            <Table variant="simple" size="sm">
-                <Thead bg="#f0f2f4">
+            <Table
+                size="sm"
+                layout="fixed"
+                variant="simple"
+                whiteSpace="pre-wrap"
+            >
+                <Thead>
                     <Tr>
-                        <Th>
+                        <Th width={350}>
                             <HStack spacing="3">
                                 {/* <Checkbox /> */}
                                 <HStack spacing="1">
@@ -79,10 +84,10 @@ export const MemberTable = ({ members }) => {
                                 </HStack>
                             </HStack>
                         </Th>
-                        <Th>Phone Number</Th>
-                        <Th>Email</Th>
-                        <Th>Role</Th>
-                        <Th>Annual Salary</Th>
+                        <Th width={150}>Phone Number</Th>
+                        <Th width={250}>Email</Th>
+                        <Th width={150}>Role</Th>
+                        <Th width={150}>Annual Salary</Th>
                         <Th></Th>
                     </Tr>
                 </Thead>

@@ -20,9 +20,9 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
-import Sidebar from "../../components/Sidebar";
-import { AttendanceTable } from "./AttendanceTable.js";
-function AttendanceWidget() {
+import Sidebar from "../../components/Sidebar.js";
+import { LeaveTable } from "./LeaveTable.js";
+function LeaveWidget() {
     const user = JSON.parse(localStorage.getItem("profile")).userDetails.data;
     const [userData, setData] = useState(null);
     useEffect(() => {
@@ -90,20 +90,16 @@ function AttendanceWidget() {
             >
                 <Stack spacing="3">
                     <Flex justifyContent="space-between">
-                        <Heading size="xs">
-                            Attendance Timesheet Details
-                        </Heading>
+                        <Heading size="xs">Leave Requests</Heading>
                         <Button onClick={onOpen} variant="primary">
-                            Raise New Log
+                            Raise New Request
                         </Button>
                     </Flex>
-                    {userData && (
-                        <AttendanceTable user={user} members={userData} />
-                    )}
+                    {userData && <LeaveTable user={user} members={userData} />}
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader> New Attendance Log </ModalHeader>
+                            <ModalHeader>Raise Leave Request</ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
                                 <Stack divider={<StackDivider />}>
@@ -153,6 +149,32 @@ function AttendanceWidget() {
                                                         />
                                                     </FormControl>
                                                 )}
+                                            </Field>{" "}
+                                            <Field
+                                                name="leaveType"
+                                                key="leaveType"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="leaveType">
+                                                        <FormLabel>
+                                                            Leave Type
+                                                        </FormLabel>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                )}
+                                            </Field>
+                                            <Field
+                                                name="leaveReason"
+                                                key="leaveReason"
+                                            >
+                                                {({ field }) => (
+                                                    <FormControl id="leaveReason">
+                                                        <FormLabel>
+                                                            Reason
+                                                        </FormLabel>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                )}
                                             </Field>
                                             <Flex
                                                 direction="row"
@@ -185,4 +207,4 @@ function AttendanceWidget() {
     );
 }
 
-export default AttendanceWidget;
+export default LeaveWidget;

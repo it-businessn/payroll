@@ -1,13 +1,6 @@
-import {
-    Button,
-    Heading,
-    HStack,
-    Stack,
-    Text,
-    useBreakpointValue,
-} from "@chakra-ui/react";
+import { Heading, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm";
 import { LoginSchema } from "../../config/userSchema";
@@ -57,14 +50,6 @@ export const SignInForm = (props) => {
                     >
                         Log in to your account
                     </Heading>
-                    <HStack spacing="1" justify="center">
-                        <Text color="fg.muted">Don't have an account?</Text>
-                        <Link to="/sign-up">
-                            <Button variant="text" size="lg">
-                                Sign up
-                            </Button>
-                        </Link>
-                    </HStack>
                 </Stack>
             </Stack>
             <Stack spacing="5">

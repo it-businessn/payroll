@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Drawer,
     DrawerBody,
@@ -12,6 +13,7 @@ import {
     HStack,
     Heading,
     Icon,
+    IconButton,
     Radio,
     RadioGroup,
     Stack,
@@ -27,12 +29,14 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 
+import { CheckIcon } from "@chakra-ui/icons";
 import moment from "moment";
 import { useState } from "react";
+import { FaBan } from "react-icons/fa";
 import { IoArrowDown } from "react-icons/io5";
 import * as api from "../../api/index.js";
 import { USER_ROLE } from "../../constants/constant.js";
-export const AttendanceTable = ({ user, members }) => {
+export const LeaveTable = ({ user, members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [recordId, setRecordId] = useState(null);
     let initialValues = {
@@ -85,7 +89,7 @@ export const AttendanceTable = ({ user, members }) => {
                         <Th>
                             <HStack spacing="3">
                                 <HStack spacing="1">
-                                    <Text>Date</Text>
+                                    <Text>Requested By</Text>
                                     <Icon
                                         as={IoArrowDown}
                                         color="muted"
@@ -94,12 +98,14 @@ export const AttendanceTable = ({ user, members }) => {
                                 </HStack>
                             </HStack>
                         </Th>
-                        <Th>Time In(Morning)</Th>
-                        <Th>Time out(Morning)</Th>
-                        <Th>Time in(Afternoon)</Th>
-                        <Th>Time out(Afternoon)</Th>
-                        <Th>Total Hours</Th>
-                        <Th></Th>
+                        <Th>Duration</Th>
+                        <Th>Balance</Th>
+                        <Th>Created On</Th>
+                        <Th>Request Type</Th>
+                        <Th>Leave Reason</Th>
+                        <Th>Status</Th>
+                        <Th> Comment</Th>
+                        {user.role !== USER_ROLE.EMPLOYEE && <Th> Action</Th>}
                     </Tr>
                 </Thead>
                 <Tbody>
@@ -107,35 +113,75 @@ export const AttendanceTable = ({ user, members }) => {
                         records.map((member) => (
                             <Tr key={member._id}>
                                 <Td>
-                                    <Text fontWeight="medium">
+                                    <HStack spacing="3">
+                                        <Box>
+                                            <Text fontWeight="medium">
+                                                {member.raisedBy}
+                                            </Text>
+                                        </Box>
+                                    </HStack>
+                                </Td>
+                                <Td>{member.durationOfLeave}</Td>
+                                <Td>{member.leaveBalance}</Td>
+                                <Td>
+                                    <Text>
                                         {moment(member.created).format(
                                             "YYYY-MM-DD"
                                         )}
                                     </Text>
                                 </Td>
-                                <Td>{moment().format("h:mm A")}</Td>
-                                <Td>{moment().format("h:mm A")}</Td>
                                 <Td>
-                                    <Text>
-                                        {moment(member.created).format(
-                                            "h:mm A"
-                                        )}
+                                    <Text color="muted">
+                                        {member.leaveType}
                                     </Text>
                                 </Td>
                                 <Td>
                                     <Text color="muted">
-                                        {moment(member.created).format(
-                                            "h:mm A"
-                                        )}
+                                        {member.leaveReason}
                                     </Text>
                                 </Td>
                                 <Td>
-                                    <Text color="muted">5.6</Text>
+                                    <Text color="muted">
+                                        {member.leaveRequestStatus}
+                                    </Text>
                                 </Td>
                                 <Td>
-                                    <Button onClick={onOpen} variant="link">
-                                        Edit Log
-                                    </Button>
+                                    <Text color="muted">
+                                        {member.leaveRequestDecisionComment}
+                                    </Text>
+                                </Td>
+                                <Td>
+                                    {user.role !== USER_ROLE.EMPLOYEE && (
+                                        <HStack spacing="1">
+                                            <IconButton
+                                                onClick={() =>
+                                                    openApproveModal(member)
+                                                }
+                                                icon={
+                                                    <CheckIcon color="brand.500" />
+                                                }
+                                                variant="ghost"
+                                                borderRadius="50%"
+                                                size="xs"
+                                                aria-label="Edit member"
+                                            />
+                                            <IconButton
+                                                icon={
+                                                    <FaBan
+                                                        color="red"
+                                                        fontSize=".5rem"
+                                                    />
+                                                }
+                                                onClick={() =>
+                                                    openApproveModal(member)
+                                                }
+                                                variant="ghost"
+                                                borderRadius="50%"
+                                                size="xs"
+                                                aria-label="Edit member"
+                                            />
+                                        </HStack>
+                                    )}
                                 </Td>
                             </Tr>
                         ))}
@@ -246,10 +292,15 @@ export const AttendanceTable = ({ user, members }) => {
                                         variant="outline"
                                         mr={3}
                                         onClick={onClose}
+                                        // color="brand.200"
                                     >
                                         Close
                                     </Button>
-                                    <Button type="submit" variant="primary">
+                                    <Button
+                                        // bg="brand.200"
+                                        type="submit"
+                                        variant="primary"
+                                    >
                                         Submit
                                     </Button>
                                 </Flex>

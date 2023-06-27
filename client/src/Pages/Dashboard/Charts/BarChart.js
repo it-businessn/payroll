@@ -51,7 +51,7 @@ export function BarChart({ data1 }) {
 
                 data: data1.map((x) => x.countMonth),
                 // data: labels.map((x) => data1.find((y) => y.month === x).count),
-                backgroundColor: ["#e4f4c1"],
+                backgroundColor: ["#c3dd98"],
             },
         ],
     };

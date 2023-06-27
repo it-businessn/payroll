@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import { USER_ROLE } from "../../constants/constant";
 import Dashboard from "../Dashboard/Dashboard";
 import EmployeeDashboard from "../Dashboard/EmployeeDashboard";
+import { Navbar } from "./Navbar";
 
 function Home() {
     const navigate = useNavigate();
@@ -22,19 +23,19 @@ function Home() {
                 base: "column",
                 lg: "row",
             }}
-            height="100vh"
             bg="bg.canvas"
-            overflowY="auto"
         >
-            {isDesktop && token ? (
+            {token && isDesktop ? (
                 <>
-                    <Sidebar user={user.userDetails.data} />
+                    <Sidebar user={user?.userDetails.data} />
                     {userRole === USER_ROLE.EMPLOYEE ? (
                         <EmployeeDashboard />
                     ) : (
                         <Dashboard />
                     )}
                 </>
+            ) : token && !isDesktop ? (
+                <Navbar user={user.userDetails.data} />
             ) : (
                 navigate("/sign-in")
             )}

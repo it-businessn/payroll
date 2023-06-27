@@ -22,8 +22,8 @@ export const Login = () => (
         }}
         bgGradient={{
             md: mode(
-                "linear(to-r, purple.600 50%, white 50%)",
-                "linear(to-r, purple.600 50%, gray.900 50%)"
+                "linear(to-r, brand.600 50%, white 50%)",
+                "linear(to-r, brand.600 50%, gray.900 50%)"
             ),
         }}
     >

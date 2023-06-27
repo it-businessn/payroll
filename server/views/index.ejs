@@ -6,26 +6,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
             * {
-                font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                font-family: "Inter Variable", -apple-system, system-ui,
+                    sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-            .grid-container {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+            .flex-container {
+                display: flex;
+                justify-content: center;
                 height: 100vh;
-            }
-            .source-img {
-                background-image: url(https://img.freepik.com/free-vector/cloud-computing-security-abstract-concept-illustration_335657-2105.jpg?w=996&t=st=1683298487~exp=1683299087~hmac=fc22a0a…);
-                background-repeat: no-repeat;
-                background-color: #eee;
-                background-size: cover;
-                background-position: center;
+                background-color: #172c44;
+                align-items: center;
             }
             .form-div {
-                padding: 8em;
-                background-color: rgb(246 248 255);
+                padding: 2em;
+                background-color: white;
+                width: 28rem;
+                border-radius: 1em;
             }
             h1 {
-                font-size: 1.5em;
+                font-size: 1.875em;
+                line-height: 2.375rem;
+                font-weight: 600;
             }
             .form-content {
                 display: flex;
@@ -34,20 +37,27 @@
             }
             input,
             button {
-                padding: 17px;
-                border-radius: 8px;
-                border: none;
-                font-size: 1em;
+                height: 2.5rem;
+                border-radius: 0.5rem;
+                border: 1px solid #e2e8f0;
+                font-size: 1rem;
             }
-            input {
+            input,
+            label {
                 color: black;
+                margin-top: 0.5rem;
             }
             button {
                 color: white;
-                background: rgb(83 95 236);
+                background: #78ab4a;
+                cursor: pointer;
             }
-            label {
-                margin: 1em 0;
+            .center {
+                text-align: center;
+                margin-bottom: 2em;
+            }
+            img {
+                width: 200px;
             }
         </style>
         <title>Document</title>
@@ -62,25 +72,27 @@
         </script>
     </head>
     <body>
-        <div class="grid-container">
-            <div class="source-img"></div>
+        <div class="flex-container">
             <div class="form-div">
-                <h1>Create Your New Password</h1>
+                <div class="center">
+                    <img
+                        alt="logo"
+                        src="https://uploads-ssl.webflow.com/643cf2f78897e3e6b64779a9/64642eaa53e8234c891aafa5_Screenshot%202023-05-16%20at%206.30.59%20PM.png"
+                    />
+                    <h1>Create Your New Password</h1>
+                </div>
+
                 <form class="form-content" action="" method="post">
-                    <label>Email Address</label>
-                    <input placeholder="<%= email%>"" value ="<%= email%>"
-                    type="email" name="email" id="email" placeholder="Enter new
-                    password" />
-                    <label>Password </label>
+                    <label>Email Address : <%= email%></label>
+
                     <input
                         type="password"
                         name="password"
                         id="password"
                         placeholder="Enter new password"
                     />
-                    <label>Confirm Password </label>
                     <input
-                        type="password"
+                        type="text"
                         name="confirmPassword"
                         id="confirmPassword"
                         placeholder="Confirm your password"

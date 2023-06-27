@@ -171,7 +171,7 @@ export const forgotPassword = async (request, response) => {
                 expiresIn: "1h",
             }
         );
-        const link = `${process.env.BASE_URL}/users/password-reset/${existingUser._id}/${token}`;
+        const link = `${process.env.BASE_URL}/user/password-reset/${existingUser._id}/${token}`;
         await sendEmail(existingUser.email, "Password reset", link);
 
         response.status(201).json({

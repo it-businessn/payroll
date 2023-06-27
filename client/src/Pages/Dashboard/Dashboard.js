@@ -118,7 +118,7 @@ function Dashboard() {
         {
             icon: FiDollarSign,
             label: "Avg. Salary",
-            value: "56.87%",
+            value: "$5689.00",
             delta: {
                 value: "2.3%",
                 isUpwardsTrend: true,
@@ -127,7 +127,7 @@ function Dashboard() {
         {
             icon: FiActivity,
             label: "Payrolls Processed",
-            value: "12.87%",
+            value: "30",
             delta: {
                 value: "0.1%",
                 isUpwardsTrend: false,
@@ -136,8 +136,18 @@ function Dashboard() {
     ];
     let average = result.annualSalary * 100;
     return (
-        <Container py="8" flex="1" maxW="100%">
-            <Stack>
+        <Container
+            maxW="100%"
+            py={{
+                base: "4",
+                md: "8",
+            }}
+            px={{
+                base: "0",
+                md: 8,
+            }}
+        >
+            <Stack spacing="3">
                 <Heading size="xs">
                     Indicator
                     <IconButton
@@ -153,7 +163,7 @@ function Dashboard() {
                             base: 1,
                             md: 3,
                         }}
-                        width="70%"
+                        width="75%"
                         gap={6}
                     >
                         {stats.map((stat, id) => (
@@ -182,7 +192,7 @@ function Dashboard() {
                     </SimpleGrid>
                     <SimpleGrid
                         marginLeft="1.5em"
-                        width="30%"
+                        width="25%"
                         columns={1}
                         gap={6}
                     >
@@ -263,10 +273,11 @@ function Dashboard() {
                     <ModalCloseButton />
                     <ModalBody>
                         <FormControl>
-                            <FormLabel>Country</FormLabel>
-                            <Select placeholder="Select country">
-                                <option>United Arab Emirates</option>
-                                <option>Nigeria</option>
+                            <FormLabel>Type</FormLabel>
+                            <Select placeholder="Select type of data to filter">
+                                <option>Members joined by month</option>
+                                <option>Payrolls processed</option>
+                                <option>Gross Salary Paid</option>
                             </Select>
                         </FormControl>
                         <FormControl>

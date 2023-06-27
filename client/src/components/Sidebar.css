@@ -1,5 +1,5 @@
 div:has(> a.active) {
-    background: #bae25d66;
+    background: #c3dd98;
     border-radius: 0.375rem;
 }
 .react-calendar {
