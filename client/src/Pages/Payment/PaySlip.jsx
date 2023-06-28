@@ -10,8 +10,8 @@ function PaySlip() {
                     <Tr>
                         <Td>Employee Name</Td>
                         <Td>
-                            {user.firstName} {user.middleName}
-                            {user.lastName}
+                            {`${user.firstName} ${user.middleName}
+                             ${user.lastName}`}
                         </Td>
                         <Td>Pay date</Td>
                         <Td>12 June 2023</Td>

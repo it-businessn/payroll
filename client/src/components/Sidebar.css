@@ -6,3 +6,34 @@ div:has(> a.active) {
     background: none !important;
     border: none !important;
 }
+.p-datatable-resizable-table > .p-datatable-thead > tr > th,
+.p-datatable-resizable-table > .p-datatable-tfoot > tr > td,
+.p-datatable-resizable-table > .p-datatable-tbody > tr > td {
+    white-space: pre-line !important;
+}
+.p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    padding: 0.2rem;
+}
+.chakra-avatar__initials {
+    font-size: 1rem !important;
+}
+.p-datepicker table {
+    table-layout: fixed !important;
+    font-size: 0.8rem !important;
+    margin: 0.25rem 0 !important;
+}
+.p-datepicker table td,
+.p-datepicker table th {
+    padding: 0.1rem !important;
+}
+.p-datepicker .p-datepicker-header {
+    padding: 0 0.5rem !important;
+}
+.p-calendar .p-datepicker {
+    display: flex !important;
+    border: none !important;
+}
+.p-datepicker table td > span {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}

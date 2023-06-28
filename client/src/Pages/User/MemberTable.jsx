@@ -1,30 +1,31 @@
 import {
     Avatar,
     Box,
-    Checkbox,
+    Button,
+    Flex,
     HStack,
-    Icon,
-    IconButton,
+    Heading,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
+    Spacer,
     Text,
-    Th,
-    Thead,
-    Tr,
     useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { FilterMatchMode, FilterOperator } from "primereact/api";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { InputNumber } from "primereact/inputnumber";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { useEffect, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
-import { IoArrowDown } from "react-icons/io5";
 import * as api from "../../api/index.js";
+import "../../components/Sidebar.css";
 import { UserSchema, userCurrency } from "../../config/userSchema.jsx";
 import { userFormFields } from "../../constants/constant.jsx";
 import PersonalInfoCard from "./EditUser/PersonalInfoCard.jsx";
@@ -63,99 +64,139 @@ export const MemberTable = ({ members }) => {
         });
         onOpen();
     };
+    useEffect(() => {
+        initFilters();
+    }, []);
+    const [filters, setFilters] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [globalFilterValue, setGlobalFilterValue] = useState("");
+    const setRowDatay = (e) => setRowData(e.rowData);
+    const [rowData, setRowData] = useState(null);
+    const initFilters = () => {
+        setFilters({
+            global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+
+            annualSalary: {
+                operator: FilterOperator.AND,
+                constraints: [
+                    { value: null, matchMode: FilterMatchMode.EQUALS },
+                ],
+            },
+        });
+        setGlobalFilterValue("");
+    };
+    const balanceFilterTemplate = (options) => {
+        return (
+            <InputNumber
+                value={options.value}
+                onChange={(e) => options.filterCallback(e.value, options.index)}
+                mode="currency"
+                currency="USD"
+                locale="en-US"
+            />
+        );
+    };
+    const [selectedProducts, setSelectedProducts] = useState(null);
+    const onGlobalFilterChange = (e) => {
+        const value = e.target.value;
+        let _filters = { ...filters };
+
+        _filters["global"].value = value;
+
+        setFilters(_filters);
+        setGlobalFilterValue(value);
+    };
+    const clearFilter = () => {
+        initFilters();
+    };
     return (
         <>
-            <TableContainer height="80vh" overflowY="scroll">
-                <Table size="sm" variant="simple" whiteSpace="pre-wrap">
-                    <Thead>
-                        <Tr>
-                            <Th width={350}>
-                                <HStack spacing="3">
-                                    <Checkbox />
-                                    <HStack spacing="1">
-                                        <Text>Name</Text>
-                                        <Icon
-                                            as={IoArrowDown}
-                                            color="muted"
-                                            boxSize="4"
-                                        />
-                                    </HStack>
-                                </HStack>
-                            </Th>
-                            <Th width={200}>Phone Number</Th>
-                            <Th width={200}>Email</Th>
-                            <Th width={150}>Role</Th>
-                            <Th width={150}>Annual Salary</Th>
-                            <Th></Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {members.length > 0 ? (
-                            <>
-                                {members.map((member) => (
-                                    <Tr key={member._id}>
-                                        <Td>
-                                            <HStack spacing="3">
-                                                <Checkbox />
-                                                <Avatar
-                                                    name={member.name}
-                                                    src=""
-                                                />
-                                                <Box>
-                                                    <Text textTransform="capitalize">
-                                                        {member.firstName}
-                                                        {member.middleName}
-                                                        {member.lastName}
-                                                    </Text>
-                                                </Box>
-                                            </HStack>
-                                        </Td>
-                                        <Td>
-                                            <Text>{member.phoneNumber}</Text>
-                                        </Td>
-                                        <Td>
-                                            <Text color="muted">
-                                                {member.email}
-                                            </Text>
-                                        </Td>
-                                        <Td>
-                                            <Text color="muted">
-                                                {member.role}
-                                            </Text>
-                                        </Td>
-                                        <Td>
-                                            <Text color="muted">
-                                                {userCurrency(
-                                                    member.currency
-                                                ).format(member.annualSalary)}
-                                            </Text>
-                                        </Td>
-
-                                        <Td>
-                                            <HStack spacing="3">
-                                                <IconButton
-                                                    onClick={() =>
-                                                        openModal(member)
-                                                    }
-                                                    icon={
-                                                        <FiEdit2 fontSize="1.25rem" />
-                                                    }
-                                                    variant="ghost"
-                                                    aria-label="Edit member"
-                                                />
-                                            </HStack>
-                                        </Td>
-                                    </Tr>
-                                ))}
-                            </>
-                        ) : (
-                            <Tr>
-                                <Td> No record to show</Td>
-                            </Tr>
+            <Flex justify="space-between" gap={2}>
+                <Heading size="xs">Members</Heading>
+                <Spacer />
+                <Button variant="primary">Process Payroll</Button>
+                <Button variant="outline" onClick={clearFilter}>
+                    Clear
+                </Button>
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <Input
+                        value={globalFilterValue}
+                        onChange={onGlobalFilterChange}
+                        placeholder="Keyword Search"
+                    />
+                </span>
+            </Flex>
+            <div className="card">
+                <DataTable
+                    selectionMode="checkbox"
+                    selection={selectedProducts}
+                    onSelectionChange={(e) => {
+                        setSelectedProducts(e.value);
+                        console.log(e.value);
+                    }}
+                    dataKey="_id"
+                    value={members}
+                    removableSort
+                    size="small"
+                    resizableColumns
+                    paginator
+                    filters={filters}
+                    globalFilterFields={["annualSalary"]}
+                    rows={8}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    tableStyle={{ whiteSpace: "pre-line" }}
+                    onCellClick={(e) => openModal(e.rowData)}
+                    cellSelection="true"
+                >
+                    <Column
+                        selectionMode="multiple"
+                        headerStyle={{ width: "3rem" }}
+                    ></Column>
+                    <Column
+                        field="name"
+                        body={(value) => (
+                            <HStack spacing="3">
+                                <Avatar
+                                    name={value.name}
+                                    src=""
+                                    w="2.5rem"
+                                    h="2.5rem"
+                                    fontSize="1rem"
+                                />
+                                <Box>
+                                    <Text textTransform="capitalize">
+                                        {value.name}
+                                    </Text>
+                                </Box>
+                            </HStack>
                         )}
-                    </Tbody>
-                </Table>
-            </TableContainer>
+                        sortable
+                        header="Name"
+                    ></Column>
+                    <Column field="phoneNumber" header="Phone Number"></Column>
+                    <Column field="email" sortable header="Email"></Column>
+                    <Column field="role" sortable header="Role"></Column>
+                    <Column
+                        field="annualSalary"
+                        sortable
+                        filterField="annualSalary"
+                        dataType="numeric"
+                        style={{ minWidth: "10rem" }}
+                        filter
+                        filterElement={balanceFilterTemplate}
+                        body={(value) => (
+                            <>
+                                {userCurrency(value.currency).format(
+                                    value.annualSalary
+                                )}
+                            </>
+                        )}
+                        header="Annual Salary"
+                    ></Column>
+                    <Column body={<FiEdit2 />} header="Status"></Column>
+                </DataTable>
+            </div>
             {record && (
                 <Modal size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />

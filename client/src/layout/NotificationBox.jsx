@@ -1,14 +1,12 @@
-import { SmallCloseIcon } from "@chakra-ui/icons";
-import { Flex, HStack, IconButton, Stack, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Calendar from "react-calendar";
+import { Flex, Stack, Text } from "@chakra-ui/react";
+import { Calendar } from "primereact/calendar";
+import { Messages } from "primereact/messages";
+import React, { useRef, useState } from "react";
 import { Card } from "../components/Card";
+import "../components/Sidebar.css";
 
+import { useMountEffect } from "primereact/hooks";
 const NotificationBox = (props) => {
-    const [dateState, setDateState] = useState(new Date());
-    const changeDate = (e) => {
-        setDateState(e);
-    };
     const members = [
         {
             id: "1",
@@ -101,10 +99,89 @@ const NotificationBox = (props) => {
             lastSeen: "5hr ago",
         },
     ];
+    const msgs = useRef(null);
+
+    useMountEffect(() => {
+        msgs.current.show([
+            {
+                sticky: true,
+                severity: "success",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "info",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "warn",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "error",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "success",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "info",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "warn",
+
+                detail: "Message Content",
+            },
+            {
+                sticky: true,
+                severity: "error",
+
+                detail: "Message Content",
+            },
+        ]);
+    });
+    const [date, setDate] = useState(null);
+
+    const dateTemplate = (date) => {
+        if (date.day > 10 && date.day < 15) {
+            return (
+                <strong
+                    style={{
+                        textDecoration: "line-through",
+                        color: "brand.500",
+                    }}
+                >
+                    {date.day}
+                </strong>
+            );
+        }
+
+        return date.day;
+    };
     return (
         <Flex width="25%" flexDir="column">
             <Card pb={3} mb={5}>
-                <Calendar value={dateState} onChange={changeDate} />
+                <Calendar
+                    inline
+                    selectionMode="range"
+                    readOnlyInput
+                    value={date}
+                    onChange={(e) => setDate(e.value)}
+                    dateTemplate={dateTemplate}
+                />
             </Card>
             <Card
                 p={5}
@@ -121,22 +198,7 @@ const NotificationBox = (props) => {
                         align="baseline"
                         flexDir="row"
                     >
-                        <HStack>
-                            <Text color="muted">
-                                Check payment page Check payment page Check
-                                payment page
-                            </Text>
-                        </HStack>
-                        <IconButton
-                            // onClick={() =>
-                            //     navigate(
-                            //         `/add-bank-detail/${userData._id}`
-                            //     )
-                            // }
-                            minW="auto"
-                            icon={<SmallCloseIcon minW="auto" />}
-                            variant="ghost"
-                        />
+                        <Messages ref={msgs} />
                     </Stack>
                 ))}
             </Card>

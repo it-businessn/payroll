@@ -11,6 +11,7 @@ import {
     ModalContent,
     ModalHeader,
     ModalOverlay,
+    Select,
     Stack,
     StackDivider,
     useDisclosure,
@@ -38,6 +39,18 @@ function LeaveWidget() {
         } finally {
         }
     };
+    const leaveTypes = [
+        "Sick leave",
+        "Casual leave",
+        "Public holiday",
+        "Religious holiday",
+        "Maternity leave",
+        "Paternity leave",
+        "Bereavement leave",
+        "Compensatory leave",
+        "Sabbatical leave",
+        "Unpaid leave",
+    ];
     const { isOpen, onOpen, onClose } = useDisclosure();
     let initialValues = {
         leaveReason: "",
@@ -148,7 +161,22 @@ function LeaveWidget() {
                                                         <FormLabel>
                                                             Leave Type
                                                         </FormLabel>
-                                                        <Input {...field} />
+                                                        <Select
+                                                            placeholder="Select leave type"
+                                                            {...field}
+                                                        >
+                                                            {leaveTypes.map(
+                                                                (item) => (
+                                                                    <option
+                                                                        key={
+                                                                            item
+                                                                        }
+                                                                    >
+                                                                        {item}
+                                                                    </option>
+                                                                )
+                                                            )}
+                                                        </Select>
                                                     </FormControl>
                                                 )}
                                             </Field>
