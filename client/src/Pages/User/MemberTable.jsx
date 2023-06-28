@@ -1,0 +1,178 @@
+import {
+    Avatar,
+    Box,
+    Checkbox,
+    HStack,
+    Icon,
+    IconButton,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tr,
+    useDisclosure,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { FiEdit2 } from "react-icons/fi";
+import { IoArrowDown } from "react-icons/io5";
+import * as api from "../../api/index.js";
+import { UserSchema, userCurrency } from "../../config/userSchema.jsx";
+import { userFormFields } from "../../constants/constant.jsx";
+import PersonalInfoCard from "./EditUser/PersonalInfoCard.jsx";
+export const MemberTable = ({ members }) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [users, setMembers] = useState(members);
+    const [record, setRecord] = useState(null);
+    const [userFormInitialValues, setUserFormInitialValues] = useState(null);
+    const handleSubmit = async (values) => {
+        try {
+            const updateData = await api.updateUserById(record._id, values);
+            onClose();
+            setMembers(members);
+        } catch (error) {
+            // setError(error.response.data.error);
+            console.log(error);
+        }
+    };
+    const openModal = (member) => {
+        setRecord(member);
+        setUserFormInitialValues({
+            firstName: member.firstName,
+            middleName: member.middleName,
+            lastName: member.lastName,
+            email: member.email,
+            password: member.password,
+            role: member.role,
+            annualSalary: member.annualSalary,
+            dateOfJoining: member.dateOfJoining,
+            phoneNumber: member.phoneNumber,
+            streetNumber: member.streetNumber,
+            city: member.city,
+            state: member.state,
+            postalCode: member.postalCode,
+            country: member.country,
+        });
+        onOpen();
+    };
+    return (
+        <>
+            <TableContainer height="80vh" overflowY="scroll">
+                <Table size="sm" variant="simple" whiteSpace="pre-wrap">
+                    <Thead>
+                        <Tr>
+                            <Th width={350}>
+                                <HStack spacing="3">
+                                    <Checkbox />
+                                    <HStack spacing="1">
+                                        <Text>Name</Text>
+                                        <Icon
+                                            as={IoArrowDown}
+                                            color="muted"
+                                            boxSize="4"
+                                        />
+                                    </HStack>
+                                </HStack>
+                            </Th>
+                            <Th width={200}>Phone Number</Th>
+                            <Th width={200}>Email</Th>
+                            <Th width={150}>Role</Th>
+                            <Th width={150}>Annual Salary</Th>
+                            <Th></Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {members.length > 0 ? (
+                            <>
+                                {members.map((member) => (
+                                    <Tr key={member._id}>
+                                        <Td>
+                                            <HStack spacing="3">
+                                                <Checkbox />
+                                                <Avatar
+                                                    name={member.name}
+                                                    src=""
+                                                />
+                                                <Box>
+                                                    <Text textTransform="capitalize">
+                                                        {member.firstName}
+                                                        {member.middleName}
+                                                        {member.lastName}
+                                                    </Text>
+                                                </Box>
+                                            </HStack>
+                                        </Td>
+                                        <Td>
+                                            <Text>{member.phoneNumber}</Text>
+                                        </Td>
+                                        <Td>
+                                            <Text color="muted">
+                                                {member.email}
+                                            </Text>
+                                        </Td>
+                                        <Td>
+                                            <Text color="muted">
+                                                {member.role}
+                                            </Text>
+                                        </Td>
+                                        <Td>
+                                            <Text color="muted">
+                                                {userCurrency(
+                                                    member.currency
+                                                ).format(member.annualSalary)}
+                                            </Text>
+                                        </Td>
+
+                                        <Td>
+                                            <HStack spacing="3">
+                                                <IconButton
+                                                    onClick={() =>
+                                                        openModal(member)
+                                                    }
+                                                    icon={
+                                                        <FiEdit2 fontSize="1.25rem" />
+                                                    }
+                                                    variant="ghost"
+                                                    aria-label="Edit member"
+                                                />
+                                            </HStack>
+                                        </Td>
+                                    </Tr>
+                                ))}
+                            </>
+                        ) : (
+                            <Tr>
+                                <Td> No record to show</Td>
+                            </Tr>
+                        )}
+                    </Tbody>
+                </Table>
+            </TableContainer>
+            {record && (
+                <Modal size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Edit Records</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <PersonalInfoCard
+                                formSubmit={handleSubmit}
+                                schema={UserSchema}
+                                initialValues={userFormInitialValues}
+                                formFields={userFormFields}
+                            />
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+            )}
+        </>
+    );
+};
