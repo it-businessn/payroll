@@ -1,4 +1,4 @@
-import Payroll from "../models/Payroll.js";
+import Payroll from "../models/payroll.js";
 export const getAllPayroll = async (request, response) => {
     try {
         const result = await Payroll.find();
