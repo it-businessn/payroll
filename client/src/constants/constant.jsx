@@ -5,76 +5,83 @@ import { ImProfile } from "react-icons/im";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineAccountBalance } from "react-icons/md";
 import { TbPointerDollar } from "react-icons/tb";
-export const ADMIN_MENULIST = [
+
+export const ROUTE_PATH = {
+    HOME: "/home",
+    PROFILE: "/profile",
+    USERS: "/users",
+    BANK: "/bank-detail",
+    PAYROLL: "/payroll-detail",
+    ATTENDANCE: "/attendance-detail",
+    LEAVE: "/leave-detail",
+};
+export const TOAST = {
+    SUCCESS: {
+        title: "Data Updated Successfully",
+        status: "success",
+        isClosable: true,
+    },
+    ERROR: {
+        title: "Sorry! Please try again.",
+        status: "error",
+        isClosable: true,
+    },
+};
+export const MENU_LIST = [
     {
         path: "/",
         name: "Home",
         icon: LuLayoutDashboard,
     },
     {
-        path: "/profile",
+        path: ROUTE_PATH.PROFILE,
         name: "Profile",
         icon: ImProfile,
     },
     {
-        path: "/users",
+        path: ROUTE_PATH.USERS,
         name: "Users",
         icon: FiUsers,
     },
     {
-        path: "/bank-detail",
+        path: ROUTE_PATH.BANK,
         name: "Bank",
         icon: MdOutlineAccountBalance,
     },
     {
-        path: "/payroll-detail",
+        path: ROUTE_PATH.PAYROLL,
         name: "Payroll",
         icon: TbPointerDollar,
     },
     {
-        path: "/leave-detail",
-        name: "Leave ",
+        path: ROUTE_PATH.LEAVE,
+        name: "Leave",
         icon: BsCalendar3,
     },
     {
-        path: "/attendance-detail",
-        name: "Attendance ",
+        path: ROUTE_PATH.ATTENDANCE,
+        name: "Attendance",
         icon: FaUserClock,
     },
 ];
-export const EMPLOYEE_MENULIST = [
-    {
-        path: "/",
-        name: "Home",
-        icon: LuLayoutDashboard,
-    },
-    {
-        path: "/bank-detail",
-        name: "Bank",
-        icon: MdOutlineAccountBalance,
-    },
-    {
-        path: "/payroll-detail",
-        name: "Payroll",
-        icon: TbPointerDollar,
-    },
-    {
-        path: "/leave-detail",
-        name: "Leave ",
-        icon: BsCalendar3,
-    },
-    {
-        path: "/attendance-detail",
-        name: "Attendance ",
-        icon: FaUserClock,
-    },
-];
-
 export const USER_ROLE = {
     EMPLOYEE: "Employee",
     MANAGER: "Super Manager",
+    HR: "HR/Manager",
     ADMIN: "Administrator",
 };
+export const LEAVE_TYPES = [
+    "Sick leave",
+    "Casual leave",
+    "Public holiday",
+    "Religious holiday",
+    "Maternity leave",
+    "Paternity leave",
+    "Bereavement leave",
+    "Compensatory leave",
+    "Sabbatical leave",
+    "Unpaid leave",
+];
 export const loginInitialValues = {
     email: "",
     password: "",
@@ -132,7 +139,7 @@ export const loginFormFields = [
         size: "sm",
     },
 ];
-export const userInitialValues = {
+export const signUpInitialValues = {
     firstName: "",
     middleName: "",
     lastName: "",
@@ -147,7 +154,7 @@ export const userInitialValues = {
     state: "",
     country: "",
 };
-export const userFormFields = [
+export const signUpFormFields = [
     {
         field: "textField",
         margin: "dense",

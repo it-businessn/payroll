@@ -15,12 +15,14 @@ import {
     Stack,
     StackDivider,
     useDisclosure,
+    useToast,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar.jsx";
+import { LEAVE_TYPES, TOAST } from "../../constants/constant.jsx";
 import DashboardLayout from "../../layout/DashboardLayout.jsx";
 import ProfileContainer from "../../layout/ProfileContainer.jsx";
 import { LeaveTable } from "./LeaveTable.jsx";
@@ -28,29 +30,14 @@ function LeaveWidget() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const [userData, setData] = useState(null);
     useEffect(() => {
-        // fetchUserData(user?.userDetails.data._id);
         fetchUserData();
     }, []);
     const fetchUserData = async () => {
         try {
             let result = await api.getLeaveRequest();
             setData(result.data.data);
-        } catch (error) {
-        } finally {
-        }
+        } catch (error) {}
     };
-    const leaveTypes = [
-        "Sick leave",
-        "Casual leave",
-        "Public holiday",
-        "Religious holiday",
-        "Maternity leave",
-        "Paternity leave",
-        "Bereavement leave",
-        "Compensatory leave",
-        "Sabbatical leave",
-        "Unpaid leave",
-    ];
     const { isOpen, onOpen, onClose } = useDisclosure();
     let initialValues = {
         leaveReason: "",
@@ -66,17 +53,23 @@ function LeaveWidget() {
         },
     });
 
+    const toast = useToast();
     const handleSubmit = async (values) => {
-        values.raisedBy = user.email;
+        values.raisedBy = user?.userDetails.data.email;
         values.durationOfLeave =
             moment(values.leaveEndDate).diff(
                 moment(values.leaveStartDate),
                 "days"
             ) + 1;
         try {
-            const updateData = await api.raiseLeaveRequest(user._id, values);
+            const updateData = await api.raiseLeaveRequest(
+                user?.userDetails.data._id,
+                values
+            );
+            toast(TOAST.SUCCESS);
             onClose();
         } catch (error) {
+            toast(TOAST.ERROR);
             // setError(error.response.data.error);
             console.log(error);
         }
@@ -119,7 +112,7 @@ function LeaveWidget() {
                                                         <Input {...field} />
                                                     </FormControl>
                                                 )}
-                                            </Field>{" "}
+                                            </Field>
                                             <Field
                                                 name="leaveStartDate"
                                                 key="leaveStartDate"
@@ -135,7 +128,7 @@ function LeaveWidget() {
                                                         />
                                                     </FormControl>
                                                 )}
-                                            </Field>{" "}
+                                            </Field>
                                             <Field
                                                 name="leaveEndDate"
                                                 key="leaveEndDate"
@@ -151,7 +144,7 @@ function LeaveWidget() {
                                                         />
                                                     </FormControl>
                                                 )}
-                                            </Field>{" "}
+                                            </Field>
                                             <Field
                                                 name="leaveType"
                                                 key="leaveType"
@@ -165,7 +158,7 @@ function LeaveWidget() {
                                                             placeholder="Select leave type"
                                                             {...field}
                                                         >
-                                                            {leaveTypes.map(
+                                                            {LEAVE_TYPES.map(
                                                                 (item) => (
                                                                     <option
                                                                         key={

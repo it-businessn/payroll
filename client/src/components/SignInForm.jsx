@@ -18,7 +18,7 @@ export const SignInForm = ({ title }) => {
             const userToken = userData?.token;
             const profile = { userDetails, userToken };
             localStorage.setItem("profile", JSON.stringify(profile));
-            userDetails.data.active
+            userDetails.data.emailVerified
                 ? navigate("/home")
                 : navigate("/verify-email");
         } catch (error) {

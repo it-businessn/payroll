@@ -97,12 +97,11 @@ const createUser = async (
     streetNumber,
     country,
     city,
-    currency,
-    state
+    state,
+    currency
 ) => {
     const hashedPassword = await encryptPassword(password);
     const otpGenerated = generateOTP();
-
     const newUser = await User.create({
         firstName,
         middleName,
@@ -152,7 +151,7 @@ const validateUserSignUp = async (email, otp) => {
         return [false, "Invalid OTP"];
     }
     const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
-        $set: { active: true },
+        $set: { emailVerified: true },
     });
     return [true, updatedUser];
 };
@@ -241,6 +240,84 @@ export const getUserById = async (request, response) => {
     try {
         const existingUser = await User.findById({ _id: id });
         response.status(200).json({ data: existingUser });
+    } catch (error) {
+        response.status(404).json({ error: error.message });
+    }
+};
+export const addRecords = async (request, response) => {
+    try {
+        User.insertMany([
+            {
+                firstName: "Isabelle Kane",
+                middleName: "Petra Bush",
+                lastName: "Megan Anthony",
+                email: "sit.amet@outlook.edu",
+                role: "Super Manager",
+                password: "DNO24DVT3MW",
+                created: "2024-05-10 02:45:19",
+                emailVerified: true,
+                dateOfJoining: "2022-07-17 14:18:20",
+                phoneNumber: "1-244-802-6218",
+                address: {
+                    streetNumber: "Ap #106-2707 Euismod Avenue",
+                    city: "Aurora",
+                    postalCode: "63R 6H4",
+                    state: "Prince Edward Island",
+                    country: "Canada",
+                },
+                preferredModeOfPayment: "Wire Transfer",
+                otp: "F2G4T4",
+                bankDetails: {
+                    currency: "DZD",
+                    accountNumber: "111314845",
+                    branchTransitNumber: "1779278",
+                    institutionNumber: "488158031",
+                },
+                annualSalary: 4129,
+                paymentInfo: [],
+                attendanceDetails: [],
+                monthNum: 11,
+                countMonth: 41,
+            },
+            {
+                firstName: "Josiah Adams",
+                middleName: "Ava Trevino",
+                lastName: "Chastity Vasquez",
+                email: "tellus@yahoo.couk",
+                role: "Administrator",
+                password: "QSR47FDL6VU",
+                created: "2022-12-13 05:53:49",
+                emailVerified: false,
+                dateOfJoining: "2023-11-25 23:25:53",
+                phoneNumber: "1-413-229-9164",
+                address: {
+                    streetNumber: "1488 Quisque Ave",
+                    city: "Las Vegas",
+                    postalCode: "72L 5Y7",
+                    state: "Vermont",
+                    country: "United States",
+                },
+                preferredModeOfPayment: "Direct Deposit",
+                otp: "F5U5Q0",
+                bankDetails: {
+                    currency: "QAR",
+                    accountNumber: "386807434",
+                    branchTransitNumber: "44588287",
+                    institutionNumber: "475464451",
+                },
+                annualSalary: 1798,
+                paymentInfo: [],
+                attendanceDetails: [],
+                monthNum: "03",
+                countMonth: 11,
+            },
+        ])
+            .then(function () {
+                console.log("Data inserted"); // Success
+            })
+            .catch(function (error) {
+                console.log(error); // Failure
+            });
     } catch (error) {
         response.status(404).json({ error: error.message });
     }

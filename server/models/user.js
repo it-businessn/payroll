@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
-import { AttendanceRequest } from "./attendanceRequest.js";
 import { BankDetail } from "./bankDetail.js";
 import { Address, EmergencyContact } from "./contactDetail.js";
-import { PaymentTransaction } from "./paymentTransaction.js";
 
 const UserDetailsSchema = new mongoose.Schema(
     {
@@ -32,7 +30,7 @@ const UserDetailsSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        active: {
+        emailVerified: {
             type: Boolean,
             default: false,
         },
@@ -69,8 +67,6 @@ const UserDetailsSchema = new mongoose.Schema(
             type: Number,
             required: false,
         },
-        attendanceDetails: [{ type: AttendanceRequest, required: false }],
-        paymentInfo: [{ type: PaymentTransaction, required: false }],
         otp: {
             type: String,
             required: false,

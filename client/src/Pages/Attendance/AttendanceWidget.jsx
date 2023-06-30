@@ -16,7 +16,6 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar.jsx";
@@ -24,28 +23,31 @@ import DashboardLayout from "../../layout/DashboardLayout.jsx";
 import ProfileContainer from "../../layout/ProfileContainer.jsx";
 import { AttendanceTable } from "./AttendanceTable.jsx";
 function AttendanceWidget() {
-    const user = JSON.parse(localStorage.getItem("profile"));
+    const user = JSON.parse(localStorage.getItem("profile"))?.userDetails?.data;
     const [userData, setData] = useState(null);
     useEffect(() => {
-        // fetchUserData(user?.userDetails.data._id);
         fetchUserData();
     }, []);
     const fetchUserData = async () => {
         try {
-            let result = await api.getLeaveRequest();
-            setData(result.data.data);
-        } catch (error) {
-        } finally {
-        }
+            let result = await api.getAttendanceDetails();
+            let filteredResult = result.data.data.filter(
+                (item) => item.email === user.email
+            );
+            setData(filteredResult);
+        } catch (error) {}
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
-    let initialValues = {
-        leaveReason: "",
-    };
+    let initialValues = { inTime: "", outTime: "" };
     const formik = useFormik({
         initialValues,
         onSubmit: (formValues) => {
             try {
+                formValues.inTime = formValues.inTime.replace(":", ".");
+                formValues.outTime = formValues.outTime.replace(":", ".");
+                let diff =
+                    Number(formValues.inTime) - Number(formValues.outTime);
+                formValues.totalHours = Math.abs(diff).toFixed(2);
                 handleSubmit(formValues);
             } catch (error) {
                 console.log(error);
@@ -54,14 +56,12 @@ function AttendanceWidget() {
     });
 
     const handleSubmit = async (values) => {
-        values.raisedBy = user.email;
-        values.durationOfLeave =
-            moment(values.leaveEndDate).diff(
-                moment(values.leaveStartDate),
-                "days"
-            ) + 1;
+        values.email = user.email;
         try {
-            const updateData = await api.raiseLeaveRequest(user._id, values);
+            const updateData = await api.addUserAttendanceDetailsById(
+                user._id,
+                values
+            );
             onClose();
         } catch (error) {
             // setError(error.response.data.error);
@@ -70,7 +70,7 @@ function AttendanceWidget() {
     };
     return (
         <DashboardLayout>
-            {user && <Sidebar user={user?.userDetails.data}></Sidebar>}
+            {user && <Sidebar user={user}></Sidebar>}
             <ProfileContainer>
                 <Stack spacing="3">
                     <Flex justifyContent="space-between">
@@ -82,10 +82,7 @@ function AttendanceWidget() {
                         </Button>
                     </Flex>
                     {userData && (
-                        <AttendanceTable
-                            user={user?.userDetails.data}
-                            members={userData}
-                        />
+                        <AttendanceTable user={user} members={userData} />
                     )}
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
@@ -96,12 +93,9 @@ function AttendanceWidget() {
                                 <Stack divider={<StackDivider />}>
                                     <FormikProvider value={formik}>
                                         <Form>
-                                            <Field
-                                                name="leaveStartDate"
-                                                key="leaveStartDate"
-                                            >
+                                            <Field name="inTime" key="inTime">
                                                 {({ field }) => (
-                                                    <FormControl id="leaveStartDate">
+                                                    <FormControl id="inTime">
                                                         <FormLabel>
                                                             Time-in
                                                         </FormLabel>
@@ -112,12 +106,9 @@ function AttendanceWidget() {
                                                     </FormControl>
                                                 )}
                                             </Field>
-                                            <Field
-                                                name="leaveEndDate"
-                                                key="leaveEndDate"
-                                            >
+                                            <Field name="outTime" key="outTime">
                                                 {({ field }) => (
-                                                    <FormControl id="leaveEndDate">
+                                                    <FormControl id="outTime">
                                                         <FormLabel>
                                                             Time-out
                                                         </FormLabel>

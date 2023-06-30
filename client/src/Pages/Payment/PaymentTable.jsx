@@ -27,13 +27,22 @@ import { useRef, useState } from "react";
 import { IoArrowDown } from "react-icons/io5";
 import { useReactToPrint } from "react-to-print";
 import { userCurrency } from "../../config/userSchema";
+import { USER_ROLE } from "../../constants/constant";
 import PaySlip from "./PaySlip";
 export const PaymentTable = ({ user, members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const componentRef = useRef();
+    const [record, setRecord] = useState(null);
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
+    if (user.role === USER_ROLE.EMPLOYEE) {
+        members = members.filter((item) => item.email === user.email);
+    }
+    const openDrawer = (member) => {
+        setRecord(member);
+        onOpen();
+    };
     const [businessHeader, setBusinessHeader] = useState(null);
     return (
         <>
@@ -83,26 +92,29 @@ export const PaymentTable = ({ user, members }) => {
                                     <Td>
                                         <Text color="muted">
                                             {userCurrency(
-                                                user?.bankDetails.currency
+                                                member.currency
                                             ).format(member.gross)}
                                         </Text>
                                     </Td>
                                     <Td>
                                         <Text color="muted">
                                             {userCurrency(
-                                                user?.bankDetails.currency
-                                            ).format(0)}
+                                                member.currency
+                                            ).format(12)}
                                         </Text>
                                     </Td>
                                     <Td>
                                         <Text color="muted">
                                             {userCurrency(
-                                                user?.bankDetails.currency
+                                                member.currency
                                             ).format(member.netPay)}
                                         </Text>
                                     </Td>
                                     <Td>
-                                        <Button onClick={onOpen} variant="link">
+                                        <Button
+                                            onClick={() => openDrawer(member)}
+                                            variant="link"
+                                        >
                                             View Details
                                         </Button>
                                     </Td>
@@ -153,7 +165,7 @@ export const PaymentTable = ({ user, members }) => {
                             </Heading>
                         </DrawerHeader>
                         <Divider />
-                        <PaySlip />
+                        {record && <PaySlip record={record} />}
                     </DrawerBody>
                     <DrawerFooter>
                         <Button

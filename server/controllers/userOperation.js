@@ -2,7 +2,6 @@ import User from "../models/user.js";
 import {
     calculatePay,
     getCurrencyAndUpdateBankDetails,
-    getUserAttendanceDetails,
 } from "../services/config.js";
 
 export const updateUser = async (request, response) => {
@@ -72,32 +71,6 @@ export const updateUserBankDetails = async (request, response) => {
             { new: true }
         );
         response.status(200).json({ data: updatedUserBankDetails });
-    } catch (error) {
-        console.log(error);
-        response.status(500).json({
-            error: "Something went wrong",
-        });
-    }
-};
-export const updateUserLeaveAttendanceDetails = async (request, response) => {
-    const { id } = request.params;
-    const userRequest = request.body;
-
-    try {
-        const existingUser = await User.find({ _id: id });
-        if (!existingUser) {
-            return response.status(404).json({ error: "User does not exist" });
-        }
-        userRequest.attendanceDetails = getUserAttendanceDetails(
-            userRequest,
-            existingUser
-        );
-        const updatedUserLeaveAttendanceDetails = await User.findByIdAndUpdate(
-            { _id: id },
-            { $push: { attendanceDetails: userRequest.attendanceDetails } },
-            { new: true }
-        );
-        response.status(200).json({ data: updatedUserLeaveAttendanceDetails });
     } catch (error) {
         console.log(error);
         response.status(500).json({

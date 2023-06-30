@@ -22,10 +22,15 @@ export const addUserPaymentDetailsById = (id, formData) =>
 export const updateUserBankDetailsById = (id, formData) =>
     API.put(`/userOperation/bank/${id}`, formData);
 export const addUserAttendanceDetailsById = (id, formData) =>
-    API.put(`/userOperation/attendance/${id}`, formData);
+    API.post(`/attendance/${id}`, formData);
+export const getAttendanceDetails = () => API.get("/attendance");
+export const updateAttendanceDetailsById = (id, formData) =>
+    API.put(`/attendance/${id}`, formData);
 export const getGroupedDataByMonth = () => API.get("/getCategory");
 export const raiseLeaveRequest = (id, formData) =>
     API.post(`/leaveRequest/${id}`, formData);
 export const getLeaveRequest = () => API.get("/leaveRequest");
 export const updateLeaveRequestDetailsById = (id, formData) =>
     API.put(`/leaveRequest/${id}`, formData);
+export const getPayroll = (formData) => API.get("/payroll", formData);
+export const processPayroll = (formData) => API.post("/payroll", formData);

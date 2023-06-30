@@ -14,6 +14,7 @@ import {
     Spacer,
     Stack,
     StackDivider,
+    useToast,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
@@ -21,6 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../../api/index.js";
 import Sidebar from "../../../components/Sidebar.jsx";
 import { UserSchema } from "../../../config/userSchema.jsx";
+import { ROUTE_PATH, TOAST } from "../../../constants/constant.jsx";
 import DashboardLayout from "../../../layout/DashboardLayout.jsx";
 import ProfileContainer from "../../../layout/ProfileContainer.jsx";
 import { UserProfile } from "../UserProfile.jsx";
@@ -58,11 +60,15 @@ export default function EditUser() {
         },
     });
 
+    const toast = useToast();
     const handleSubmit = async (values) => {
         try {
             const updateData = await api.updateUserById(id, values);
+            toast(TOAST.SUCCESS);
+            navigate(ROUTE_PATH.PROFILE);
         } catch (error) {
-            // setError(error.response.data.error);
+            toast(TOAST.ERROR);
+
             console.log(error);
         }
     };

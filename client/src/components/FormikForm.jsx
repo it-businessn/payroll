@@ -157,7 +157,6 @@ function FormikForm({
                                 <FormControl>
                                     <FormLabel>{item.label}</FormLabel>
                                     <Input
-                                        onChange={(i) => console.log(i)}
                                         placeholder="Select Date and Time"
                                         size="md"
                                         {...field}

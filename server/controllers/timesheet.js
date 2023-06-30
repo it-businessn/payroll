@@ -33,7 +33,7 @@ export const raiseLeaveRequest = async (request, response) => {
             leaveType,
             leaveReason,
             leaveApproved: false,
-            leaveRequestDecisionComment: "Pending",
+            leaveRequestDecisionComment: "",
             leaveRequestStatus: "Pending",
             leaveBalance: 20 - durationOfLeave,
             totalLeaves: 20,

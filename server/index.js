@@ -2,7 +2,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import attendanceRoutes from "./routes/attendance.js";
 import categoryRoutes from "./routes/category.js";
+import payrollRoutes from "./routes/payroll.js";
 import timeSheetRoutes from "./routes/timesheet.js";
 import userOperationRoutes from "./routes/userOperation.js";
 import userRoutes from "./routes/users.js";
@@ -18,6 +20,8 @@ app.use("/user", userRoutes);
 app.use("/getCategory", categoryRoutes);
 app.use("/userOperation", userOperationRoutes);
 app.use("/leaveRequest", timeSheetRoutes);
+app.use("/payroll", payrollRoutes);
+app.use("/attendance", attendanceRoutes);
 
 const PORT = process.env.PORT || 5000;
 

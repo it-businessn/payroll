@@ -7,16 +7,16 @@ import ProfileContainer from "../../layout/ProfileContainer.jsx";
 import { PaymentTable } from "./PaymentTable.jsx";
 function PaymentWidget() {
     const user = JSON.parse(localStorage.getItem("profile"));
-    const [userData, setData] = useState(null);
+    const [data, setData] = useState(null);
     useEffect(() => {
-        fetchUserData(user?.userDetails.data._id);
+        fetchPayroll();
     }, []);
-    const fetchUserData = async (id) => {
+    const fetchPayroll = async () => {
         try {
-            let user = await api.getUserById(id);
-            setData(user.data.data);
+            let result = await api.getPayroll();
+            setData(result.data.data);
         } catch (error) {
-        } finally {
+            console.log(error);
         }
     };
     return (
@@ -25,10 +25,10 @@ function PaymentWidget() {
             <ProfileContainer>
                 <Stack spacing="3">
                     <Heading size="xs">Your Payroll Information</Heading>
-                    {userData && (
+                    {data && (
                         <PaymentTable
-                            user={userData}
-                            members={userData?.paymentInfo}
+                            user={user?.userDetails.data}
+                            members={data}
                         />
                     )}
                 </Stack>

@@ -38,7 +38,7 @@ import * as api from "../../api/index.js";
 import { USER_ROLE } from "../../constants/constant.jsx";
 export const LeaveTable = ({ user, members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [recordId, setRecordId] = useState(null);
+    const [record, setRecord] = useState(null);
     let initialValues = {
         leaveRequestDecisionComment: "",
         leaveApproved: "",
@@ -47,7 +47,10 @@ export const LeaveTable = ({ user, members }) => {
     if (user.role === USER_ROLE.EMPLOYEE) {
         records = members.filter((data) => data.raisedBy === user.email);
     } else {
-        records = members.filter((data) => data.approverName === user.email);
+        records = members.filter(
+            (data) =>
+                data.approverName === user.email || data.raisedBy === user.email
+        );
     }
     const formik = useFormik({
         initialValues,
@@ -64,7 +67,7 @@ export const LeaveTable = ({ user, members }) => {
         values.leaveApproved = "Yes" ? true : false;
         try {
             const updateData = await api.updateLeaveRequestDetailsById(
-                recordId,
+                record._id,
                 values
             );
             onClose();
@@ -74,11 +77,7 @@ export const LeaveTable = ({ user, members }) => {
         }
     };
     const openApproveModal = (member) => {
-        setRecordId(member._id);
-        initialValues = {
-            leaveRequestDecisionComment: "",
-            leaveApproved: "",
-        };
+        setRecord(member);
         onOpen();
     };
     return (
@@ -152,44 +151,52 @@ export const LeaveTable = ({ user, members }) => {
                                         </Text>
                                     </Td>
                                     <Td>
-                                        {user.role !== USER_ROLE.EMPLOYEE && (
-                                            <HStack spacing="1">
-                                                <IconButton
-                                                    onClick={() =>
-                                                        openApproveModal(member)
-                                                    }
-                                                    icon={
-                                                        <CheckIcon color="brand.500" />
-                                                    }
-                                                    variant="ghost"
-                                                    borderRadius="50%"
-                                                    size="xs"
-                                                    aria-label="Edit member"
-                                                />
-                                                <IconButton
-                                                    icon={
-                                                        <FaBan
-                                                            color="red"
-                                                            fontSize=".5rem"
-                                                        />
-                                                    }
-                                                    onClick={() =>
-                                                        openApproveModal(member)
-                                                    }
-                                                    variant="ghost"
-                                                    borderRadius="50%"
-                                                    size="xs"
-                                                    aria-label="Edit member"
-                                                />
-                                            </HStack>
-                                        )}
+                                        {user.role !== USER_ROLE.EMPLOYEE &&
+                                            user.email ===
+                                                member.approverName &&
+                                            member.leaveRequestStatus !==
+                                                "Approved" && (
+                                                <HStack spacing="1">
+                                                    <IconButton
+                                                        onClick={() =>
+                                                            openApproveModal(
+                                                                member
+                                                            )
+                                                        }
+                                                        icon={
+                                                            <CheckIcon color="brand.500" />
+                                                        }
+                                                        variant="ghost"
+                                                        borderRadius="50%"
+                                                        size="xs"
+                                                        aria-label="Edit member"
+                                                    />
+                                                    <IconButton
+                                                        icon={
+                                                            <FaBan
+                                                                color="red"
+                                                                fontSize=".5rem"
+                                                            />
+                                                        }
+                                                        onClick={() =>
+                                                            openApproveModal(
+                                                                member
+                                                            )
+                                                        }
+                                                        variant="ghost"
+                                                        borderRadius="50%"
+                                                        size="xs"
+                                                        aria-label="Edit member"
+                                                    />
+                                                </HStack>
+                                            )}
                                     </Td>
                                 </Tr>
                             ))}
                         </>
                     ) : (
                         <Tr>
-                            <Td>No record to show</Td>
+                            <Td colSpan={9}>No record to show</Td>
                         </Tr>
                     )}
                 </Tbody>
@@ -207,26 +214,40 @@ export const LeaveTable = ({ user, members }) => {
 
                     <DrawerBody>
                         <Table variant="simple" size="sm">
-                            <Tbody>
-                                <Tr>
-                                    <Td>Employee Name</Td>
-                                    <Td>Test user 1</Td>
-                                    <Td>Requested On</Td>
-                                    <Td>12 June 2023</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td>Duration of Leave(in days) </Td>
-                                    <Td>8</Td>
-                                    <Td>Duration period</Td>
-                                    <Td>2023/06/28 - 2023/07/27</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td>Leave Reason</Td>
-                                    <Td>24</Td>
-                                    <Td>Leave Type</Td>
-                                    <Td>24</Td>
-                                </Tr>
-                            </Tbody>
+                            {record && (
+                                <Tbody>
+                                    <Tr>
+                                        <Td>Employee Email</Td>
+                                        <Td>{record.raisedBy}</Td>
+                                        <Td>Requested On</Td>
+                                        <Td>
+                                            {moment(record.created).format(
+                                                "YYYY-MM-DD"
+                                            )}
+                                        </Td>
+                                    </Tr>
+                                    <Tr>
+                                        <Td>Duration of Leave(in days) </Td>
+                                        <Td>{record.durationOfLeave}</Td>
+                                        <Td>Duration period</Td>
+                                        <Td>
+                                            {moment(
+                                                record.leaveStartDate
+                                            ).format("YYYY-MM-DD")}
+                                            -
+                                            {moment(record.leaveEndDate).format(
+                                                "YYYY-MM-DD"
+                                            )}
+                                        </Td>
+                                    </Tr>
+                                    <Tr>
+                                        <Td>Leave Reason</Td>
+                                        <Td>{record.leaveReason}</Td>
+                                        <Td>Leave Type</Td>
+                                        <Td>{record.leaveType}</Td>
+                                    </Tr>
+                                </Tbody>
+                            )}
                         </Table>
                         <FormikProvider value={formik}>
                             <Form>
@@ -289,7 +310,7 @@ export const LeaveTable = ({ user, members }) => {
                                                             />
                                                         </FormControl>
                                                     )}
-                                                </Field>{" "}
+                                                </Field>
                                             </Td>
                                         </Tr>
                                     </Tbody>
@@ -299,15 +320,10 @@ export const LeaveTable = ({ user, members }) => {
                                         variant="outline"
                                         mr={3}
                                         onClick={onClose}
-                                        // color="brand.200"
                                     >
                                         Close
                                     </Button>
-                                    <Button
-                                        // bg="brand.200"
-                                        type="submit"
-                                        variant="primary"
-                                    >
+                                    <Button type="submit" variant="primary">
                                         Submit
                                     </Button>
                                 </Flex>

@@ -11,12 +11,14 @@ import {
     Spacer,
     Stack,
     StackDivider,
+    useToast,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../api/index.js";
 import Sidebar from "../../components/Sidebar.jsx";
+import { ROUTE_PATH, TOAST } from "../../constants/constant.jsx";
 import DashboardLayout from "../../layout/DashboardLayout.jsx";
 import ProfileContainer from "../../layout/ProfileContainer.jsx";
 import { UserProfile } from "../User/UserProfile.jsx";
@@ -42,15 +44,15 @@ function AddBankDetail() {
             }
         },
     });
+    const toast = useToast();
     const handleSubmit = async (values) => {
         values.country = userData.address.country;
         try {
             const updateData = await api.updateUserBankDetailsById(id, values);
-            localStorage.setItem(
-                "updatedData",
-                JSON.stringify(updateData.data)
-            );
+            toast(TOAST.SUCCESS);
+            navigate(ROUTE_PATH.BANK);
         } catch (error) {
+            toast(TOAST.ERROR);
             // setError(error.response.data.error);
             console.log(error);
         }

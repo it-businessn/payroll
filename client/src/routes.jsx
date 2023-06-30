@@ -17,6 +17,7 @@ import EditUser from "./Pages/User/EditUser/EditUser";
 import Profile from "./Pages/User/Profile";
 import User from "./Pages/User/Users";
 import ViewPayment from "./Pages/ViewPayment";
+import { ROUTE_PATH } from "./constants/constant";
 
 const user = JSON.parse(localStorage.getItem("profile"));
 const token = user && user?.userDetails?.token;
@@ -29,7 +30,7 @@ const RoutePages = () => {
                 path="/"
                 element={token ? <Home /> : <Navigate to="/sign-in" replace />}
             />
-            <Route exact path="/home" element={<Home />} />
+            <Route exact path={ROUTE_PATH.HOME} element={<Home />} />
             <Route exact path="/sign-in" element={<Login />} />
             <Route exact path="/sign-up" element={<SignUp />} />
             <Route
@@ -37,12 +38,12 @@ const RoutePages = () => {
                 path="/verify-email"
                 element={<VerifyEmail user={user} />}
             />
-            <Route exact path="/users" element={<User />} />
-            <Route exact path="/profile" element={<Profile />} />
+            <Route exact path={ROUTE_PATH.USERS} element={<User />} />
+            <Route exact path={ROUTE_PATH.PROFILE} element={<Profile />} />
             <Route exact path="/edit-user/:id" element={<EditUser />} />
             <Route
                 exact
-                path="/bank-detail"
+                path={ROUTE_PATH.BANK}
                 element={<BankDetail user={user} />}
             />
             <Route
@@ -52,17 +53,17 @@ const RoutePages = () => {
             />
             <Route
                 exact
-                path="/payroll-detail"
+                path={ROUTE_PATH.PAYROLL}
                 element={<PaymentWidget user={user} />}
             />
             <Route
                 exact
-                path="/attendance-detail"
+                path={ROUTE_PATH.ATTENDANCE}
                 element={<AttendanceWidget user={user} />}
             />
             <Route
                 exact
-                path="/leave-detail"
+                path={ROUTE_PATH.LEAVE}
                 element={<LeaveWidget user={user} />}
             />
             <Route exact path="/add-payment/:id" element={<AddPayment />} />

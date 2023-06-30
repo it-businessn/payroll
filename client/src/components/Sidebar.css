@@ -10,9 +10,13 @@ div:has(> a.active) {
 .p-datatable-resizable-table > .p-datatable-tfoot > tr > td,
 .p-datatable-resizable-table > .p-datatable-tbody > tr > td {
     white-space: pre-line !important;
+    padding: 0.1rem !important;
 }
 .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
     padding: 0.2rem;
+}
+.chakra-table {
+    white-space: pre-line !important;
 }
 .chakra-avatar__initials {
     font-size: 1rem !important;

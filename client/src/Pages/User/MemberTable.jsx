@@ -15,6 +15,7 @@ import {
     Spacer,
     Text,
     useDisclosure,
+    useToast,
 } from "@chakra-ui/react";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Column } from "primereact/column";
@@ -27,19 +28,33 @@ import { FiEdit2 } from "react-icons/fi";
 import * as api from "../../api/index.js";
 import "../../components/Sidebar.css";
 import { UserSchema, userCurrency } from "../../config/userSchema.jsx";
-import { userFormFields } from "../../constants/constant.jsx";
+import { TOAST, signUpFormFields } from "../../constants/constant.jsx";
 import PersonalInfoCard from "./EditUser/PersonalInfoCard.jsx";
 export const MemberTable = ({ members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [users, setMembers] = useState(members);
     const [record, setRecord] = useState(null);
     const [userFormInitialValues, setUserFormInitialValues] = useState(null);
+    const toast = useToast();
     const handleSubmit = async (values) => {
         try {
             const updateData = await api.updateUserById(record._id, values);
+            toast(TOAST.SUCCESS);
             onClose();
-            setMembers(members);
         } catch (error) {
+            toast(TOAST.ERROR);
+            // setError(error.response.data.error);
+            console.log(error);
+        }
+    };
+    const processPayroll = async () => {
+        try {
+            selectedUsers.map((item) => delete item._id);
+            const updateData = await api.processPayroll(selectedUsers);
+            toast(TOAST.SUCCESS);
+            onClose();
+        } catch (error) {
+            toast(TOAST.ERROR);
             // setError(error.response.data.error);
             console.log(error);
         }
@@ -56,11 +71,11 @@ export const MemberTable = ({ members }) => {
             annualSalary: member.annualSalary,
             dateOfJoining: member.dateOfJoining,
             phoneNumber: member.phoneNumber,
-            streetNumber: member.streetNumber,
-            city: member.city,
-            state: member.state,
-            postalCode: member.postalCode,
-            country: member.country,
+            streetNumber: member.address.streetNumber,
+            city: member.address.city,
+            state: member.address.state,
+            postalCode: member.address.postalCode,
+            country: member.address.country,
         });
         onOpen();
     };
@@ -96,7 +111,7 @@ export const MemberTable = ({ members }) => {
             />
         );
     };
-    const [selectedProducts, setSelectedProducts] = useState(null);
+    const [selectedUsers, setSelectedUsers] = useState(null);
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
         let _filters = { ...filters };
@@ -114,7 +129,9 @@ export const MemberTable = ({ members }) => {
             <Flex justify="space-between" gap={2}>
                 <Heading size="xs">Members</Heading>
                 <Spacer />
-                <Button variant="primary">Process Payroll</Button>
+                <Button variant="primary" onClick={processPayroll}>
+                    Process Payroll
+                </Button>
                 <Button variant="outline" onClick={clearFilter}>
                     Clear
                 </Button>
@@ -130,11 +147,11 @@ export const MemberTable = ({ members }) => {
             <div className="card">
                 <DataTable
                     selectionMode="checkbox"
-                    selection={selectedProducts}
+                    selection={selectedUsers}
                     onSelectionChange={(e) => {
-                        setSelectedProducts(e.value);
-                        console.log(e.value);
+                        setSelectedUsers(e.value);
                     }}
+                    onRowClick={(e) => openModal(e.data)}
                     dataKey="_id"
                     value={members}
                     removableSort
@@ -143,11 +160,9 @@ export const MemberTable = ({ members }) => {
                     paginator
                     filters={filters}
                     globalFilterFields={["annualSalary"]}
-                    rows={8}
+                    rows={11}
                     rowsPerPageOptions={[5, 10, 25, 50]}
                     tableStyle={{ whiteSpace: "pre-line" }}
-                    onCellClick={(e) => openModal(e.rowData)}
-                    cellSelection="true"
                 >
                     <Column
                         selectionMode="multiple"
@@ -174,7 +189,11 @@ export const MemberTable = ({ members }) => {
                         sortable
                         header="Name"
                     ></Column>
-                    <Column field="phoneNumber" header="Phone Number"></Column>
+                    <Column
+                        field="phoneNumber"
+                        style={{ minWidth: "10rem" }}
+                        header="Phone Number"
+                    ></Column>
                     <Column field="email" sortable header="Email"></Column>
                     <Column field="role" sortable header="Role"></Column>
                     <Column
@@ -182,33 +201,36 @@ export const MemberTable = ({ members }) => {
                         sortable
                         filterField="annualSalary"
                         dataType="numeric"
-                        style={{ minWidth: "10rem" }}
                         filter
                         filterElement={balanceFilterTemplate}
                         body={(value) => (
                             <>
-                                {userCurrency(value.currency).format(
-                                    value.annualSalary
-                                )}
+                                {userCurrency(
+                                    value.bankDetails.currency
+                                ).format(value.annualSalary)}
                             </>
                         )}
                         header="Annual Salary"
                     ></Column>
-                    <Column body={<FiEdit2 />} header="Status"></Column>
+                    <Column
+                        style={{ cursor: "pointer" }}
+                        body={<FiEdit2 />}
+                        header="Action"
+                    ></Column>
                 </DataTable>
             </div>
             {record && (
                 <Modal size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Edit Records</ModalHeader>
+                        <ModalHeader>Edit Record</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <PersonalInfoCard
                                 formSubmit={handleSubmit}
                                 schema={UserSchema}
                                 initialValues={userFormInitialValues}
-                                formFields={userFormFields}
+                                formFields={signUpFormFields}
                             />
                         </ModalBody>
                     </ModalContent>

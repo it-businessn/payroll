@@ -1,34 +1,37 @@
 import { Stack, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
-function PaySlip() {
-    const user = JSON.parse(localStorage.getItem("profile")).userDetails.data;
+import "../../components/Sidebar.css";
+import { userCurrency } from "../../config/userSchema";
+function PaySlip({ record }) {
     return (
         <Stack spacing={8}>
             <Table marginTop="1em" variant="simple" size="sm">
                 <Tbody>
                     <Tr>
                         <Td>Employee Name</Td>
-                        <Td>
-                            {`${user.firstName} ${user.middleName}
-                             ${user.lastName}`}
-                        </Td>
+                        <Td>{record.name}</Td>
                         <Td>Pay date</Td>
-                        <Td>12 June 2023</Td>
+                        <Td>
+                            {moment(record.nextPayDate).format("YYYY-MM-DD")}
+                        </Td>
                     </Tr>
                     <Tr>
                         <Td>Date of Joining</Td>
                         <Td>
-                            {moment(user.dateOfJoining).format("YYYY-MM-DD")}
+                            {moment(record.dateOfJoining).format("YYYY-MM-DD")}
                         </Td>
                         <Td>Pay period</Td>
-                        <Td>2023/06/28 - 2023/07/27</Td>
+                        <Td>
+                            {moment(record.lastPayDate).format("YYYY/MM/DD")} -
+                            {moment(record.nextPayDate).format("YYYY/MM/DD")}
+                        </Td>
                     </Tr>
                     <Tr>
                         <Td>Worked Days</Td>
                         <Td>24</Td>
                         <Td>Designation</Td>
-                        <Td>Employee</Td>
+                        <Td>{record.role}</Td>
                     </Tr>
                 </Tbody>
             </Table>
@@ -48,23 +51,25 @@ function PaySlip() {
                     <Tr>
                         <Td>Basic</Td>
                         <Td></Td>
-                        <Td>2000</Td>
+                        <Td>{userCurrency(record.currency).format(0)}</Td>
                     </Tr>
                     <Tr>
                         <Td>Incentive Pay</Td>
                         <Td></Td>
-                        <Td>300</Td>
+                        <Td>{userCurrency(record.currency).format(0)}</Td>
                     </Tr>
                     <Tr>
                         <Td>Allowance</Td>
                         <Td></Td>
-                        <Td>400</Td>
+                        <Td>{userCurrency(record.currency).format(400)}</Td>
                     </Tr>
 
                     <Tr>
                         <Td></Td>
                         <Td textAlign="right">Total Earnings</Td>
-                        <Td>{2000 + 300 + 400}</Td>
+                        <Td>
+                            {userCurrency(record.currency).format(record.gross)}
+                        </Td>
                     </Tr>
                 </Tbody>
             </Table>
@@ -86,27 +91,31 @@ function PaySlip() {
                     <Tr>
                         <Td>EPF</Td>
                         <Td></Td>
-                        <Td>200</Td>
+                        <Td>{userCurrency(record.currency).format(200)}</Td>
                     </Tr>
                     <Tr>
                         <Td>Federal Tax</Td>
                         <Td></Td>
-                        <Td>200</Td>
+                        <Td>{userCurrency(record.currency).format(200)}</Td>
                     </Tr>
                     <Tr>
                         <Td>Professional Tax</Td>
                         <Td></Td>
-                        <Td>80</Td>
+                        <Td>{userCurrency(record.currency).format(80)}</Td>
                     </Tr>
                     <Tr>
                         <Td></Td>
                         <Td textAlign="right">Total Deductions</Td>
-                        <Td>{200 + 200 + 80}</Td>
+                        <Td>{userCurrency(record.currency).format(12)}</Td>
                     </Tr>
                     <Tr>
                         <Td></Td>
                         <Td textAlign="right">Net Pay</Td>
-                        <Td>{2700 - 480}</Td>
+                        <Td>
+                            {userCurrency(record.currency).format(
+                                record.netPay
+                            )}
+                        </Td>
                     </Tr>
                 </Tbody>
             </Table>

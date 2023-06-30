@@ -1,7 +1,19 @@
 import {
     Button,
+    Flex,
+    FormControl,
+    FormLabel,
     HStack,
     Icon,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+    Stack,
+    StackDivider,
     Table,
     Tbody,
     Td,
@@ -11,42 +23,38 @@ import {
     Tr,
     useDisclosure,
 } from "@chakra-ui/react";
-import { useFormik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 
 import moment from "moment";
 import { useState } from "react";
 import { IoArrowDown } from "react-icons/io5";
 import * as api from "../../api/index.js";
-import { USER_ROLE } from "../../constants/constant.jsx";
 export const AttendanceTable = ({ user, members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [recordId, setRecordId] = useState(null);
     let initialValues = {
-        leaveRequestDecisionComment: "",
-        leaveApproved: "",
+        inTime: "",
+        outTime: "",
     };
-    let records = [];
-    if (user.role === USER_ROLE.EMPLOYEE) {
-        records = members.filter((data) => data.raisedBy === user.email);
-    } else {
-        records = members.filter((data) => data.approverName === user.email);
-    }
+    const [record, setRecord] = useState(null);
     const formik = useFormik({
         initialValues,
         onSubmit: (formValues) => {
             try {
+                formValues.inTime = formValues.inTime.replace(":", ".");
+                formValues.outTime = formValues.outTime.replace(":", ".");
+                let diff =
+                    Number(formValues.inTime) - Number(formValues.outTime);
+                formValues.totalHours = Math.abs(diff).toFixed(2);
                 handleSubmit(formValues);
             } catch (error) {
                 console.log(error);
             }
         },
     });
-
     const handleSubmit = async (values) => {
-        values.leaveApproved = "Yes" ? true : false;
         try {
-            const updateData = await api.updateLeaveRequestDetailsById(
-                recordId,
+            const updateData = await api.updateAttendanceDetailsById(
+                record._id,
                 values
             );
             onClose();
@@ -55,12 +63,9 @@ export const AttendanceTable = ({ user, members }) => {
             console.log(error);
         }
     };
-    const openApproveModal = (member) => {
-        setRecordId(member._id);
-        initialValues = {
-            leaveRequestDecisionComment: "",
-            leaveApproved: "",
-        };
+    const openModal = (log) => {
+        setRecord(log);
+        initialValues = { inTime: log?.inTime, outTime: log?.outTime };
         onOpen();
     };
     return (
@@ -83,40 +88,37 @@ export const AttendanceTable = ({ user, members }) => {
                         <Th>Time In</Th>
                         <Th>Time out</Th>
                         <Th>Total Hours</Th>
-                        <Th>Action</Th>
+                        <Th></Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {records.length ? (
+                    {members.length ? (
                         <>
-                            {records.map((member) => (
+                            {members.map((member) => (
                                 <Tr key={member._id}>
                                     <Td>
-                                        <Text fontWeight="medium">
-                                            {moment(member.created).format(
-                                                "YYYY-MM-DD"
-                                            )}
-                                        </Text>
+                                        {moment(member.created).format(
+                                            "YYYY-MM-DD"
+                                        )}
                                     </Td>
                                     <Td>
-                                        <Text>
-                                            {moment(member.created).format(
-                                                "h:mm A"
-                                            )}
+                                        <Text>{member.inTime}</Text>
+                                    </Td>
+                                    <Td>
+                                        <Text color="muted">
+                                            {member.outTime}
                                         </Text>
                                     </Td>
                                     <Td>
                                         <Text color="muted">
-                                            {moment(member.created).format(
-                                                "h:mm A"
-                                            )}
+                                            {member.totalHours}
                                         </Text>
                                     </Td>
                                     <Td>
-                                        <Text color="muted">5.6</Text>
-                                    </Td>
-                                    <Td>
-                                        <Button onClick={onOpen} variant="link">
+                                        <Button
+                                            onClick={() => openModal(member)}
+                                            variant="link"
+                                        >
                                             Edit Log
                                         </Button>
                                     </Td>
@@ -130,6 +132,65 @@ export const AttendanceTable = ({ user, members }) => {
                     )}
                 </Tbody>
             </Table>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader> Edit Attendance Log </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Stack divider={<StackDivider />}>
+                            <FormikProvider value={formik}>
+                                <Form>
+                                    <Field name="inTime" key="inTime">
+                                        {({ field }) => (
+                                            <FormControl id="inTime">
+                                                <FormLabel>Time-in</FormLabel>
+                                                <Input
+                                                    {...field}
+                                                    type="time"
+                                                    defaultValue={
+                                                        initialValues.inTime
+                                                    }
+                                                />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    <Field name="outTime" key="outTime">
+                                        {({ field }) => (
+                                            <FormControl id="outTime">
+                                                <FormLabel>Time-out</FormLabel>
+                                                <Input
+                                                    {...field}
+                                                    defaultValue={
+                                                        initialValues.outTime
+                                                    }
+                                                    type="time"
+                                                />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    <Flex
+                                        direction="row"
+                                        justify="flex-end"
+                                        py="4"
+                                    >
+                                        <Button
+                                            variant="outline"
+                                            mr={3}
+                                            onClick={onClose}
+                                        >
+                                            Close
+                                        </Button>
+                                        <Button type="submit" variant="primary">
+                                            Submit
+                                        </Button>
+                                    </Flex>
+                                </Form>
+                            </FormikProvider>
+                        </Stack>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </>
     );
 };

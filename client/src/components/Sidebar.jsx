@@ -13,7 +13,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../Pages/Home/Logo";
 import { NavButton } from "../Pages/Home/NavButton";
 import { UserProfile } from "../Pages/User/UserProfile";
-import { ADMIN_MENULIST, USER_ROLE } from "../constants/constant";
+import { MENU_LIST, USER_ROLE } from "../constants/constant";
 import "./Sidebar.css";
 
 const Sidebar = ({ user, children }) => {
@@ -22,8 +22,8 @@ const Sidebar = ({ user, children }) => {
     const toggle = () => setIsOpen(!isOpen);
     const getSideMenu = (role) =>
         role === USER_ROLE.EMPLOYEE
-            ? ADMIN_MENULIST.filter((item) => item.name !== "Users")
-            : ADMIN_MENULIST;
+            ? MENU_LIST.filter((item) => item.name !== "Users")
+            : MENU_LIST;
 
     return (
         <Flex as="section" minH="100vh" bg="bg.canvas">

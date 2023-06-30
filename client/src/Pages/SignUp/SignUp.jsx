@@ -14,8 +14,8 @@ import * as api from "../../api/index.js";
 import FormikForm from "../../components/FormikForm.jsx";
 import { UserSchema } from "../../config/userSchema.jsx";
 import {
-    userFormFields,
-    userInitialValues,
+    signUpFormFields,
+    signUpInitialValues,
 } from "../../constants/constant.jsx";
 import Logo from "../Home/Logo.jsx";
 
@@ -23,6 +23,15 @@ export const SignUp = () => {
     const navigate = useNavigate();
     const [hasError, setError] = useState("");
     const [countryList, setCountryList] = useState("");
+    useEffect(() => {
+        fetchCountry();
+    }, []);
+    const fetchCountry = async () => {
+        try {
+            let result = await Country.getAllCountries();
+            setCountryList(result);
+        } catch (error) {}
+    };
     const handleSubmit = async (values) => {
         try {
             const userData = await api.signUp(values);
@@ -33,17 +42,6 @@ export const SignUp = () => {
         } catch (error) {
             setError(error.response.data.error);
             console.log(error);
-        }
-    };
-    useEffect(() => {
-        fetchCountry();
-    }, []);
-    const fetchCountry = async () => {
-        try {
-            let result = await Country.getAllCountries();
-            setCountryList(result);
-        } catch (error) {
-        } finally {
         }
     };
     return (
@@ -73,8 +71,8 @@ export const SignUp = () => {
                             id="sign-up"
                             formSubmit={handleSubmit}
                             schema={UserSchema}
-                            initialValues={userInitialValues}
-                            formFields={userFormFields}
+                            initialValues={signUpInitialValues}
+                            formFields={signUpFormFields}
                             countryList={countryList}
                         />
                     )}
