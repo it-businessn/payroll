@@ -14,10 +14,10 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
-import CenterBoxLayout from "../../layout/CenterBoxLayout.jsx";
-import Logo from "../Home/Logo.jsx";
+import { Logo } from "../../components";
+import { CenterBoxLayout } from "../../layout";
 
-export const VerifyEmail = () => {
+const VerifyEmail = () => {
     const user = JSON.parse(localStorage.getItem("profile")) || "";
 
     const resetPasswordInitialValues = {
@@ -140,3 +140,4 @@ export const VerifyEmail = () => {
         </CenterBoxLayout>
     );
 };
+export default VerifyEmail;

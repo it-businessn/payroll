@@ -1,11 +1,10 @@
 import { useBreakpointValue } from "@chakra-ui/react";
 import React from "react";
-import Sidebar from "../../components/Sidebar";
 import { USER_ROLE } from "../../constants/constant";
-import DashboardLayout from "../../layout/DashboardLayout";
+import { DashboardLayout, Sidebar } from "../../layout";
 import Dashboard from "../Dashboard/Dashboard";
 import EmployeeDashboard from "../Dashboard/EmployeeDashboard";
-import { Navbar } from "./Navbar";
+import Navbar from "./Navbar";
 
 function Home() {
     const user = JSON.parse(localStorage.getItem("profile"));

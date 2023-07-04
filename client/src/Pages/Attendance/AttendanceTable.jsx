@@ -28,8 +28,7 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import moment from "moment";
 import { useState } from "react";
 import { IoArrowDown } from "react-icons/io5";
-import * as api from "../../api/index.js";
-export const AttendanceTable = ({ user, members }) => {
+const AttendanceTable = ({ user, members, handleFormSubmit }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     let initialValues = {
         inTime: "",
@@ -45,24 +44,12 @@ export const AttendanceTable = ({ user, members }) => {
                 let diff =
                     Number(formValues.inTime) - Number(formValues.outTime);
                 formValues.totalHours = Math.abs(diff).toFixed(2);
-                handleSubmit(formValues);
+                handleFormSubmit(formValues, record);
             } catch (error) {
                 console.log(error);
             }
         },
     });
-    const handleSubmit = async (values) => {
-        try {
-            const updateData = await api.updateAttendanceDetailsById(
-                record._id,
-                values
-            );
-            onClose();
-        } catch (error) {
-            // setError(error.response.data.error);
-            console.log(error);
-        }
-    };
     const openModal = (log) => {
         setRecord(log);
         initialValues = { inTime: log?.inTime, outTime: log?.outTime };
@@ -194,3 +181,4 @@ export const AttendanceTable = ({ user, members }) => {
         </>
     );
 };
+export default AttendanceTable;

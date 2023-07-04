@@ -11,15 +11,14 @@ import { Country } from "country-state-city";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../api/index.js";
-import FormikForm from "../../components/FormikForm.jsx";
-import { UserSchema } from "../../config/userSchema.jsx";
+import { FormikForm, Logo } from "../../components";
+import { UserSchema } from "../../config/userSchema.js";
 import {
     signUpFormFields,
     signUpInitialValues,
-} from "../../constants/constant.jsx";
-import Logo from "../Home/Logo.jsx";
+} from "../../constants/constant.js";
 
-export const SignUp = () => {
+const SignUp = () => {
     const navigate = useNavigate();
     const [hasError, setError] = useState("");
     const [countryList, setCountryList] = useState("");
@@ -92,3 +91,4 @@ export const SignUp = () => {
         </Container>
     );
 };
+export default SignUp;

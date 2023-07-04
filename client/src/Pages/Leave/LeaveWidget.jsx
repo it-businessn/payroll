@@ -21,11 +21,9 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
-import Sidebar from "../../components/Sidebar.jsx";
-import { LEAVE_TYPES, TOAST } from "../../constants/constant.jsx";
-import DashboardLayout from "../../layout/DashboardLayout.jsx";
-import ProfileContainer from "../../layout/ProfileContainer.jsx";
-import { LeaveTable } from "./LeaveTable.jsx";
+import { LEAVE_TYPES, TOAST } from "../../constants/constant.js";
+import { DashboardLayout, ProfileContainer, Sidebar } from "../../layout";
+import LeaveTable from "./LeaveTable.jsx";
 function LeaveWidget() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const [userData, setData] = useState(null);
@@ -66,6 +64,7 @@ function LeaveWidget() {
                 user?.userDetails.data._id,
                 values
             );
+            fetchUserData();
             toast(TOAST.SUCCESS);
             onClose();
         } catch (error) {

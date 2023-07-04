@@ -5,13 +5,10 @@ import { BsCalendar2Week, BsCalendar3 } from "react-icons/bs";
 import { FiDollarSign } from "react-icons/fi";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { TbPointerDollar } from "react-icons/tb";
-import { Card } from "../../components/Card";
+import { Card, HalfDoughnutChart, PieChart, UserStat } from "../../components";
 import fakedata from "../../constants/fakedata.json";
-import LandingPageLayout from "../../layout/LandingPageLayout";
-import NotificationBox from "../../layout/NotificationBox";
-import { HalfDoughnutChart } from "./Charts/HalfDoughnutChart";
-import { PieChart } from "./Charts/PieChart";
-import { UserStat } from "./UserStat";
+import { LandingPageLayout, NotificationBox } from "../../layout";
+
 function EmployeeDashboard() {
     const empStats = [
         {

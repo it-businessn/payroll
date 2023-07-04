@@ -20,12 +20,10 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../../api/index.js";
-import Sidebar from "../../../components/Sidebar.jsx";
-import { UserSchema } from "../../../config/userSchema.jsx";
-import { ROUTE_PATH, TOAST } from "../../../constants/constant.jsx";
-import DashboardLayout from "../../../layout/DashboardLayout.jsx";
-import ProfileContainer from "../../../layout/ProfileContainer.jsx";
-import { UserProfile } from "../UserProfile.jsx";
+import { UserProfile } from "../../../components";
+import { UserSchema } from "../../../config/userSchema.js";
+import { ROUTE_PATH, TOAST } from "../../../constants/constant.js";
+import { DashboardLayout, ProfileContainer, Sidebar } from "../../../layout";
 export default function EditUser() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const userData = user?.userDetails?.data;

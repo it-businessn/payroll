@@ -12,9 +12,8 @@ import {
     useColorModeValue as mode,
     useBreakpointValue,
 } from "@chakra-ui/react";
-import { SignInForm } from "../../components/SignInForm";
-import Logo from "../Home/Logo";
-export const Login = () => (
+import { Logo, SignInForm } from "../../components";
+const Login = () => (
     <Flex
         minH={{
             base: "auto",
@@ -130,3 +129,4 @@ export const Login = () => (
         </Flex>
     </Flex>
 );
+export default Login;

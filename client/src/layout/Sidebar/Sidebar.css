@@ -41,3 +41,7 @@ div:has(> a.active) {
     width: 1.5rem !important;
     height: 1.5rem !important;
 }
+.p-message .p-message-wrapper {
+    padding: 0.25em 0.5em !important;
+    font-size: 0.8em;
+}

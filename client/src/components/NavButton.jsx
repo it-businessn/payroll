@@ -1,6 +1,6 @@
 import { Button, HStack, Icon, Text } from "@chakra-ui/react";
 
-export const NavButton = (props) => {
+const NavButton = (props) => {
     const { icon, label, ...buttonProps } = props;
     return (
         <Button variant="ghost" justifyContent="start" {...buttonProps}>
@@ -11,3 +11,4 @@ export const NavButton = (props) => {
         </Button>
     );
 };
+export default NavButton;

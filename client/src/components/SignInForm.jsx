@@ -1,12 +1,12 @@
 import { Heading, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../Pages/Home/Logo.jsx";
 import * as api from "../api/index.js";
-import { LoginSchema } from "../config/userSchema.jsx";
-import { loginFormFields, loginInitialValues } from "../constants/constant.jsx";
+import { LoginSchema } from "../config/userSchema.js";
+import { loginFormFields, loginInitialValues } from "../constants/constant.js";
 import FormikForm from "./FormikForm.jsx";
-export const SignInForm = ({ title }) => {
+import Logo from "./Logo.jsx";
+const SignInForm = ({ title }) => {
     const [hasError, setError] = useState("");
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -65,3 +65,4 @@ export const SignInForm = ({ title }) => {
         </Stack>
     );
 };
+export default SignInForm;
