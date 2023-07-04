@@ -1,8 +1,8 @@
 import { Stack, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
-import "../../components/Sidebar.css";
 import { userCurrency } from "../../config/userSchema";
+import "../../layout/Sidebar/Sidebar.css";
 function PaySlip({ record }) {
     return (
         <Stack spacing={8}>

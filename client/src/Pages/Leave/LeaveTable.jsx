@@ -35,8 +35,8 @@ import { useState } from "react";
 import { FaBan } from "react-icons/fa";
 import { IoArrowDown } from "react-icons/io5";
 import * as api from "../../api/index.js";
-import { USER_ROLE } from "../../constants/constant.jsx";
-export const LeaveTable = ({ user, members }) => {
+import { USER_ROLE } from "../../constants/constant.js";
+const LeaveTable = ({ user, members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [record, setRecord] = useState(null);
     let initialValues = {
@@ -335,3 +335,4 @@ export const LeaveTable = ({ user, members }) => {
         </>
     );
 };
+export default LeaveTable;

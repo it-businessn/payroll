@@ -6,10 +6,10 @@ import {
     Flex,
     useDisclosure,
 } from "@chakra-ui/react";
-import Sidebar from "../../components/Sidebar";
-import { ToggleButton } from "./ToggleButton";
+import { ToggleButton } from "../../components";
+import { Sidebar } from "../../layout";
 
-export const Navbar = ({ user }) => {
+const Navbar = ({ user }) => {
     const { isOpen, onToggle, onClose } = useDisclosure();
     return (
         <Box
@@ -47,3 +47,4 @@ export const Navbar = ({ user }) => {
         </Box>
     );
 };
+export default Navbar;

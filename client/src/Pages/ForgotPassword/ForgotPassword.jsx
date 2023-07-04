@@ -9,16 +9,15 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as api from "../../api/index.js";
-import FormikForm from "../../components/FormikForm.jsx";
-import { ResetPasswordSchema } from "../../config/userSchema.jsx";
+import { FormikForm, Logo } from "../../components";
+import { ResetPasswordSchema } from "../../config/userSchema.js";
 import {
     resetPasswordFormFields,
     resetPasswordInitialValues,
-} from "../../constants/constant.jsx";
-import CenterBoxLayout from "../../layout/CenterBoxLayout.jsx";
-import Logo from "../Home/Logo.jsx";
+} from "../../constants/constant.js";
+import { CenterBoxLayout } from "../../layout";
 
-export const ForgotPassword = () => {
+const ForgotPassword = () => {
     const [hasError, setErrorMessage] = useState("");
     const [captionTitle, setCaptionTitle] = useState("");
     const handleSubmit = async (values) => {
@@ -98,3 +97,4 @@ export const ForgotPassword = () => {
         </CenterBoxLayout>
     );
 };
+export default ForgotPassword;

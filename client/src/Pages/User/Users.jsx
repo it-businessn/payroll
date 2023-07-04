@@ -1,10 +1,8 @@
 import { Stack, useBreakpointValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
-import Sidebar from "../../components/Sidebar.jsx";
-import DashboardLayout from "../../layout/DashboardLayout.jsx";
-import ProfileContainer from "../../layout/ProfileContainer.jsx";
-import { MemberTable } from "./MemberTable.jsx";
+import { DashboardLayout, ProfileContainer, Sidebar } from "../../layout";
+import MemberTable from "./MemberTable.jsx";
 
 export default function User() {
     const user = JSON.parse(localStorage.getItem("profile"));

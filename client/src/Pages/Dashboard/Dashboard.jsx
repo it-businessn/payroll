@@ -4,18 +4,19 @@ import { SimpleGrid } from "@chakra-ui/react";
 import "react-calendar/dist/Calendar.css";
 import { FiDollarSign, FiUsers } from "react-icons/fi";
 import { TbPointerDollar } from "react-icons/tb";
-import { Card } from "../../components/Card";
+import {
+    AreaChart,
+    BarChart,
+    Card,
+    DoughnutChart,
+    HalfDoughnutChart,
+    LineChart,
+    PieChart,
+    Stat,
+} from "../../components";
 import fakedata from "../../constants/fakedata.json";
-import LandingPageLayout from "../../layout/LandingPageLayout";
-import NotificationBox from "../../layout/NotificationBox";
-import { AreaChart } from "./Charts/AreaChart";
-import { BarChart } from "./Charts/BarChart";
-import { DoughnutChart } from "./Charts/DoughnutChart";
-import { HalfDoughnutChart } from "./Charts/HalfDoughnutChart";
-import { LineChart } from "./Charts/LineChart";
-import { PieChart } from "./Charts/PieChart";
+import { LandingPageLayout, NotificationBox } from "../../layout";
 
-import { Stat } from "./Stat";
 function Dashboard() {
     let data = fakedata;
     let result = fakedata.reduce((a, c) => ({

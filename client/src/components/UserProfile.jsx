@@ -1,6 +1,6 @@
 import { Avatar, Box, HStack, Text } from "@chakra-ui/react";
 
-export const UserProfile = (props) => {
+const UserProfile = (props) => {
     const { user } = props;
     const userName = `${user.firstName} ${user.middleName} ${user.lastName}`;
     return (
@@ -21,3 +21,4 @@ export const UserProfile = (props) => {
         </HStack>
     );
 };
+export default UserProfile;

@@ -44,7 +44,7 @@ const ToggleIcon = (props) => {
     );
 };
 
-export const ToggleButton = (props) => {
+const ToggleButton = (props) => {
     const { isOpen, ...iconButtonProps } = props;
     return (
         <IconButton
@@ -58,3 +58,4 @@ export const ToggleButton = (props) => {
         />
     );
 };
+export default ToggleButton;

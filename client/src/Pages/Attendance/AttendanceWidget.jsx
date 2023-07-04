@@ -18,10 +18,8 @@ import {
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
-import Sidebar from "../../components/Sidebar.jsx";
-import DashboardLayout from "../../layout/DashboardLayout.jsx";
-import ProfileContainer from "../../layout/ProfileContainer.jsx";
-import { AttendanceTable } from "./AttendanceTable.jsx";
+import { DashboardLayout, ProfileContainer, Sidebar } from "../../layout";
+import AttendanceTable from "./AttendanceTable.jsx";
 function AttendanceWidget() {
     const user = JSON.parse(localStorage.getItem("profile"))?.userDetails?.data;
     const [userData, setData] = useState(null);
@@ -62,6 +60,21 @@ function AttendanceWidget() {
                 user._id,
                 values
             );
+            fetchUserData();
+            onClose();
+        } catch (error) {
+            // setError(error.response.data.error);
+            console.log(error);
+        }
+    };
+    const handleFormSubmit = async (values, record) => {
+        console.log(values, record);
+        try {
+            const updateData = await api.updateAttendanceDetailsById(
+                record._id,
+                values
+            );
+            fetchUserData();
             onClose();
         } catch (error) {
             // setError(error.response.data.error);
@@ -82,7 +95,11 @@ function AttendanceWidget() {
                         </Button>
                     </Flex>
                     {userData && (
-                        <AttendanceTable user={user} members={userData} />
+                        <AttendanceTable
+                            handleFormSubmit={handleFormSubmit}
+                            user={user}
+                            members={userData}
+                        />
                     )}
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />

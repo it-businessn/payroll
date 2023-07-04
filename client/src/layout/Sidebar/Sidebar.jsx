@@ -10,10 +10,8 @@ import {
 import React, { useState } from "react";
 import { FiLogOut, FiSearch } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
-import Logo from "../Pages/Home/Logo";
-import { NavButton } from "../Pages/Home/NavButton";
-import { UserProfile } from "../Pages/User/UserProfile";
-import { MENU_LIST, USER_ROLE } from "../constants/constant";
+import { Logo, NavButton, UserProfile } from "../../components";
+import { MENU_LIST, USER_ROLE } from "../../constants/constant";
 import "./Sidebar.css";
 
 const Sidebar = ({ user, children }) => {

@@ -100,6 +100,38 @@ export const LABELS = [
     "Nov",
     "Dec",
 ];
+export const notifications = [
+    {
+        sticky: true,
+        severity: "success",
+        detail: "Reminder: Meeting tomorrow at 10:00 AM",
+    },
+    {
+        sticky: true,
+        severity: "info",
+        detail: "Upcoming Event: Payroll cutoff date on July 15th at 7:00 PM",
+    },
+    {
+        sticky: true,
+        severity: "success",
+        detail: "Important Deadline: Project submission due on September 20th",
+    },
+    {
+        sticky: true,
+        severity: "info",
+        detail: "Special Event: Company retreat on November 12th-15th",
+    },
+    {
+        sticky: true,
+        severity: "warn",
+        detail: "Exciting News: New product launch on February 15th",
+    },
+    {
+        sticky: true,
+        severity: "error",
+        detail: "Mark your calendar: Holiday party on December 23rd",
+    },
+];
 export const loginFormFields = [
     {
         field: "textField",

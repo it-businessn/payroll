@@ -29,7 +29,7 @@ import { useReactToPrint } from "react-to-print";
 import { userCurrency } from "../../config/userSchema";
 import { USER_ROLE } from "../../constants/constant";
 import PaySlip from "./PaySlip";
-export const PaymentTable = ({ user, members }) => {
+const PaymentTable = ({ user, members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const componentRef = useRef();
     const [record, setRecord] = useState(null);
@@ -183,3 +183,4 @@ export const PaymentTable = ({ user, members }) => {
         </>
     );
 };
+export default PaymentTable;

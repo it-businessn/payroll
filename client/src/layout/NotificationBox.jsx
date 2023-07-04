@@ -2,10 +2,11 @@ import { Flex, Stack, Text } from "@chakra-ui/react";
 import { Calendar } from "primereact/calendar";
 import { Messages } from "primereact/messages";
 import React, { useRef, useState } from "react";
-import { Card } from "../components/Card";
-import "../components/Sidebar.css";
+import { Card } from "../components";
+import "./Sidebar/Sidebar.css";
 
 import { useMountEffect } from "primereact/hooks";
+import { notifications } from "../constants/constant";
 const NotificationBox = (props) => {
     const members = [
         {
@@ -102,56 +103,7 @@ const NotificationBox = (props) => {
     const msgs = useRef(null);
 
     useMountEffect(() => {
-        msgs.current.show([
-            {
-                sticky: true,
-                severity: "success",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "info",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "warn",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "error",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "success",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "info",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "warn",
-
-                detail: "Message Content",
-            },
-            {
-                sticky: true,
-                severity: "error",
-
-                detail: "Message Content",
-            },
-        ]);
+        msgs.current.show(notifications);
     });
     const [date, setDate] = useState(null);
 
@@ -184,7 +136,7 @@ const NotificationBox = (props) => {
                 />
             </Card>
             <Card
-                p={5}
+                p={3}
                 style={{ height: props.height && "23em", overflowY: "auto" }}
             >
                 <Text textAlign="center" fontWeight="medium">

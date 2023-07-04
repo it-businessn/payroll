@@ -1,11 +1,10 @@
-import { Heading, Text, VStack } from "@chakra-ui/react";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export function HalfDoughnutChart({ text, label, datalist }) {
+export default function HalfDoughnutChart({ text, label, datalist }) {
     const options = {
         responsive: true,
         rotation: -90,

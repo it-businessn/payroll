@@ -26,11 +26,11 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { useEffect, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import * as api from "../../api/index.js";
-import "../../components/Sidebar.css";
-import { UserSchema, userCurrency } from "../../config/userSchema.jsx";
-import { TOAST, signUpFormFields } from "../../constants/constant.jsx";
-import PersonalInfoCard from "./EditUser/PersonalInfoCard.jsx";
-export const MemberTable = ({ members }) => {
+import { PersonalInfoCard } from "../../components";
+import { UserSchema, userCurrency } from "../../config/userSchema.js";
+import { TOAST, signUpFormFields } from "../../constants/constant.js";
+import "../../layout/Sidebar/Sidebar.css";
+const MemberTable = ({ members }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [users, setMembers] = useState(members);
     const [record, setRecord] = useState(null);
@@ -239,3 +239,4 @@ export const MemberTable = ({ members }) => {
         </>
     );
 };
+export default MemberTable;

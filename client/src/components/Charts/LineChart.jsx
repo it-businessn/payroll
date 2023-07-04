@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { LABELS } from "../../../constants/constant";
+import { LABELS } from "../../constants/constant";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -34,7 +34,7 @@ export const options = {
     },
 };
 
-export function LineChart({ data1 }) {
+export default function LineChart({ data1 }) {
     const data = {
         labels: LABELS,
         datasets: [

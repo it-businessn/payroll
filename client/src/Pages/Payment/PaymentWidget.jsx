@@ -1,10 +1,8 @@
 import { Heading, Stack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import * as api from "../../api/index.js";
-import Sidebar from "../../components/Sidebar.jsx";
-import DashboardLayout from "../../layout/DashboardLayout.jsx";
-import ProfileContainer from "../../layout/ProfileContainer.jsx";
-import { PaymentTable } from "./PaymentTable.jsx";
+import { DashboardLayout, ProfileContainer, Sidebar } from "../../layout";
+import PaymentTable from "./PaymentTable.jsx";
 function PaymentWidget() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const [data, setData] = useState(null);

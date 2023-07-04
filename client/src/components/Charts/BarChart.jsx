@@ -9,7 +9,7 @@ import {
 } from "chart.js";
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { LABELS } from "../../../constants/constant";
+import { LABELS } from "../../constants/constant";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -19,7 +19,7 @@ ChartJS.register(
     Legend
 );
 
-export function BarChart({ data1, titleText, legend }) {
+export default function BarChart({ data1, titleText, legend }) {
     const options = {
         responsive: true,
         plugins: {

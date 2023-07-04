@@ -1,18 +1,16 @@
 import {
     Box,
-    Button,
-    HStack,
     Heading,
+    HStack,
     Icon,
     Square,
     Stack,
     Text,
 } from "@chakra-ui/react";
-import { FiArrowRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 
-export const UserStat = (props) => {
-    const { label, value, icon, period, range, delta, ...boxProps } = props;
+const Stat = (props) => {
+    const { label, value, icon, delta, ...boxProps } = props;
     return (
         <Box
             px={{
@@ -44,6 +42,7 @@ export const UserStat = (props) => {
                         </Square>
                         <Text fontWeight="medium">{label}</Text>
                     </HStack>
+                    {/* <Icon as={FiMoreVertical} boxSize="5" color="fg.muted" /> */}
                 </Stack>
                 <Stack>
                     <Heading
@@ -55,23 +54,26 @@ export const UserStat = (props) => {
                         {value}
                     </Heading>
                     {delta && (
-                        <HStack
-                            spacing="1"
-                            justify="space-between"
-                            fontSize="sm"
-                        >
-                            {delta.value && <Text>{delta.value}</Text>}
-                            {delta.value2 && <Text>{delta.value2}</Text>}
-                            {delta.link && (
-                                <Link to="/leave-detail">
-                                    <Button
-                                        rightIcon={<FiArrowRight />}
-                                        variant="link"
-                                    >
-                                        {delta.link}
-                                    </Button>
-                                </Link>
-                            )}
+                        <HStack spacing="1" fontWeight="medium">
+                            <Icon
+                                color={
+                                    delta.isUpwardsTrend ? "success" : "error"
+                                }
+                                as={
+                                    delta.isUpwardsTrend
+                                        ? FiArrowUpRight
+                                        : FiArrowDownRight
+                                }
+                                boxSize="5"
+                            />
+                            <Text
+                                color={
+                                    delta.isUpwardsTrend ? "success" : "error"
+                                }
+                            >
+                                {delta.value}
+                            </Text>
+                            <Text color="fg.muted">vs last week</Text>
                         </HStack>
                     )}
                 </Stack>
@@ -79,3 +81,4 @@ export const UserStat = (props) => {
         </Box>
     );
 };
+export default Stat;

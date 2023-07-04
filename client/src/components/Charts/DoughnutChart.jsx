@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export function DoughnutChart({ title, labels, text, datalist }) {
+export default function DoughnutChart({ title, labels, text, datalist }) {
     const options = {
         responsive: true,
         plugins: {

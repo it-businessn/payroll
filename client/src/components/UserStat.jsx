@@ -1,16 +1,18 @@
 import {
     Box,
-    Heading,
+    Button,
     HStack,
+    Heading,
     Icon,
     Square,
     Stack,
     Text,
 } from "@chakra-ui/react";
-import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
-export const Stat = (props) => {
-    const { label, value, icon, delta, ...boxProps } = props;
+const UserStat = (props) => {
+    const { label, value, icon, period, range, delta, ...boxProps } = props;
     return (
         <Box
             px={{
@@ -42,7 +44,6 @@ export const Stat = (props) => {
                         </Square>
                         <Text fontWeight="medium">{label}</Text>
                     </HStack>
-                    {/* <Icon as={FiMoreVertical} boxSize="5" color="fg.muted" /> */}
                 </Stack>
                 <Stack>
                     <Heading
@@ -54,26 +55,23 @@ export const Stat = (props) => {
                         {value}
                     </Heading>
                     {delta && (
-                        <HStack spacing="1" fontWeight="medium">
-                            <Icon
-                                color={
-                                    delta.isUpwardsTrend ? "success" : "error"
-                                }
-                                as={
-                                    delta.isUpwardsTrend
-                                        ? FiArrowUpRight
-                                        : FiArrowDownRight
-                                }
-                                boxSize="5"
-                            />
-                            <Text
-                                color={
-                                    delta.isUpwardsTrend ? "success" : "error"
-                                }
-                            >
-                                {delta.value}
-                            </Text>
-                            <Text color="fg.muted">vs last week</Text>
+                        <HStack
+                            spacing="1"
+                            justify="space-between"
+                            fontSize="sm"
+                        >
+                            {delta.value && <Text>{delta.value}</Text>}
+                            {delta.value2 && <Text>{delta.value2}</Text>}
+                            {delta.link && (
+                                <Link to="/leave-detail">
+                                    <Button
+                                        rightIcon={<FiArrowRight />}
+                                        variant="link"
+                                    >
+                                        {delta.link}
+                                    </Button>
+                                </Link>
+                            )}
                         </HStack>
                     )}
                 </Stack>
@@ -81,3 +79,4 @@ export const Stat = (props) => {
         </Box>
     );
 };
+export default UserStat;
