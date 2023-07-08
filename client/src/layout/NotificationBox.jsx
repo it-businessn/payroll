@@ -101,7 +101,6 @@ const NotificationBox = (props) => {
         },
     ];
     const msgs = useRef(null);
-
     useMountEffect(() => {
         msgs.current.show(notifications);
     });

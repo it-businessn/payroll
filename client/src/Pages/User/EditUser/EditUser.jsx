@@ -10,6 +10,7 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
+    Select,
     SimpleGrid,
     Spacer,
     Stack,
@@ -22,7 +23,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../../api/index.js";
 import { UserProfile } from "../../../components";
 import { UserSchema } from "../../../config/userSchema.js";
-import { ROUTE_PATH, TOAST } from "../../../constants/constant.js";
+import { ROUTE_PATH, TOAST, USER_ROLE } from "../../../constants/constant.js";
 import { DashboardLayout, ProfileContainer, Sidebar } from "../../../layout";
 export default function EditUser() {
     const user = JSON.parse(localStorage.getItem("profile"));
@@ -233,12 +234,23 @@ export default function EditUser() {
                                                         <FormLabel>
                                                             Role
                                                         </FormLabel>
-                                                        <Input
-                                                            defaultValue={
+                                                        <Select
+                                                            placeholder={
                                                                 userData.role
                                                             }
                                                             {...field}
-                                                        />
+                                                        >
+                                                            {Object.values(
+                                                                USER_ROLE
+                                                            ).map((item) => (
+                                                                <option
+                                                                    key={item}
+                                                                    value={item}
+                                                                >
+                                                                    {item}
+                                                                </option>
+                                                            ))}
+                                                        </Select>
                                                     </FormControl>
                                                 )}
                                             </Field>

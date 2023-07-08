@@ -19,8 +19,14 @@ ChartJS.register(
     Legend
 );
 
-export default function BarChart({ data1, titleText, legend }) {
+export default function BarChart({
+    data1,
+    titleText,
+    legend,
+    indexAxis = "x",
+}) {
     const options = {
+        indexAxis: indexAxis,
         responsive: true,
         plugins: {
             legend: {

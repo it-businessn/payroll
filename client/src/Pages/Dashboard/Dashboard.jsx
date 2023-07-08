@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { SimpleGrid } from "@chakra-ui/react";
 import "react-calendar/dist/Calendar.css";
+import { Doughnut } from "react-chartjs-2";
 import { FiDollarSign, FiUsers } from "react-icons/fi";
 import { TbPointerDollar } from "react-icons/tb";
 import {
@@ -14,6 +15,7 @@ import {
     PieChart,
     Stat,
 } from "../../components";
+import { notifications } from "../../constants/constant";
 import fakedata from "../../constants/fakedata.json";
 import { LandingPageLayout, NotificationBox } from "../../layout";
 
@@ -113,6 +115,7 @@ function Dashboard() {
                         <Card>
                             {data && (
                                 <BarChart
+                                    indexAxis={"y"}
                                     titleText="Average Salary By Month"
                                     data1={data}
                                     legend="Salary(in $)"
@@ -131,15 +134,55 @@ function Dashboard() {
                             />
                         </Card>
                         <Card>
-                            <DoughnutChart
-                                datalist={[60, 30]}
-                                text="Sick Leave"
-                                labels={labels2}
-                                title="% of Sick Leave"
+                            <Doughnut
+                                options={{
+                                    responsive: true,
+                                    type: "doughnut",
+                                    data: data,
+                                    plugins: {
+                                        legend: { display: false },
+                                        title: {
+                                            display: true,
+                                            text: "Accrued Leaves(in days)",
+                                        },
+                                    },
+                                }}
+                                data={{
+                                    labels: [
+                                        "Sick leave",
+                                        "Casual leave",
+                                        "Public holiday",
+                                        "Religious holiday",
+                                        "Maternity leave",
+                                        "Paternity leave",
+                                        "Bereavement leave",
+                                        "Compensatory leave",
+                                        "Sabbatical leave",
+                                        "Unpaid leave",
+                                    ],
+                                    datasets: [
+                                        {
+                                            label: "Number of days:",
+                                            data: [
+                                                1, 2, 1, 1, 3, 1, 1, 1, 1, 2,
+                                            ],
+                                            backgroundColor: [
+                                                "#cdb1af",
+                                                "#b28db8",
+                                                "#c6e8c7",
+                                                "#a1a764",
+                                                "#f7e09a",
+                                                "#ed9b80",
+                                                "#ecc6c6",
+                                            ],
+                                            hoverOffset: 4,
+                                        },
+                                    ],
+                                }}
                             />
                         </Card>
                     </SimpleGrid>
-                    <NotificationBox />
+                    <NotificationBox notifications1={notifications} />
                 </>
             }
         />

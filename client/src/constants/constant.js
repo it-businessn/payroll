@@ -103,6 +103,11 @@ export const LABELS = [
 export const notifications = [
     {
         sticky: true,
+        severity: "info",
+        detail: "Reminder: You have new update on your leave request",
+    },
+    {
+        sticky: true,
         severity: "success",
         detail: "Reminder: Meeting tomorrow at 10:00 AM",
     },
