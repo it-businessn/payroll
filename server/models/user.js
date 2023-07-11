@@ -6,7 +6,7 @@ const UserDetailsSchema = new mongoose.Schema(
     {
         companyNo: {
             type: String,
-            required: true,
+            required: false,
         },
         firstName: {
             type: String,

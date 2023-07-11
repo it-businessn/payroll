@@ -32,7 +32,6 @@ export const signIn = async (request, response) => {
 };
 export const signUp = async (request, response) => {
     const {
-        companyNo,
         firstName,
         middleName,
         lastName,
@@ -56,7 +55,6 @@ export const signUp = async (request, response) => {
             });
         }
         const newUser = await createUser(
-            companyNo,
             firstName,
             middleName,
             lastName,
@@ -87,7 +85,6 @@ export const signUp = async (request, response) => {
 };
 
 const createUser = async (
-    companyNo,
     firstName,
     middleName,
     lastName,
@@ -106,7 +103,6 @@ const createUser = async (
     const hashedPassword = await encryptPassword(password);
     const otpGenerated = generateOTP();
     const newUser = await User.create({
-        companyNo,
         firstName,
         middleName,
         lastName,
