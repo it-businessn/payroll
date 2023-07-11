@@ -4,6 +4,10 @@ import { Address, EmergencyContact } from "./contactDetail.js";
 
 const UserDetailsSchema = new mongoose.Schema(
     {
+        companyNo: {
+            type: String,
+            required: true,
+        },
         firstName: {
             type: String,
             required: true,
@@ -18,6 +22,7 @@ const UserDetailsSchema = new mongoose.Schema(
         },
         email: { type: String, unique: true, required: true },
         role: { type: String, required: true },
+        // manager:{type:User,required:true},
         password: {
             type: String,
             required: true,
